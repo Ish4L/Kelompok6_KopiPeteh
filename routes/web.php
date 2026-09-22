@@ -17,3 +17,7 @@ Route::get('/fatih', function () {
 Route::get('/erlyn', function () {
     return view('welcome');
 });
+
+Route::get('/alsa', function () {
+    return view('welcome');
+});
