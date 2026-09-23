@@ -13,3 +13,11 @@ Route::get('/ishal', function () {
 Route::get('/fatih', function () {
     return view('hi fatih');
 });
+
+Route::get('/erlyn', function () {
+    return view('welcome');
+});
+
+Route::get('/alsa', function () {
+    return view('welcome');
+});
