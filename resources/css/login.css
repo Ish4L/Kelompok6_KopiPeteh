@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;600;700&family=Shanti&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+body {
+    font-family: 'ubuntu', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../images/coffee-bg.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 100vh;
+    /* background-color: #fdf2de; */
+    overflow: hidden;
+}
+
+.login-image {
+    width: 50%;
+    min-height: 500px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-caption {
+    width: 100%;
+    text-align: center;
+    padding: 35px 20px 42px;
+}
+
+.image-caption h1 {
+    color: #fff;
+    font-family: 'ubuntu', sans-serif;
+    font-size: 29px;
+    font-weight: 800;
+    line-height: 1.2;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.login-form-section {
+    width: 48%;
+    background-color: #fdf2de;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 35px;
+}
+
+.login-content {
+    width: 100%;
+    max-width: 320px;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.brand img {
+    width: 105px;
+    height: auto;
+    object-fit: contain;
+}
+
+.welcome {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.welcome h2 {
+    font-family: 'ubuntu', sans-serif;
+    font-size: 23px;
+    font-weight: 800;
+    color: #000000;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #000000;
+}
+
+.welcome p {
+    font-family: 'shanti', sans-serif;
+    font-size: 10px;
+    color: #000000;
+    margin-top: 8px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'shanti', sans-serif;
+    font-size: 12px;
+    color: #000000;
+    margin-bottom: 6px;
+}
+
+.input-box {
+    position: relative;
+    width: 100%;
+}
+
+.input-box input {
+    width: 100%;
+    height: 34px;
+    padding: 0 38px 0 10px;
+    font-family: 'shanti', sans-serif;
+    font-size: 14px;
+    color: #3B2721;
+    border: 1px solid #000000;
+    border-bottom: 2px solid #000000;
+    border-radius: 7px;
+    background-color: #ffff;
+    outline: none;
+}
+
+.input-box i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000000;
+    font-size: 13px;
+}
+
+.login-btn {
+    width: 100%;
+    height: 34px;
+    background-color: #3B2721;
+    color: #ffffff;
+    font-family: 'shanti', sans-serif;
+    font-size: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
