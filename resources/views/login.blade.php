@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     @vite(['resources/css/login.css'])
-    <title>Login Page</title>
+    <title>Login | KopiPeteh</title>
 </head>
 <body>
     <main class="login-container">
@@ -34,10 +34,10 @@
                     <p>Login to continue your KopiPeteh experience.</p>
                 </div>
 
-                <form action="" method="POST">
+                <form action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="username">Username</label>
+                        <label>Username</label>
 
                         <div class="input-box">
                             <input
@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label>Password</label>
 
                         <div class="input-box">
                             <input
@@ -63,12 +63,6 @@
                             <i class="fa-solid fa-lock"></i>
                         </div>
                     </div>
-
-                    <!-- @if ($errors->any())
-                        <div class="error-message">
-                            {{ $errors->first() }}
-                        </div>
-                    @endif -->
 
                     <button type="submit" class="login-btn">
                         Login

@@ -13,4 +13,27 @@ class AuthController extends Controller
     {
         return view('login');
     }
+
+    public function login(Request $request) {
+        $credentials = $request->validate([
+            'username' => 'required|exists:admins,username',
+            'password' => 'required',
+        ]);
+
+        if (Auth::guard('admin')->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard');
+        }
+
+        return back()->withErrors([
+            'username' => 'Username tidak sesuai.',
+        ]);
+    }
+
+    public function logout(Request $request) {
+        Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login')->with('success', 'Berhasil logout.');
+    }
 }
