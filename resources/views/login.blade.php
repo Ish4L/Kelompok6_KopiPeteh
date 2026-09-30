@@ -23,7 +23,7 @@
         <div class="login-form-section">
             <div class="login-content">
 
-                <div class="brand">
+                <div class="logo">
                     <img
                         src="{{ asset('images/logo1.png') }}"
                         alt="KopiPeteh Logo">
@@ -64,11 +64,11 @@
                         </div>
                     </div>
 
-                    @if ($errors->any())
+                    <!-- @if ($errors->any())
                         <div class="error-message">
                             {{ $errors->first() }}
                         </div>
-                    @endif
+                    @endif -->
 
                     <button type="submit" class="login-btn">
                         Login

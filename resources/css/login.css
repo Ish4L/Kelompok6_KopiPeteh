@@ -49,7 +49,7 @@ body {
 
 .image-caption h1:nth-child(2) {
     margin-left: 20%;
-    color: #fdf2de;
+    color: #FDF2DE;
 }
 
 .login-form-section {
@@ -57,7 +57,7 @@ body {
     width: 40%;
     height: 100vh;
     margin-left: auto;
-    background-color: #fdf2de;
+    background-color: #FDF2DE;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,15 +67,16 @@ body {
 .login-content {
     width: 60%;
     /* max-width: 320px; */
+    margin-bottom: 10%;
 }
 
-.brand {
+.logo {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.brand img {
-    width: 50%;
+.logo img {
+    width: 45%;
     height: auto;
     object-fit: contain;
 }
@@ -107,11 +108,11 @@ body {
 
 .form-group label {
     display: block;
+    padding-left: 13px;
     font-family: 'shanti', sans-serif;
     font-size: 12px;
     color: #000000;
     margin-bottom: 6px;
-    padding-left: 8px;
 }
 
 .input-box {
@@ -122,19 +123,18 @@ body {
 .input-box input {
     width: 100%;
     height: 34px;
-    padding: 0 38px 0 10px;
+    padding: 0 38px 0 13px;
     font-family: 'shanti', sans-serif;
     font-size: 12px;
     color: #3B2721;
-    border: 1px solid #0000004a;
+    border: none;
     border-radius: 7px;
-    background-color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.08);
     outline: none;
 }
 
-input:focus {
-    border-color: #3B2721;
-    transition-duration: 0.5s;
+.input-box input:focus-visible {
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
 .input-box i {
@@ -149,10 +149,11 @@ input:focus {
 .login-btn {
     width: 100%;
     height: 34px;
+    margin-top: 3%;
     background-color: #3B2721;
     color: #ffffff;
     font-family: 'shanti', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
