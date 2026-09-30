@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     @vite(['resources/css/login.css'])
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <title>Login Page</title>
 </head>
 <body>
     <main class="login-container">
@@ -37,10 +34,8 @@
                     <p>Login to continue your KopiPeteh experience.</p>
                 </div>
 
-                <form action=""
-                      method="POST">
+                <form action="" method="POST">
                     @csrf
-
                     <div class="form-group">
                         <label for="username">Username</label>
 
@@ -48,7 +43,7 @@
                             <input
                                 type="text"
                                 name="username"
-                                placeholder="Enter Username"
+                                placeholder="Enter username..."
                                 required>
 
                             <i class="fa-solid fa-user"></i>
@@ -62,7 +57,7 @@
                             <input
                                 type="password"
                                 name="password"
-                                placeholder="Enter Password"
+                                placeholder="Enter password..."
                                 required>
 
                             <i class="fa-solid fa-lock"></i>

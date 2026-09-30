@@ -8,13 +8,7 @@
 
 body {
     font-family: 'ubuntu', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    /* background-size: cover;
-    background-position: center; */
+    min-height: 100vh;    
 }
 
 .login-container {
@@ -30,15 +24,14 @@ body {
     inset: 0;
     width: 75%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
     background-image: url('/public/images/coffee-bg.png');
+    background-size: cover;
 }
 
 .image-caption {
     position: absolute;
     bottom: 60px;
-    left: 28%;
+    left: 35%;
     width: 50%;
     text-align: center;
     padding: 0;
@@ -55,13 +48,13 @@ body {
 }
 
 .image-caption h1:nth-child(2) {
-    margin-left: 86px;
+    margin-left: 20%;
     color: #fdf2de;
 }
 
 .login-form-section {
     position: relative; 
-    width: 45%;
+    width: 40%;
     height: 100vh;
     margin-left: auto;
     background-color: #fdf2de;
@@ -72,8 +65,8 @@ body {
 }
 
 .login-content {
-    width: 100%;
-    max-width: 320px;
+    width: 60%;
+    /* max-width: 320px; */
 }
 
 .brand {
@@ -82,19 +75,19 @@ body {
 }
 
 .brand img {
-    width: 130px;
+    width: 50%;
     height: auto;
     object-fit: contain;
 }
 
 .welcome {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 40px;
 }
 
 .welcome h2 {
     font-family: 'ubuntu', sans-serif;
-    font-size: 23px;
+    font-size: 1.8rem;
     font-weight: 800;
     color: #000000;
     padding-bottom: 6px;
@@ -103,13 +96,13 @@ body {
 
 .welcome p {
     font-family: 'shanti', sans-serif;
-    font-size: 15px;
+    font-size: .8rem;
     color: #000000;
     margin-top: 8px;
 }
 
 .form-group {
-   margin-bottom: 16px;
+    margin-bottom: 16px;
 }
 
 .form-group label {
@@ -118,7 +111,7 @@ body {
     font-size: 12px;
     color: #000000;
     margin-bottom: 6px;
-    padding-left: 5px;
+    padding-left: 8px;
 }
 
 .input-box {
@@ -133,14 +126,15 @@ body {
     font-family: 'shanti', sans-serif;
     font-size: 12px;
     color: #3B2721;
-    border: 1.3px solid #0000004a;
+    border: 1px solid #0000004a;
     border-radius: 7px;
-    background-color: #ffff;
+    background-color: #ffffff;
     outline: none;
 }
 
 input:focus {
     border-color: #3B2721;
+    transition-duration: 0.5s;
 }
 
 .input-box i {
@@ -167,6 +161,11 @@ input:focus {
 
 .login-btn:hover {
     background-color: #64443a;
-    transform:scale(1.01);
+    /* transform:scale(1.01); */
     transition-duration: 0.2s;
+}
+
+.login-btn:active {
+    transform: scale(0.98);
+    transition-duration: 0.1s;
 }
