@@ -17,6 +17,22 @@ Route::middleware('auth:admin')->group(function () {
         return view('admin.dashboard');
     })->name('dashboard');
 
+    Route::get('/profil', function () {
+        return view('admin.profile');
+    })->name('profile');
+
+    Route::get('/kategori', function () {
+        return view('admin.category');
+    })->name('category');
+
+    Route::get('/produk', function () {
+        return view('admin.product');
+    })->name('product');
+
+    Route::get('/riwayat', function () {
+        return view('admin.history');
+    })->name('history');
+
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 

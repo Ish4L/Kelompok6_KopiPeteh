@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: ubuntu, sans-serif;
+    /* min-height: 100vh; */
+    background-color: #FDF2DE;
+}
+
+.wrapper{
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    padding: 30px;
+    gap:60px;
+}
+
+.sidebar{
+    width: 20%;
+    min-width: 200px;
+    height: 100%;
+    background: #4c332b;
+    padding: 6px 14px;
+    transition: all 0.5s ease;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+}
+
+.sidebar-header{
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1.3px solid rgba(255, 255, 255, 0.7);
+}
+
+.sidebar-header img {
+    width: 80%;
+    height: auto;
+    margin-bottom: 15px;
+    object-fit: contain;
+}
+
+.sidebar-menu {
+    width: 100%;
+    flex: 1;
+    margin-top: 20px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-menu li {
+    margin-bottom: 20px;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    border-radius: 8px;
+}
+
+.sidebar-menu li a img {
+    width: 25px;
+}
+
+.sidebar-menu .logout {
+    margin-top: auto;
+    margin-bottom: 20px;
+    padding-left: 15px;
+}
+
+.section {
+    position: relative;
+    width: 80%;
+}
