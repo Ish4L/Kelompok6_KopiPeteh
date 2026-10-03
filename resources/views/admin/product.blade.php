@@ -95,12 +95,12 @@
 
                 <thead>
                     <tr>
-                        <th>No</th>
+                        <th class="top-left">No</th>
                         <th>Produk</th>
                         <th>Kategori</th>
                         <th>Detail</th>
                         <th>Harga</th>
-                        <th>Aksi</th>
+                        <th class="top-right">Aksi</th>
                     </tr>
                 </thead>
 
@@ -112,8 +112,11 @@
                         <td>Minuman</td>
                         <td>Kopi dicamp...</td>
                         <td>20.000</td>
-                        <td>
-                            <button class="btn-action">•••</button>
+                        <td class="action">
+                            <img src="{{ asset('images/icons/edit.png') }}"
+                                 alt="Edit">
+                            <img src="{{ asset('images/icons/delete.png') }}"
+                                 alt="Delete">
                         </td>
                     </tr>
 
@@ -123,19 +126,25 @@
                         <td>Minuman</td>
                         <td>Intinya kopi...</td>
                         <td>15.000</td>
-                        <td>
-                            <button class="btn-action">•••</button>
+                        <td class="action">
+                            <img src="{{ asset('images/icons/edit.png') }}"
+                                 alt="Edit">
+                            <img src="{{ asset('images/icons/delete.png') }}"
+                                 alt="Delete">
                         </td>
                     </tr>
 
                     <tr>
-                        <td>3</td>
+                        <td class="bottom-left">3</td>
                         <td>Ice Americano</td>
                         <td>Minuman</td>
                         <td>Kopi hitam es</td>
                         <td>12.000</td>
-                        <td>
-                            <button class="btn-action">•••</button>
+                        <td class="bottom-right action">
+                            <img src="{{ asset('images/icons/edit.png') }}"
+                                 alt="Edit">
+                            <img src="{{ asset('images/icons/delete.png') }}"
+                                 alt="Delete">
                         </td>
                     </tr>
 

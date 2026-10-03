@@ -103,9 +103,9 @@
 
                 <thead>
                     <tr>
-                        <th>No</th>
+                        <th class="top-left">No</th>
                         <th>Kategori</th>
-                        <th>Aksi</th>
+                        <th class="top-right">Aksi</th>
                     </tr>
                 </thead>
 
@@ -114,16 +114,22 @@
                     <tr>
                         <td>1</td>
                         <td>Makanan</td>
-                        <td>
-                            <button class="btn-action">•••</button>
+                        <td class="action">
+                            <img src="{{ asset('images/icons/edit.png') }}"
+                                 alt="Edit">
+                            <img src="{{ asset('images/icons/delete.png') }}"
+                                 alt="Delete">
                         </td>
                     </tr>
 
                     <tr>
-                        <td>2</td>
+                        <td class="bottom-left">2</td>
                         <td>Minuman</td>
-                        <td>
-                            <button class="btn-action">•••</button>
+                        <td class="bottom-right action">
+                            <img src="{{ asset('images/icons/edit.png') }}"
+                                 alt="Edit">
+                            <img src="{{ asset('images/icons/delete.png') }}"
+                                 alt="Delete">
                         </td>
                     </tr>
 

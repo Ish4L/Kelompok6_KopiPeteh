@@ -89,7 +89,7 @@ body {
 
 .content {
     flex: 1;
-    min-width: 0;
+    width: auto;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
@@ -127,7 +127,7 @@ body {
 
 .search-box {
     flex: 0.9;
-    height: 35px;
+    height: 40px;
     border: 1px solid #0000004f;
     border-radius: 8px;
     display: flex;
@@ -168,45 +168,55 @@ body {
 }
 
 .data-table thead tr {
-    height: 35px;
+    height: 40px;
 }
 
 .data-table thead th {
     background-color: #4C332B;
     padding: 0 20px;
     text-align: left;
-}
-
-.data-table thead th:first-child {
-    border-radius: 8px 0 0 8px;
-}
-
-.data-table thead th:last-child {
-    border-radius: 0 8px 8px 0;
+    font-weight: 400;
 }
 
 .data-table tbody tr {
-    height: 45px;
+    height: 40px;
 }
 
 .data-table tbody td {
-    background-color: #65413780;
+    background-color: #F2F2F2;
     padding: 0 20px;
-    color: #ffffff;
+    color: #000000;
 }
 
-.data-table tbody td:first-child {
-    border-radius: 8px 0 0 8px;
+.top-left {
+    border-top-left-radius: 8px;
 }
 
-.data-table tbody td:last-child {
-    border-radius: 0 8px 8px 0;
+.bottom-left {
+    border-bottom-left-radius: 8px;
 }
 
-.btn-action {
+.top-right {
+    border-top-right-radius: 8px;
+}
+
+.bottom-right {
+    border-bottom-right-radius: 8px;
+}
+
+.action {
     border: none;
     background-color: transparent;
-    color: #ffffff;
+    color: #000000;
     font-size: 16px;
     cursor: pointer;
+}
+
+.action i {
+    margin: 0 3px;
+}
+
+.action img {
+    width: 20px;
+    margin: 0 3px;
 }
