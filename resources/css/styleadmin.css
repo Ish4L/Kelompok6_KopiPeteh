@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;600;700&family=Shanti&display=swap');
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: ubuntu, sans-serif;
     /* min-height: 100vh; */
     background-color: #FDF2DE;
@@ -83,4 +85,128 @@ body{
 .section {
     position: relative;
     width: 80%;
+}
+
+.content {
+    flex: 1;
+    min-width: 0;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+.page-header h3{
+    color: #000000;
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.search-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+.btn-add {
+    width: 85px;
+    height: 34px;
+    border: none;
+    border-radius: 8px;
+    background-color: #654137;
+    color: #fff;
+    font-family: 'ubuntu', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-add:hover {
+    background-color: #4c332b;
+}
+
+.search-box {
+    flex: 0.9;
+    height: 35px;
+    border: 1px solid #0000004f;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 13px;
+    background-color: #fff;
+}
+
+.search-box i {
+    color: #00000063;
+    font-size: 13px;
+    margin-right: 8px;
+}
+
+.search-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'ubuntu', sans-serif;
+    font-size: 13px;
+    color: #000000;
+}
+
+.search-box input::placeholder {
+    color: #00000063;
+    font-family: 'ubuntu', sans-serif;
+    font-size: 13px;
+}
+
+.data-table {
+    width: 91%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    font-family: 'ubuntu', sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.data-table thead tr {
+    height: 35px;
+}
+
+.data-table thead th {
+    background-color: #4C332B;
+    padding: 0 20px;
+    text-align: left;
+}
+
+.data-table thead th:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.data-table thead th:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.data-table tbody tr {
+    height: 45px;
+}
+
+.data-table tbody td {
+    background-color: #65413780;
+    padding: 0 20px;
+    color: #ffffff;
+}
+
+.data-table tbody td:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.data-table tbody td:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.btn-action {
+    border: none;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
 }

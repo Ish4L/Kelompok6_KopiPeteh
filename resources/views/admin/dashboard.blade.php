@@ -23,11 +23,8 @@
         </div>
 
         <div class="content">
-            <header>
-                <h1>Dashboard</h1>
-            </header>
+            <h3>Dashboard</h3>
         </div>
-
     </div>
 </body>
 </html>
