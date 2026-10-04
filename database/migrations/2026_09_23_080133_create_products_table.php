@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('price', 12, 2);
             $table->text('description')->nullable();
             $table->string('image', 255);
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
         });
     }
 
