@@ -43,8 +43,9 @@
                             <input
                                 type="text"
                                 name="username"
+                                value="{{ old('username') }}"
                                 placeholder="Enter username..."
-                                required>
+                                autofocus>
 
                             <i class="fa-solid fa-user"></i>
                         </div>
@@ -57,12 +58,19 @@
                             <input
                                 type="password"
                                 name="password"
-                                placeholder="Enter password..."
-                                required>
+                                placeholder="Enter password...">
 
                             <i class="fa-solid fa-lock"></i>
                         </div>
                     </div>
+
+                    @if ($errors->any())
+                        <div style="color: red; font-size: 12px;">
+                            @foreach ($errors->all() as $error)
+                                <span>{{ $error }}</span>
+                            @endforeach
+                        </div>
+                    @endif
 
                     <button type="submit" class="login-btn">
                         Login

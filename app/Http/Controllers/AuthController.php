@@ -17,7 +17,7 @@ class AuthController extends Controller
     public function login(Request $request) {
         if (empty($request->username) && empty($request->password)) {
         return back()->withErrors([
-            'error' => 'Username dan password wajib diisi!',
+            'error' => 'Username and password must be filled!',
         ]);
     }
 
@@ -25,8 +25,8 @@ class AuthController extends Controller
             'username' => 'required',
             'password' => 'required',
         ], [
-            'username.required' => 'Username harus diisi.',
-            'password.required' => 'Password harus diisi.',
+            'username.required' => 'Username must be filled.',
+            'password.required' => 'Password must be filled.',
         ]);
 
         if (Auth::guard('admin')->attempt($credentials)) {
@@ -35,7 +35,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'error' => 'Username atau password tidak sesuai.',
+            'error' => 'Username or password is incorrect.',
         ])->onlyInput('username');
     }
 
