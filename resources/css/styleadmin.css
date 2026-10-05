@@ -278,3 +278,16 @@ body {
     text-decoration: none;
 }
 
+.dashboard-header {
+    margin-bottom: 20px;
+}
+
+.dashboard-header h3 {
+    color: #000000;
+    margin-bottom: 17px;
+}
+
+.dashboard-header p {
+    color: #000000;
+}
+
