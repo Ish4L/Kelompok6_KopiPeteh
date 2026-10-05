@@ -17,7 +17,7 @@ class AuthController extends Controller
     public function login(Request $request) {
         if (empty($request->username) && empty($request->password)) {
         return back()->withErrors([
-            'error' => 'Username and password must be filled!',
+            'error' => 'Username and password must be filled.',
         ]);
     }
 
@@ -35,7 +35,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'error' => 'Username or password is incorrect.',
+            'error' => 'Incorrect username or password.',
         ])->onlyInput('username');
     }
 
