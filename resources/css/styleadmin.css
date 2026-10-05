@@ -305,3 +305,27 @@ table.product-table th:nth-child(7) { width: 5%; }
     background-color: #fadcd8;
     color: #c5221f;
 }
+
+.tabs {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 2px;
+    padding-left: 2px; 
+}
+
+.tab {
+    position: relative;
+    text-decoration: none;
+    color: #654137;
+    font-size: 15px;
+    padding: 5px 0;
+}
+
+.active-tab {
+    color: #654137;
+    font-weight: 600;
+    border-bottom: 2px solid #4C332B;
+    text-decoration: none;
+}
+
