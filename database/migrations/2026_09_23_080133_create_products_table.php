@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories');
             $table->decimal('price', 12, 2);
             $table->text('description')->nullable();
-            $table->string('image', 255);
+            $table->string('image', 255)->nullable();
             $table->enum('status', ['active', 'inactive'])->default('inactive');
         });
     }
