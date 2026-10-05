@@ -2,15 +2,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Product Page</title>
-
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
-
+    <title>Produk - KopiPeteh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
     @vite(['resources/css/styleadmin.css'])
     @vite(['resources/js/script.js'])
-
 </head>
 
 <body>
@@ -18,89 +13,78 @@
         <x-sidebar />
 
         <div class="content">
-            <div class="page-header">
-                <h3>Produk</h3>
-            </div>
-
+            <h3>Produk</h3>
+            
             <div class="search-area">
-
-                <button class="btn-add">
-                    Tambah
-                </button>
+                <a class="btn-add" href="#">Tambah</a>
 
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-
-                    <input type="text"
-                           placeholder="Cari Produk">
+                    <input type="text" placeholder="Cari Kategori">
                 </div>
-
             </div>
 
-            <table class="data-table">
+            <table class="data-table product-table">
+                <tr>
+                    <th>No</th>
+                    <th>Produk</th>
+                    <th>Deskripsi</th>
+                    <th>Kategori</th>
+                    <th>Harga</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
 
-                <thead>
-                    <tr>
-                        <th class="top-left">No</th>
-                        <th>Produk</th>
-                        <th>Kategori</th>
-                        <th>Detail</th>
-                        <th>Harga</th>
-                        <th class="top-right">Aksi</th>
-                    </tr>
-                </thead>
+                <tr>
+                    <td>1</td>
+                    <td>Dirty Latte</td>
+                    <td>Kopi dicamp...</td>
+                    <td>Minuman</td>
+                    <td>20.000</td>
+                    <td>
+                        <span class="status status-green">Active</span>
+                    </td>
+                    <td>
+                        <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
+                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a></a>
+                    </td>
+                </tr>
 
-                <tbody>
+                <tr>
+                    <td>2</td>
+                    <td>Spanish Latte</td>
+                    <td>Intinya kopi...</td>
+                    <td>Minuman</td>
+                    <td>15.000</td>
+                    <td>
+                        <span class="status status-red">Inactive</span>
+                    </td>
+                    <td>
+                        <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
+                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a></a>
+                    </td>
+                </tr>
 
-                    <tr>
-                        <td>1</td>
-                        <td>Dirty Latte</td>
-                        <td>Minuman</td>
-                        <td>Kopi dicamp...</td>
-                        <td>20.000</td>
-                        <td class="action">
-                            <img src="{{ asset('images/icons/edit.png') }}"
-                                 alt="Edit">
-                            <img src="{{ asset('images/icons/delete.png') }}"
-                                 alt="Delete">
-                        </td>
-                    </tr>
+                <tr>
+                    <td class="bottom-left">3</td>
+                    <td>Ice Americano</td>
+                    <td>Kopi hitam es</td>
+                    <td>Minuman</td>
+                    <td>12.000</td>
+                    <td>
+                        <span class="status status-green">Active</span>
+                    </td>
+                    <td>
+                        <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
+                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a></a>
+                    </td>
+                </tr>
 
-                    <tr>
-                        <td>2</td>
-                        <td>Spanish Latte</td>
-                        <td>Minuman</td>
-                        <td>Intinya kopi...</td>
-                        <td>15.000</td>
-                        <td class="action">
-                            <img src="{{ asset('images/icons/edit.png') }}"
-                                 alt="Edit">
-                            <img src="{{ asset('images/icons/delete.png') }}"
-                                 alt="Delete">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="bottom-left">3</td>
-                        <td>Ice Americano</td>
-                        <td>Minuman</td>
-                        <td>Kopi hitam es</td>
-                        <td>12.000</td>
-                        <td class="bottom-right action">
-                            <img src="{{ asset('images/icons/edit.png') }}"
-                                 alt="Edit">
-                            <img src="{{ asset('images/icons/delete.png') }}"
-                                 alt="Delete">
-                        </td>
-                    </tr>
-
-                </tbody>
-
+                <tr>
+                    <td colspan="7" style="color: rgba(0, 0, 0, 0.5)">Tidak ada data</td>
+                </tr>
             </table>
-
         </div>
-
     </div>
-
 </body>
 </html>

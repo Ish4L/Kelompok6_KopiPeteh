@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category Page</title>
+    <title>Kategori - KopiPeteh</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
     @vite(['resources/css/styleadmin.css'])
     @vite(['resources/js/script.js'])
@@ -13,14 +13,10 @@
         <x-sidebar />
 
         <div class="content">
-            <div class="page-header">
-                <h3>Kategori</h3>
-            </div>
+            <h3>Kategori</h3>
 
             <div class="search-area">
-                <button class="btn-add">
-                    Tambah
-                </button>
+                <a class="btn-add" href="#">Tambah</a>
 
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -28,34 +24,25 @@
                 </div>
             </div>
 
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th class="top-left">No</th>
-                        <th>Kategori</th>
-                        <th class="top-right">Aksi</th>
-                    </tr>
-                </thead>
+            <table class="data-table category-table">
+                <tr>
+                    <th>No</th>
+                    <th>Kategori</th>
+                    <th>Aksi</th>
+                </tr>
+                
+                <tr>
+                    <td>1</td>
+                    <td>Makanan</td>
+                    <td>
+                        <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
+                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a></a>
+                    </td>
+                </tr>
 
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Makanan</td>
-                        <td class="action">
-                            <img src="{{ asset('images/icons/edit.png') }}" alt="Edit">
-                            <img src="{{ asset('images/icons/delete.png') }}" alt="Delete">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="bottom-left">2</td>
-                        <td>Minuman</td>
-                        <td class="bottom-right action">
-                            <img src="{{ asset('images/icons/edit.png') }}" alt="Edit">
-                            <img src="{{ asset('images/icons/delete.png') }}" alt="Delete">
-                        </td>
-                    </tr>
-                </tbody>
+                <tr>
+                    <td colspan="3" style="color: rgba(0, 0, 0, 0.5)">Tidak ada data</td>
+                </tr>
             </table>
         </div>
     </div>
