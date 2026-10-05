@@ -35,54 +35,30 @@
                     <th>Aksi</th>
                 </tr>
 
-                <tr>
-                    <td>1</td>
-                    <td>Dirty Latte</td>
-                    <td>Kopi dicamp...</td>
-                    <td>Minuman</td>
-                    <td>20.000</td>
-                    <td>
-                        <span class="status status-green">Active</span>
-                    </td>
-                    <td>
-                        <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
-                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a></a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>Spanish Latte</td>
-                    <td>Intinya kopi...</td>
-                    <td>Minuman</td>
-                    <td>15.000</td>
-                    <td>
-                        <span class="status status-red">Inactive</span>
-                    </td>
-                    <td>
-                        <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
-                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a></a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="bottom-left">3</td>
-                    <td>Ice Americano</td>
-                    <td>Kopi hitam es</td>
-                    <td>Minuman</td>
-                    <td>12.000</td>
-                    <td>
-                        <span class="status status-green">Active</span>
-                    </td>
-                    <td>
-                        <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
-                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a></a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="7" style="color: rgba(0, 0, 0, 0.5)">Tidak ada data</td>
-                </tr>
+                @if ($products->isNotEmpty())
+                    @foreach ($products as $index => $product)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $product->product_name }}</td>
+                            <td>{{ $product->description }}</td>
+                            <td>{{ $product->category->category_name }}</td>
+                            <td>{{ number_format($product->price, 0, ',', '.') }}</td>
+                            <td>
+                                <span class="status {{ $product->status == 'active' ? 'status-green' : 'status-red' }}">
+                                    {{ ucfirst($product->status) }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
+                                <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="7" style="color: rgba(0, 0, 0, 0.5); font-weight: 500;">Tidak ada data</td>
+                    </tr>
+                @endif
             </table>
         </div>
     </div>

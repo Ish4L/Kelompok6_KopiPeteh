@@ -27,7 +27,7 @@ class CategoryController extends Controller
         $categoryName = ucwords(strtolower($request->input('category_name')));
         Category::create(['category_name' => $categoryName]);
 
-        return redirect()->route('category.index')->with('success', 'Category created successfully.');
+        return redirect()->route('category.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     public function show(Category $category)
