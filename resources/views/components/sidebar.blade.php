@@ -7,17 +7,17 @@
 
     @php
         $menus = [
-            ['route' => 'dashboard', 'label' => 'Dashboard',       'icon' => 'home.svg'],
-            ['route' => 'profile',   'label' => 'Profil',          'icon' => 'profile.svg'],
-            ['route' => 'category',  'label' => 'Kategori',        'icon' => 'category.svg'],
-            ['route' => 'product',   'label' => 'Produk',          'icon' => 'product.svg'],
-            ['route' => 'history',   'label' => 'Riwayat Pesanan', 'icon' => 'history.svg'],
+            ['route' => 'dashboard', 'active' => 'dashboard*', 'label' => 'Dashboard',       'icon' => 'home.svg'],
+            ['route' => 'profile',   'active' => 'profile*',   'label' => 'Profil',          'icon' => 'profile.svg'],
+            ['route' => 'category',  'active' => 'category*',  'label' => 'Kategori',        'icon' => 'category.svg'],
+            ['route' => 'product',   'active' => 'product*',   'label' => 'Produk',          'icon' => 'product.svg'],
+            ['route' => 'history',   'active' => 'history*',   'label' => 'Riwayat Pesanan', 'icon' => 'history.svg'],
         ];
     @endphp
 
     <ul>
         @foreach ($menus as $m)
-            <li class="{{ request()->routeIs($m['route']) ? 'active' : '' }}">
+            <li class="{{ request()->routeIs($m['active']) ? 'active' : '' }}">
                 <a href="{{ route($m['route']) }}">
                     <img src="{{ asset('images/icons/' . $m['icon']) }}" alt="">
                     {{ $m['label'] }}
