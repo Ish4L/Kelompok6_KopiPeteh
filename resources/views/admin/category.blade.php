@@ -31,18 +31,22 @@
                     <th>Aksi</th>
                 </tr>
                 
-                <tr>
-                    <td>1</td>
-                    <td>Makanan</td>
-                    <td>
-                        <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
-                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a></a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="3" style="color: rgba(0, 0, 0, 0.5)">Tidak ada data</td>
-                </tr>
+                @if ($categories->isNotEmpty())
+                    @foreach ($categories as $index => $category)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $category->category_name }}</td>
+                            <td>
+                                <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
+                                <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="3" style="color: rgba(0, 0, 0, 0.5); font-weight: 500;">Tidak ada data</td>
+                    </tr>
+                @endif
             </table>
         </div>
     </div>
