@@ -125,7 +125,7 @@ body {
 }
 
 h3{
-    color: #000000;
+    /* color: #000000; */
     font-size: 1.2em;
     margin-bottom: 12px;
 }
@@ -222,6 +222,11 @@ h3{
     text-align: left;
     font-weight: 400;
 }
+
+table.dashboard-table th:nth-child(1) { width: 5%; }
+table.dashboard-table th:nth-child(2) { width: 30%; }
+table.dashboard-table th:nth-child(3) { width: 25%; }
+table.dashboard-table th:nth-child(4) { width: 40%; }
 
 table.category-table th:nth-child(1) { width: 5%; }
 table.category-table th:nth-child(2) { width: 85%; }
@@ -329,6 +334,10 @@ table.product-table th:nth-child(7) { width: 5%; }
     text-decoration: none;
 }
 
+.dashboard-content {
+    background-color: transparent;
+}
+
 .dashboard-header {
     margin-bottom: 20px;
 }
@@ -341,4 +350,62 @@ table.product-table th:nth-child(7) { width: 5%; }
 .dashboard-header p {
     color: #000000;
 }
+
+.report-cards {
+    width: 100%; 
+    padding: 10px 20px;
+    margin-bottom: 20;
+    border-radius: 10px;
+    background-color: #ffffff;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.report-cards p {
+    grid-column: 1 / 3;
+    margin-top: 5px;
+    margin-bottom: 10px; 
+    font-weight: bold;
+}
+
+.card-expense {
+    height: 100px;
+    border-radius: 10px;
+    justify-content: space-between; 
+    padding: 15px 20px;
+    display: flex;
+    background-color: #4C332B;
+}
+
+.card-income {
+    height: 100px;
+    border-radius: 10px;
+    justify-content: space-between; 
+    padding: 15px 20px;
+    display: flex;
+    background-color: #4C332B;
+}
+
+.card-text {
+    color: #ffffff;
+    padding: 10px;
+}
+
+.order-list {
+    width: 100%; 
+    padding: 10px 20px;
+    margin-bottom: 20;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+.order-list p {
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+
 
