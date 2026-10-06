@@ -12,25 +12,25 @@
         <x-sidebar />
 
         <div class="content dashboard-content">
-            <div class="dashboard-header">
+            <!-- <div class="dashboard-header">
                 <h3>Selamat Datang, Admin.</h3>
-            </div>
+            </div> -->
             
             <div class="report-cards">
-                <p>Laporan Minggu Ini</p>
-                <div class="card-expense">
+                <h3>Laporan Minggu Ini</h3>
+                <div class="report-card">
                     <div class="card-text">
                         <span>Total penjualan minggu ini</span>
-                        <h3>xx Cup</h3>
+                        <h3>XX Cup</h3>
                     </div>
                     <div class="card-icon">
                         <img src="{{ asset('images/icons/cup.svg') }}" alt="Sales">
                     </div>
                 </div>
-                <div class="card-income">
+                <div class="report-card">
                     <div class="card-text">
                         <span>Total pemasukan minggu ini</span>
-                        <h3>Rp. xxx.xxx,xx</h3>
+                        <h3>Rp XXX.XXX,XX</h3>
                     </div>
                     <div class="card-icon">
                         <img src="{{ asset('images/icons/income.svg') }}" alt="Sales">
@@ -39,7 +39,7 @@
             </div>
     
             <div class="order-list">
-                <p>List pesanan hari ini: Kamis</p>
+                <h3>List pesanan hari ini: Kamis</h3>
             <table class="data-table dashboard-table">
                 <tr>
                     <th>No</th>
