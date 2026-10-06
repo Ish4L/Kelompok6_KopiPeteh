@@ -11,8 +11,72 @@
     <div class="wrapper">
         <x-sidebar />
 
-        <div class="content">
-            <h3>Dashboard</h3>
+        <div class="content dashboard-content">
+            <!-- <div class="dashboard-header">
+                <h3>Selamat Datang, Admin.</h3>
+            </div> -->
+            
+            <div class="report-cards">
+                <h3>Laporan Minggu Ini</h3>
+                <div class="report-card">
+                    <div class="card-text">
+                        <span>Total penjualan minggu ini</span>
+                        <h3>XX Cup</h3>
+                    </div>
+                    <div class="card-icon">
+                        <img src="{{ asset('images/icons/cup.svg') }}" alt="Sales">
+                    </div>
+                </div>
+                <div class="report-card">
+                    <div class="card-text">
+                        <span>Total pemasukan minggu ini</span>
+                        <h3>Rp XXX.XXX,XX</h3>
+                    </div>
+                    <div class="card-icon">
+                        <img src="{{ asset('images/icons/income.svg') }}" alt="Sales">
+                    </div>
+                </div>
+            </div>
+    
+            <div class="order-list">
+                <h3>List pesanan hari ini: Kamis</h3>
+            <table class="data-table dashboard-table">
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Pesanan</th>
+                    <th>Harga</th>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td>Ahoy</td>
+                    <td>Dirty Latte</td>
+                    <td>20.000</td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td>Kokoh</td>
+                    <td>Ice Americano</td>
+                    <td>12.000</td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td>Zixuss</td>
+                    <td>Spanish Latte</td>
+                    <td>15.000</td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td>Helta</td>
+                    <td>Ice Americano</td>
+                    <td>12.000</td>
+                </tr>
+            </table>
+            </div>
         </div>
     </div>
 </body>
