@@ -27,7 +27,7 @@
                     <a href="#" class="tab">Selesai</a>
             </div>
 
-            <table class="data-table">
+            <table class="data-table history-table">
                 <thead>
                     <tr>
                         <th class="top-left">No</th>
