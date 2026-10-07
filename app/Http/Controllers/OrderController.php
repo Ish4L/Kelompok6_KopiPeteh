@@ -3,13 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function dashboardIndex()
     {
-        $orders = Order::all();
+        $todayOrders = OrderItem::with('order', 'product')->whereDate('created_at', Carbon::today())->get();
+        return view('admin.dashboard', compact('todayOrders'));
+    }
+    
+    public function historyIndex()
+    {
+        $orders = Order::with('oder', 'product')->latest()->get();
         return view('admin.history', compact('orders'));
     }
 
@@ -20,15 +30,42 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:50',
-            'phone' => 'required|string|max:20',
-            'total_price' => 'required|numeric|min:0',
-            'status' => 'required|in:pending,processing,completed,cancelled'
-        ]);
+        $todayCount = Order::whereDate('created_at', Carbon::today())->count();
+            if ($todayCount >= 10) {
+            return back()->withErrors(['error' => 'Maaf, pemesanan sudah ditutup.']);
+        }
+    
+        return DB::transaction(function () use ($request) {
+            $totalPrice = 0;
+            $itemsData = [];
 
-        Order::create($request->all());
-        return redirect()->route('order.index')->with('success', 'Order created successfully.');
+            foreach ($request->products as $item) {
+                $product = Product::findOrFail($item['product_id']);
+                $quantity = $item['quantity'];
+                $price = $product->price;
+                
+                $totalPrice += ($quantity * $price);
+
+                $itemsData[] = [
+                    'product_id' => $product->id,
+                    'quantity' => $quantity,
+                    'price' => $price,
+                ];
+            }
+
+            $order = Order::create([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'total_price' => $totalPrice,
+                'status' => 'pending',
+            ]);
+
+            foreach ($itemsData as $itemData) {
+                $order->items()->create($itemData);
+            }
+
+            return redirect()->route('order.index')->with('success', 'Pesanan berhasil dibuat.');
+        });
     }
 
     public function show(Order $order)

@@ -21,7 +21,7 @@
                 <div class="report-card">
                     <div class="card-text">
                         <span>Total penjualan minggu ini</span>
-                        <h3>XX Cup</h3>
+                        <h3>67 Cup</h3>
                     </div>
                     <div class="card-icon">
                         <img src="{{ asset('images/icons/cup.svg') }}" alt="Sales">
@@ -30,7 +30,7 @@
                 <div class="report-card">
                     <div class="card-text">
                         <span>Total pemasukan minggu ini</span>
-                        <h3>Rp XXX.XXX,XX</h3>
+                        <h3>Rp 676.767,67</h3>
                     </div>
                     <div class="card-icon">
                         <img src="{{ asset('images/icons/income.svg') }}" alt="Sales">
@@ -45,36 +45,25 @@
                     <th>No</th>
                     <th>Nama</th>
                     <th>Pesanan</th>
-                    <th>Harga</th>
+                    <th>Jumlah</th>
+                    <th>Total harga</th>
                 </tr>
-
-                <tr>
-                    <td>1</td>
-                    <td>Ahoy</td>
-                    <td>Dirty Latte</td>
-                    <td>20.000</td>
-                </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>Kokoh</td>
-                    <td>Ice Americano</td>
-                    <td>12.000</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>Zixuss</td>
-                    <td>Spanish Latte</td>
-                    <td>15.000</td>
-                </tr>
-
-                <tr>
-                    <td>4</td>
-                    <td>Helta</td>
-                    <td>Ice Americano</td>
-                    <td>12.000</td>
-                </tr>
+                
+                @if ($todayOrders->isNotEmpty())
+                    @foreach ($todayOrders as $index => $item)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $item->order->name }}</td>
+                            <td>{{ $item->product->product_name }}</td>
+                            <td>{{ $item->quantity }}</td>
+                            <td>{{ number_format($item->quantity * $item->price, 0, ',', '.') }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="5" style="color: rgba(0, 0, 0, 0.5); font-weight: 500;">Belum ada pesanan hari ini</td>
+                    </tr>
+                @endif
             </table>
             </div>
         </div>
