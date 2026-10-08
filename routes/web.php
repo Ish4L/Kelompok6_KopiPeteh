@@ -12,14 +12,22 @@ Route::get('/', function () {
 });
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/login', [
+        AuthController::class, 
+        'loginForm'
+    ])->name('login');
+
+    Route::post('/login', [
+        AuthController::class, 
+        'login'
+    ]);
 });
 
 Route::middleware('auth:admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [
+        OrderController::class, 
+        'dashboardIndex'
+    ])->name('dashboard');
 
     Route::get('/profil', [
         AdminController::class, 
@@ -38,7 +46,7 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('/riwayat', [
         OrderController::class, 
-        'index'
+        'historyIndex'
         ])->name('history');
 
     Route::get('/logout', [
