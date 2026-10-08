@@ -119,6 +119,7 @@ body {
 .content {
     flex: 1;
     width: auto;
+    height: calc(100vh - 60px);
     padding: 20px 30px;
     border-radius: 10px;
     background-color: #ffffff;
@@ -367,8 +368,13 @@ h3{
 }
 
 .dashboard-content {
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
     background-color: transparent;
     padding: 0;
+    /* overflow-y: scroll; */
 }
 
 .dashboard-header {
@@ -385,9 +391,7 @@ h3{
 }
 
 .report-cards {
-    width: 100%; 
     padding: 20px 30px;
-    margin-bottom: 20;
     border-radius: 10px;
     background-color: #ffffff;
 
@@ -430,16 +434,23 @@ h3{
 }
 
 .order-list {
-    width: 100%; 
+    height: 1px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 12px;
     padding: 20px 30px;
-    margin-bottom: 20;
-    margin-top: 10px;
     border-radius: 10px;
     background-color: #ffffff;
 }
 
 .order-list h3 {
-    margin-bottom: 12px;
     font-weight: bold;
+    margin-bottom: 0;
 }
 
+.dashboard-table th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}

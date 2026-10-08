@@ -40,50 +40,52 @@
     
             <div class="order-list">
                 <h3>List pesanan hari ini: {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l') }}</h3>
-                <div style="margin-bottom: 10px;">
+                <div>
                     <span>Cup terjual: {{ $todayCups }}/10 cup</span>
                 </div>
-                <table class="data-table dashboard-table">
-                    <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Pesanan</th>
-                        <th>Jumlah</th>
-                        <th>Total harga</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                    
-                    @if ($todayOrders->isNotEmpty())
-                        @foreach ($todayOrders as $index => $item)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $item->order->name }}</td>
-                                <td>{{ $item->product->product_name }}</td>
-                                <td>{{ $item->quantity }}</td>
-                                <td>{{ number_format($item->quantity * $item->price, 0, ',', '.') }}</td>
-                                <td>
-                                    <span class="status 
-                                        @if($item->order->status == 'menunggu')
-                                        status-yellow
-                                        @elseif($item->order->status == 'selesai')
-                                            status-green
-                                        @else
-                                            status-red
-                                        @endif
-                                    ">
-                                    {{ ucfirst($item->order->status) }}
-                                </span>
-                                </td>
-                                <td>•••</td>
-                            </tr>
-                        @endforeach
-                    @else
+                <div style="height: fit-content; overflow-y: auto;">
+                    <table class="data-table dashboard-table">
                         <tr>
-                            <td colspan="7" style="color: rgba(0, 0, 0, 0.5); font-weight: 500;">Belum ada pesanan hari ini</td>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Pesanan</th>
+                            <th>Jumlah</th>
+                            <th>Total harga</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
-                    @endif
-                </table>
+                        
+                        @if ($todayOrders->isNotEmpty())
+                            @foreach ($todayOrders as $index => $item)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $item->order->name }}</td>
+                                    <td>{{ $item->product->product_name }}</td>
+                                    <td>{{ $item->quantity }}</td>
+                                    <td>{{ number_format($item->quantity * $item->price, 0, ',', '.') }}</td>
+                                    <td>
+                                        <span class="status 
+                                            @if($item->order->status == 'menunggu')
+                                            status-yellow
+                                            @elseif($item->order->status == 'selesai')
+                                                status-green
+                                            @else
+                                                status-red
+                                            @endif
+                                        ">
+                                        {{ ucfirst($item->order->status) }}
+                                    </span>
+                                    </td>
+                                    <td>•••</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="7" style="color: rgba(0, 0, 0, 0.5); font-weight: 500;">Belum ada pesanan hari ini</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
         </div>
     </div>
