@@ -40,7 +40,7 @@
     
             <div class="order-list">
                 <h3>List pesanan hari ini: {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l') }}</h3>
-                <div style="margin-bottom: 10px; font-weight: bold;">
+                <div style="margin-bottom: 10px;">
                     <span>Cup terjual: {{ $todayCups }}/10 cup</span>
                 </div>
                 <table class="data-table dashboard-table">
@@ -64,9 +64,9 @@
                                 <td>{{ number_format($item->quantity * $item->price, 0, ',', '.') }}</td>
                                 <td>
                                     <span class="status 
-                                        @if($item->order->status == 'pending')
+                                        @if($item->order->status == 'menunggu')
                                         status-yellow
-                                        @elseif($item->order->status == 'completed')
+                                        @elseif($item->order->status == 'selesai')
                                             status-green
                                         @else
                                             status-red

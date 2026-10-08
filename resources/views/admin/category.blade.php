@@ -35,7 +35,7 @@
                     @foreach ($categories as $index => $category)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $category->category_name }}</td>
+                            <td>{{ ucfirst($category->category_name) }}</td>
                             <td>
                                 <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
                                 <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a>
