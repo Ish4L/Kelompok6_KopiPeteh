@@ -14,12 +14,21 @@ class OrderController extends Controller
     public function dashboardIndex()
     {
         $todayOrders = OrderItem::with('order', 'product')->whereDate('created_at', Carbon::today())->get();
-        return view('admin.dashboard', compact('todayOrders'));
+        $todayCups = $todayOrders->sum('quantity');
+
+        $weekOrderItems = OrderItem::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        $weekCups = $weekOrderItems->sum('quantity');
+        $weekIncome = $weekOrderItems->sum(function ($item) {
+            return $item->quantity * $item->price;
+        });
+
+        return view('admin.dashboard', compact('todayOrders', 'todayCups', 'weekCups', 'weekIncome'));
     }
     
     public function historyIndex()
     {
-        $orders = Order::with('oder', 'product')->latest()->get();
+        $orders = Order::with('items.product')->latest()->get();
+
         return view('admin.history', compact('orders'));
     }
 
@@ -30,9 +39,16 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $todayCount = Order::whereDate('created_at', Carbon::today())->count();
-            if ($todayCount >= 10) {
-            return back()->withErrors(['error' => 'Maaf, pemesanan sudah ditutup.']);
+        $todayCups = OrderItem::whereDate('created_at', Carbon::today())->sum('quantity');
+        $requestCups = collect($request->products)->sum('quantity');
+
+        if (($todayCups + $requestCups) > 10) {
+            $cupsLeft = 10 - $todayCups;
+            $message = $cupsLeft > 0
+                ? "Maaf, kuota hari ini sisa {$cupsLeft} cup."
+                : "Maaf, kuota hari ini sudah penuh";
+
+            return back()->withErrors(['error' => $message]);
         }
     
         return DB::transaction(function () use ($request) {
@@ -40,17 +56,19 @@ class OrderController extends Controller
             $itemsData = [];
 
             foreach ($request->products as $item) {
-                $product = Product::findOrFail($item['product_id']);
-                $quantity = $item['quantity'];
-                $price = $product->price;
-                
-                $totalPrice += ($quantity * $price);
+                if ($item['quantity'] > 0) {
+                    $product = Product::findOrFail($item['product_id']);
+                    $quantity = $item['quantity'];
+                    $price = $product->price;
+                    
+                    $totalPrice += ($quantity * $price);
 
-                $itemsData[] = [
-                    'product_id' => $product->id,
-                    'quantity' => $quantity,
-                    'price' => $price,
-                ];
+                    $itemsData[] = [
+                        'product_id' => $product->id,
+                        'quantity' => $quantity,
+                        'price' => $price,
+                    ];
+                }
             }
 
             $order = Order::create([
