@@ -62,7 +62,7 @@
                                     <td>{{ $item->order->name }}</td>
                                     <td>{{ $item->product->product_name }}</td>
                                     <td>{{ $item->quantity }}</td>
-                                    <td>{{ number_format($item->quantity * $item->price, 0, ',', '.') }}</td>
+                                    <td>Rp {{ number_format($item->quantity * $item->price, 0, ',', '.') }}</td>
                                     <td>
                                         <span class="status 
                                             @if($item->order->status == 'menunggu')
