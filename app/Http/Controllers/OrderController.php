@@ -25,9 +25,16 @@ class OrderController extends Controller
         return view('admin.dashboard', compact('todayOrders', 'todayCups', 'weekCups', 'weekIncome'));
     }
     
-    public function historyIndex()
+    public function historyIndex(Request $request)
     {
-        $orders = Order::with('items.product')->latest()->get();
+        $status = $request->query('status');
+
+        if ($status) {
+            $orders = Order::where('status', $status)->latest()->get();
+        } else {
+            $orders = Order::latest()->get();
+        }
+
         return view('admin.history', compact('orders'));
     }
 

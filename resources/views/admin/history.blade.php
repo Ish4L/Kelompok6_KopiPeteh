@@ -21,56 +21,54 @@
             </div>
 
             <div class="tabs">
-                    <a href="#" class="active-tab">Semua Pesanan</a>
-                    <a href="#" class="tab">Dibatalkan</a>
-                    <a href="#" class="tab">Menunggu</a>
-                    <a href="#" class="tab">Selesai</a>
+                    <a href="{{ route('history') }}" class="tab {{ request('status') == null ? 'active-tab' : '' }}">Semua Pesanan</a>
+                    <a href="{{ route('history', ['status' => 'menunggu']) }}" class="tab {{ request('status') == 'menunggu' ? 'active-tab' : '' }}">Menunggu</a>
+                    <a href="{{ route('history', ['status' => 'selesai']) }}" class="tab {{ request('status') == 'selesai' ? 'active-tab' : '' }}">Selesai</a>
+                    <a href="{{ route('history', ['status' => 'dibatalkan']) }}" class="tab {{ request('status') == 'dibatalkan' ? 'active-tab' : '' }}">Dibatalkan</a>
             </div>
 
             <table class="data-table history-table">
-                <thead>
-                    <tr>
-                        <th class="top-left">No</th>
-                        <th>Nama</th>
-                        <th>No. Telp</th>
-                        <th>Tanggal ↓</th>
-                        <th>Harga</th>
-                        <th>Status</th>
-                        <th class="top-right">Aksi</th>
-                    </tr>
-                </thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>No. Telp</th>
+                    <th>Tanggal</th>
+                    <th>Total Harga</th>
+                    <th>Status</th>
+                    <th>Aksi</th=>
+                </tr>
 
-                <tbody>
+                @if ($orders->isNotEmpty())
+                @foreach ($orders as $index => $order)
                     <tr>
-                        <td>1</td>
-                        <td>Ahoy</td>
-                        <td>081234567</td>
-                        <td>17-9-2026</td>
-                        <td>20.000</td>
-                        <td>Menunggu</td>
-                        <td class="action">•••</td>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $order->name }}</td>
+                        <td>{{ $order->phone }}</td>
+                        <td>{{ $order->created_at->format('d - m - Y') }}</td>
+                        <td>Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
+                        <td>
+                            <span class="status 
+                                @if($order->status == 'menunggu')
+                                    status-yellow
+                                @elseif($order->status == 'selesai')
+                                    status-green
+                                @else
+                                    status-red
+                                @endif
+                            ">
+                                {{ ucfirst($order->status) }}
+                            </span>
+                        </td>
+                        <td>•••</td>
                     </tr>
-
+                @endforeach
+                @else
                     <tr>
-                        <td>2</td>
-                        <td>Kokoh</td>
-                        <td>088888888 </td>
-                        <td>17-9-2026</td>
-                        <td>12.000</td>
-                        <td>Menunggu</td>
-                        <td class="action">•••</td>
+                        <td colspan="7" style="text-align: center; color: rgba(0, 0, 0, 0.5); font-weight: 500;">
+                            Belum ada riwayat pesanan
+                        </td>
                     </tr>
-
-                    <tr>
-                        <td class="bottom-left">3</td>
-                        <td>Zixuss</td>
-                        <td>0867676767</td>
-                        <td>17-9-2026</td>
-                        <td>15.000</td>
-                        <td>Menunggu</td>
-                        <td class="action bottom-right">•••</td>
-                    </tr>
-                </tbody>
+                @endif
             </table>
         </div>
     </div>
