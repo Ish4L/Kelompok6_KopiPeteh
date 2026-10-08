@@ -224,12 +224,13 @@ h3{
 .category-table th:nth-child(3) { width: 10%; }
 
 .product-table th:nth-child(1) { width: 5%; }
-.product-table th:nth-child(2) { width: 15%; }
-.product-table th:nth-child(3) { width: 36%; }
-.product-table th:nth-child(4) { width: 12%; }
-.product-table th:nth-child(5) { width: 10%; }
-.product-table th:nth-child(6) { width: 12%; }
-.product-table th:nth-child(7) { width: 10%; }
+.product-table th:nth-child(2) { width: 10%; }
+.product-table th:nth-child(3) { width: 15%; }
+.product-table th:nth-child(4) { width: 26%; }
+.product-table th:nth-child(5) { width: 12%; }
+.product-table th:nth-child(6) { width: 10%; }
+.product-table th:nth-child(7) { width: 12%; }
+.product-table th:nth-child(8) { width: 10%; }
 
 .history-table th:nth-child(1) { width: 5%; }
 .history-table th:nth-child(2) { width: 10%; }
@@ -243,17 +244,22 @@ h3{
 .dashboard-table tr th:nth-child(5), .dashboard-table tr td:nth-child(5),
 .dashboard-table tr th:nth-child(6), .dashboard-table tr td:nth-child(6),
 .dashboard-table tr th:nth-child(7), .dashboard-table tr td:nth-child(7),
+
 .category-table tr th:nth-child(3), .category-table tr td:nth-child(3),
-.product-table tr th:nth-child(4), .product-table tr td:nth-child(4),
+
+.product-table tr th:nth-child(2), .product-table tr td:nth-child(2),
 .product-table tr th:nth-child(5), .product-table tr td:nth-child(5),
 .product-table tr th:nth-child(6), .product-table tr td:nth-child(6),
 .product-table tr th:nth-child(7), .product-table tr td:nth-child(7),
+.product-table tr th:nth-child(8), .product-table tr td:nth-child(8),
+
 .history-table tr th:nth-child(4), .history-table tr td:nth-child(4),
 .history-table tr th:nth-child(5), .history-table tr td:nth-child(5),
 .history-table tr th:nth-child(6), .history-table tr td:nth-child(6),
 .history-table tr th:nth-child(7), .history-table tr td:nth-child(7)
 {
     text-align: center;
+    align-items: center;
 }
 
 .data-table th:first-child {
@@ -411,6 +417,35 @@ h3{
 .order-list h3 {
     font-weight: bold;
     margin-bottom: 0;
+}
+
+.product-table tr {
+    height: 4rem;
+}
+
+.product-table tr td:nth-child(2) {
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+}
+
+.product-table .product-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.product-table .no-img {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.08);
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .tabs {

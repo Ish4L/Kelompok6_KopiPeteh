@@ -5,7 +5,6 @@
     <title>Produk - KopiPeteh</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
     @vite(['resources/css/styleadmin.css'])
-    @vite(['resources/js/script.js'])
 </head>
 <body>
     <div class="wrapper">
@@ -26,6 +25,7 @@
             <table class="data-table product-table">
                 <tr>
                     <th>No</th>
+                    <th>Gambar</th>
                     <th>Produk</th>
                     <th>Deskripsi</th>
                     <th>Kategori</th>
@@ -38,10 +38,17 @@
                     @foreach ($products as $index => $product)
                         <tr>
                             <td>{{ $index + 1 }}</td>
+                            <td>@if($product->image)
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->product_name }}" class="product-img">
+                                @else
+                                    <div class="no-img">
+                                        <span>No img</span>
+                                    </div>
+                                @endif</td>
                             <td>{{ $product->product_name }}</td>
                             <td>{{ $product->description }}</td>
                             <td>{{ $product->category->category_name }}</td>
-                            <td>{{ number_format($product->price, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                             <td>
                                 <span class="status {{ $product->status == 'active' ? 'status-green' : 'status-red' }}">
                                     {{ ucfirst($product->status) }}
@@ -55,7 +62,7 @@
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="7" style="color: rgba(0, 0, 0, 0.5); font-weight: 500;">Tidak ada data</td>
+                        <td colspan="8" style="color: rgba(0, 0, 0, 0.5); font-weight: 500;">Tidak ada data</td>
                     </tr>
                 @endif
             </table>
