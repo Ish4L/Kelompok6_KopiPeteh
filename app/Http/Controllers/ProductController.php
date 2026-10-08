@@ -25,17 +25,17 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,svg',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'status' => 'nullable|in:active,inactive'
         ]);
 
         Product::create([
-            'product_name' => $request->input('product_name'),
-            'category_id' => $request->input('category_id'),
-            'price' => $request->input('price'),
-            'description' => $request->input('description'),
+            'product_name' => $request->product_name,
+            'category_id' => $request->category_id,
+            'price' => $request->price,
+            'description' => $request->description,
             'image' => $request->file('image') ? $request->file('image')->store('products', 'public') : null,
-            'status' => $request->input('status')
+            'status' => $request->status
         ]);
 
         return redirect()->route('product.index')->with('success', 'Produk berhasil ditambahkan.');

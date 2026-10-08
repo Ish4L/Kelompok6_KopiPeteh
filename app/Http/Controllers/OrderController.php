@@ -28,7 +28,6 @@ class OrderController extends Controller
     public function historyIndex()
     {
         $orders = Order::with('items.product')->latest()->get();
-
         return view('admin.history', compact('orders'));
     }
 
