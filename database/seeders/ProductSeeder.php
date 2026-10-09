@@ -16,6 +16,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'price' => 20000,
                 'description' => 'lorem ipsum',
+                'image' => 'products\dirty-latte.jpeg',
                 'status' => 'active'
             ],
             [
@@ -23,6 +24,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'price' => 15000,
                 'description' => 'lorem ipsum',
+                'image' => 'products\spanish-latte.jpeg',
                 'status' => 'active'
             ],
             [
@@ -30,6 +32,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'price' => 12000,
                 'description' => 'lorem ipsum',
+                'image' => 'products\ice-americano.jpeg',
                 'status' => 'active'
             ]
         ]);
