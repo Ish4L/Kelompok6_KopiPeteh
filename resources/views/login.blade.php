@@ -66,9 +66,7 @@
 
                     @if ($errors->any())
                         <div style="color: red; font-size: 12px;">
-                            @foreach ($errors->all() as $error)
-                                <span>{{ $error }}</span>
-                            @endforeach
+                            <span>{{ $errors->first() }}</span>
                         </div>
                     @endif
 

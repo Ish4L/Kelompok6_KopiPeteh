@@ -38,7 +38,7 @@ class ProductController extends Controller
             'status' => $request->status
         ]);
 
-        return redirect()->route('product.index')->with('success', 'Produk berhasil ditambahkan.');
+        return redirect()->route('product')->with('success', 'Produk berhasil ditambahkan.');
     }
 
     public function show(Product $product)
