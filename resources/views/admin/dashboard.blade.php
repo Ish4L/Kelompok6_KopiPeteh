@@ -40,40 +40,31 @@
     
             <div class="order-list">
                 <h3>List pesanan hari ini: Kamis</h3>
+                <p>Cup terjual: 1/10 cup</p>
             <table class="data-table dashboard-table">
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
                     <th>Pesanan</th>
-                    <th>Harga</th>
+                    <th>Jumlah</th>
+                    <th>Total Harga</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
                 </tr>
 
                 <tr>
                     <td>1</td>
-                    <td>Ahoy</td>
+                    <td>Fulan</td>
                     <td>Dirty Latte</td>
+                    <td>1</td>
                     <td>20.000</td>
-                </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>Kokoh</td>
-                    <td>Ice Americano</td>
-                    <td>12.000</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>Zixuss</td>
-                    <td>Spanish Latte</td>
-                    <td>15.000</td>
-                </tr>
-
-                <tr>
-                    <td>4</td>
-                    <td>Helta</td>
-                    <td>Ice Americano</td>
-                    <td>12.000</td>
+                    <td>
+                        <span class="status status-yellow">Menunggu</span>
+                    </td>
+                    <td>
+                        <a href="#"><img img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
+                        <a href="#"><img img src="{{ asset('images/icons/info.svg') }}" alt="Info"></a>
+                    </td>
                 </tr>
             </table>
             </div>

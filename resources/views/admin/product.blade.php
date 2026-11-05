@@ -27,6 +27,7 @@
             <table class="data-table product-table">
                 <tr>
                     <th>No</th>
+                    <th>Gambar</th>
                     <th>Produk</th>
                     <th>Deskripsi</th>
                     <th>Kategori</th>
@@ -37,6 +38,9 @@
 
                 <tr>
                     <td>1</td>
+                    <td>
+                        <img src="{{ asset('images/dirty.jpeg') }}" alt="Dirty Latte">
+                    </td>
                     <td>Dirty Latte</td>
                     <td>Kopi dicamp...</td>
                     <td>Minuman</td>
@@ -52,6 +56,9 @@
 
                 <tr>
                     <td>2</td>
+                    <td>
+                        <img src="{{ asset('images/spanish.jpeg') }}" alt="Spanish Latte">
+                    </td>
                     <td>Spanish Latte</td>
                     <td>Intinya kopi...</td>
                     <td>Minuman</td>
@@ -67,6 +74,9 @@
 
                 <tr>
                     <td class="bottom-left">3</td>
+                    <td>
+                        <img src="{{ asset('images/americano.jpeg') }}" alt="Americano">
+                    </td>
                     <td>Ice Americano</td>
                     <td>Kopi hitam es</td>
                     <td>Minuman</td>
@@ -78,10 +88,6 @@
                         <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
                         <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a></a>
                     </td>
-                </tr>
-
-                <tr>
-                    <td colspan="7" style="color: rgba(0, 0, 0, 0.5)">Tidak ada data</td>
                 </tr>
             </table>
         </div>

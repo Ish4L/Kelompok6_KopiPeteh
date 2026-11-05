@@ -47,8 +47,13 @@
                         <td>081234567</td>
                         <td>17-9-2026</td>
                         <td>20.000</td>
-                        <td>Menunggu</td>
-                        <td class="action">•••</td>
+                        <td>
+                            <span class="status status-yellow">Menunggu</span>
+                        </td>
+                        <td>
+                            <a href="#"><img img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
+                            <a href="#"><img img src="{{ asset('images/icons/info.svg') }}" alt="Info"></a>
+                        </td>
                     </tr>
 
                     <tr>
@@ -57,8 +62,13 @@
                         <td>088888888 </td>
                         <td>17-9-2026</td>
                         <td>12.000</td>
-                        <td>Menunggu</td>
-                        <td class="action">•••</td>
+                        <td>
+                            <span class="status status-yellow">Menunggu</span>
+                        </td>
+                        <td>
+                            <a href="#"><img img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
+                            <a href="#"><img img src="{{ asset('images/icons/info.svg') }}" alt="Info"></a>
+                        </td>
                     </tr>
 
                     <tr>
@@ -67,8 +77,13 @@
                         <td>0867676767</td>
                         <td>17-9-2026</td>
                         <td>15.000</td>
-                        <td>Menunggu</td>
-                        <td class="action bottom-right">•••</td>
+                        <td>
+                            <span class="status status-yellow">Menunggu</span>
+                        </td>
+                        <td>
+                            <a href="#"><img img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
+                            <a href="#"><img img src="{{ asset('images/icons/info.svg') }}" alt="Info"></a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
