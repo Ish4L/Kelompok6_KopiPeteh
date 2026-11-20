@@ -11,7 +11,7 @@ body {
     background-color: #FDF2DE;
 }
 
-.wrapper{
+.wrapper {
     display: flex;
     position: relative;
     width: 100%;
@@ -21,17 +21,17 @@ body {
     gap:30px;
 }
 
-.sidebar{
+.sidebar {
     width: 17%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    border-radius: 10px;
+    border-radius: 13px;
     background: #4C332B;
     transition: 1s;
 }
 
-.sidebar-header{
+.sidebar-header {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -49,7 +49,7 @@ body {
 .sidebar-header img {
     width: 73%;
     height: auto;
-    padding: 1.2em 0;
+    padding: 1.8em 0 1.2em;
     object-fit: contain;
 }
 
@@ -66,8 +66,17 @@ body {
     transition: 0.3s ease;
 }
 
+.sidebar ul li:last-child {
+    margin-top: auto;
+}
+
 .sidebar ul li:hover {
     background-color: rgba(255, 255, 255, 0.1);
+    /* background-color: blue; */
+}
+
+.sidebar ul li:last-child:hover {
+    background-color: transparent;
 }
 
 .sidebar ul li.active {
@@ -77,16 +86,19 @@ body {
     box-shadow: 0 3px 5px 0px rgba(0, 0, 0, 0.5);
 }
 
-.sidebar ul li:last-child {
-    margin-top: auto;
-    margin-bottom: 10px;
+.sidebar ul li:last-child.active {
+    width: 100%;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+
+    .profile-link {
+    background-color: rgba(0, 0, 0, 0.23);
+    }
 }
 
-.sidebar ul li:last-child a:hover{
-    color: rgb(252, 54, 54);
-}
-
-.sidebar ul li a {
+.sidebar ul li a, 
+.sidebar ul li .profile {
     display: flex;
     align-items: center;
     gap: 9px;
@@ -96,7 +108,8 @@ body {
     color: #fff;
 }
 
-.sidebar ul li a:active {
+.sidebar ul li a:active, 
+.sidebar ul li .profile a:active {
     transform: scale(.96);
     transition: 0.3s;
 }
@@ -105,12 +118,59 @@ body {
     width: 20px;
 }
 
+.sidebar ul li .profile {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 6px calc(30px + 7px) 6px calc(30px - 10px);
+    border-top: 1.3px solid rgba(255, 255, 255, 0.6);
+}
+
+.sidebar ul li .profile-link {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.sidebar ul li .profile-link:hover {
+    background-color: rgba(0, 0, 0, 0.23);
+    transition: 0.3s;
+}
+
+.sidebar ul li .text-profile {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sidebar ul li .profile img {
+    width: 28px;
+    height: auto;
+}
+
+.sidebar ul li .logout-link {
+    padding: 0;
+}
+
+.sidebar ul li .profile svg {
+    width: 23px;
+    height: auto;
+}
+
+.sidebar ul li .profile svg:hover {
+    color: rgb(252, 54, 54);
+    transition: 0.2s;
+}
+
 .content {
     flex: 1; 
     width: auto;
     height: calc(100vh - 60px);
     padding: 20px 30px;
-    border-radius: 10px;
+    border-radius: 13px;
     background-color: #ffffff;
     
 }
@@ -133,7 +193,8 @@ h3{
     margin-bottom: 1em;
 }
 
-.btn-add, .btn-profile {
+.btn-add, 
+.btn-profile {
     width: auto;
     /* height: 100%; */
     line-height: 2.2rem;
@@ -149,11 +210,13 @@ h3{
     transition: 0.3s ease;
 }
 
-.btn-add:hover, .btn-profile:hover{
+.btn-add:hover, 
+.btn-profile:hover{
     background-color: #4c332b;
 }
 
-.btn-add:active, .btn-profile:active{
+.btn-add:active, 
+.btn-profile:active{
     transform: scale(.95);
     transition: 0.3s;
 }
@@ -178,7 +241,7 @@ h3{
 }
 
 .search-box input {
-    width: 100%;
+    width:100%;
     height: 100%;
     padding: 0 13px 0 38px;
     font-family: 'ubuntu', sans-serif;
@@ -384,7 +447,7 @@ h3{
 
 .report-cards {
     padding: 20px 30px;
-    border-radius: 10px;
+    border-radius: 13px;
     background-color: #ffffff;
     
     display: grid;
@@ -405,6 +468,11 @@ h3{
     padding: 15px 20px;
     display: flex;
     background-color: #4C332B;
+}
+
+.report-card img {
+    width: 2.3rem;
+    height: auto;
 }
 
 .card-text {
@@ -431,7 +499,7 @@ h3{
     flex: 1;
     gap: 12px;
     padding: 20px 30px;
-    border-radius: 10px;
+    border-radius: 13px;
     background-color: #ffffff;
 }
 
@@ -448,139 +516,6 @@ h3{
     height: 4rem;
     display: flex;
     justify-content: center;
-}
-
-.profile-content {
-    flex: 1;
-    min-width: 0;
-    padding: 0 0;
-    background-color: transparent;
-}
-
-.profile-content > h3 {
-    margin: 0 0 36px;
-    color: #888;
-    font-size: 16px;
-    font-weight: 400;
-}
-
-.identity-card h3,
-.password-card h3 {
-    margin: 0 0 18px;
-    color: #000;
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.identity-card,
-.password-card {
-    width: 100%;
-    margin-bottom: 20px;
-    padding: 20px 30px;
-    border-radius: 12px;
-    background-color: #fff;
-}
-
-/* .identity-card form,
-.password-card form {
-    display: grid;
-    grid-template-columns: 1fr 1fr; */
-    /* column-gap: 34px; */
-    /* row-gap: 16px; */
-    /* gap: 20px;
-    align-items: end;
-} */
-
-.form-group {
-    display: flex;
-    gap: 25px;
-}
-
-.form-group .field {
-    width: 100%;
-    display: grid;
-}
-
-.profile-content .form-group label {
-    margin: 0 0 4px 7px;
-    color: #000;
-    font-size: 12px;
-    font-weight: 400;
-}
-
-.profile-content .form-group input {
-    width: 100%;
-    height: 35px;
-    margin-bottom: 16px;
-    padding: 0 13px;
-    border: none;
-    border-radius: 6px;
-    background-color: #e5e5e5;
-    color: #333;
-    font-size: 12px;
-}
-
-/* .profile-content button {
-    grid-column: 1 / -1;
-    justify-self: start;
-    min-width: 88px;
-    height: 34px;
-    margin-top: -8px;
-    padding: 0 20px;
-    border: none;
-    border-radius: 6px;
-    background-color: #654139;
-    color: #fff;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.profile-content button:hover {
-    background-color: #4c332b;
-} */
-
-.profile-content .password-card {
-    margin-top: 16px;
-}
-
-@media (max-width: 768px) {
-    .profile-content {
-        padding: 20px;
-    }
-
-    .identity-card form,
-    .password-card form {
-        grid-template-columns: 1fr;
-    }
-}
-
-.logout {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    padding: 0 30px;
-    border-top: 1.3px solid rgba(255, 255, 255, 0.7);
-}
-
-.logout a {
-    display: flex;
-    align-items: center;
-    /* gap: 9px; */
-    padding: 13px 30px;
-    font-size: 12px;
-    text-decoration: none;
-    color: #fff;
-}
-
-.text-profile {
-    color: #ffffff;
-}
-
-.logout svg {
-    width: 20px;
-    height: 20px;
-    margin-left: auto;
 }
 
 .product-table .product-img {
@@ -627,4 +562,60 @@ h3{
 
 .history-table .status {
     width: 5.8rem;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 0;
+    background-color: transparent;
+}
+
+.profile-content .form-card {
+    padding: 20px 30px;
+    border-radius: 12px;
+    background-color: #fff;
+}
+
+.profile-content .input-group {
+    display: flex;
+    gap: 25px;
+}
+
+.profile-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.profile-content .field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.profile-content label {
+    font-family: 'ubuntu', sans-serif;
+    font-size: 14px;
+}
+
+.profile-content input {
+    height: 36px;
+    padding: 0 13px;
+    font-family: 'ubuntu', sans-serif;
+    font-size: 13px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    background: #fff;
+    outline: none;
+}
+
+.profile-content input:focus-visible {
+    box-shadow: 0 0 1.3px rgba(0, 0, 0, 0.5);
+}
+
+.profile-content button {
+    width: fit-content;
 }
