@@ -12,51 +12,67 @@
         <x-sidebar />
 
         <div class="content profile-content">
-            <div class="form-card">
+            <form action="{{ route('profile.update') }}" method="POST" class="form-card">
+                @csrf
+                @method('PUT')
                 <h3>Profil</h3>
-                <form action="" method="POST">
-                    <div class="input-group">
-                        <div class="field">
-                            <label for="name">Nama</label>
-                            <input type="text" name="name" placeholder="Nama" required>
-                        </div>
-                        <div class="field">
-                            <label for="username">Username</label>
-                            <input type="text" name="username" placeholder="Username" required>
-                        </div>
+                <div class="input-group">
+                    <div class="field">
+                        <label>Nama</label>
+                        <input type="text" name="name" value="{{ old('name', $admin->name) }}" placeholder="Masukkan nama">
                     </div>
-                    <div class="input-group">
-                        <div class="field">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" placeholder="Email" required>
-                        </div>
-                        <div class="field">
-                            <label for="nomor_telpon">No. Telp</label>
-                            <input type="text" name="nomor_telpon" placeholder="Telp" required>
-                        </div>
+                    <div class="field">
+                        <label>Username</label>
+                        <input type="text" name="username" value="{{ old('username', $admin->username) }}" placeholder="Masukkan username">
                     </div>
+                </div>
+                <div class="input-group">
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" name="email" value="{{ old('email', $admin->email) }}" placeholder="Masukkan email">
+                    </div>
+                    <div class="field">
+                        <label>No. Telp</label>
+                        <input type="text" name="phone" value="{{ old('phone', $admin->phone) }}" placeholder="Masukkan No. telepon">
+                    </div>
+                </div>
 
-                    <button type="submit" class="btn-profile">Simpan</button>
-                </form>
-            </div>
+                <div style="display: flex; align-items:center; gap: 10px;">
+                    <button type="submit" class="btn-profile" onclick="return confirm('Konfirmasi ubah profil?')">Simpan</button>
+                    @if (session('success_profile'))
+                        <span style="color: lime; font-size: 12px">{{ session('success_profile') }}</span>
+                    @endif
+                    @if ($errors->profile->any())
+                        <span style="color: red; font-size: 12px;">{{ $errors->profile->first() }}</span>
+                    @endif
+                </div>
+            </form>
 
-            <div class="form-card">
+            <form action="{{ route('profile.password') }}" method="POST" class="form-card">
+                @csrf
+                @method('PUT')
                 <h3>Ganti Password</h3>
-                <form action="" method="POST">
-                    <div class="input-group">
-                        <div class="field">
-                            <label for="current_password">Password Baru</label>
-                            <input type="password" name="current_password" placeholder="Masukkan password" required>
-                        </div>
-                        <div class="field">
-                            <label for="new_password">Konfirmasi Password</label>
-                            <input type="password" name="new_password" placeholder="Konfirmasi password" required>
-                        </div>
+                <div class="input-group">
+                    <div class="field">
+                        <label>Password Baru</label>
+                        <input type="password" name="password" placeholder="Masukkan password">
                     </div>
-                    
-                    <button type="submit" class="btn-profile">Simpan</button>
-                </form>
-            </div>
+                    <div class="field">
+                        <label>Konfirmasi Password</label>
+                        <input type="password" name="password_confirmation" placeholder="Konfirmasi password">
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items:center; gap: 10px;">
+                    <button type="submit" class="btn-profile" onclick="return confirm('Konfirmasi ubah password?')">Simpan</button>
+                    @if (session('success_password'))
+                        <div style="color: lime; font-size: 12px">{{ session('success_password') }}</div>
+                    @endif
+                    @if ($errors->password->any())
+                        <span style="color: red; font-size: 12px;">{{ $errors->password->first() }}</span>
+                    @endif
+                </div>
+            </form>
         </div>
     </div>
 </body>

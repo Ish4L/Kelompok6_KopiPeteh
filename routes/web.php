@@ -29,11 +29,6 @@ Route::middleware('auth:admin')->group(function () {
         'dashboardIndex'
     ])->name('dashboard');
 
-    Route::get('/profil', [
-        AdminController::class, 
-        'index'
-    ])->name('profile');
-
     Route::get('/kategori', [
         CategoryController::class, 
         'index'
@@ -47,7 +42,23 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/riwayat', [
         OrderController::class, 
         'historyIndex'
-        ])->name('history');
+    ])->name('history');
+
+    Route::get('/profil', [
+        AdminController::class, 
+        'index'
+    ])->name('profile');
+
+    Route::put('/profil/update', [
+        AdminController::class,
+        'updateProfile'
+    ])->name('profile.update');
+    
+    Route::put('/profil/password', [
+        AdminController::class,
+        'updatePassword'
+    ])->name('profile.password');
+
 
     Route::get('/logout', [
         AuthController::class, 

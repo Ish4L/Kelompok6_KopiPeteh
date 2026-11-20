@@ -29,8 +29,8 @@
                 <a class="profile-link" href="{{ route('profile') }}"> 
                     <img src="{{ asset('images/icons/user.svg') }}" alt="">
                     <div class="text-profile">
-                        <p>Peteh</p>
-                        <small>admin</small>
+                        <span>{{ Auth::guard('admin')->user()->username }}</span>
+                        <small>{{ Auth::guard('admin')->user()->name }}</small>
                     </div>
                 </a>
 
