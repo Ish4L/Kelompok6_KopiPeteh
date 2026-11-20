@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Pesanan - KopiPeteh</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
     @vite(['resources/css/styleadmin.css'])
     @vite(['resources/js/script.js'])
@@ -21,10 +22,10 @@
             </div>
 
             <div class="tabs">
-                    <a href="#" class="active-tab">Semua Pesanan</a>
-                    <a href="#" class="tab">Dibatalkan</a>
-                    <a href="#" class="tab">Menunggu</a>
-                    <a href="#" class="tab">Selesai</a>
+                    <a href="{{ route('history') }}" class="tab {{ request('status') == null ? 'active-tab' : '' }}">Semua Pesanan</a>
+                    <a href="{{ route('history', ['status' => 'menunggu']) }}" class="tab {{ request('status') == 'menunggu' ? 'active-tab' : '' }}">Menunggu</a>
+                    <a href="{{ route('history', ['status' => 'selesai']) }}" class="tab {{ request('status') == 'selesai' ? 'active-tab' : '' }}">Selesai</a>
+                    <a href="{{ route('history', ['status' => 'dibatalkan']) }}" class="tab {{ request('status') == 'dibatalkan' ? 'active-tab' : '' }}">Dibatalkan</a>
             </div>
 
             <table class="data-table history-table">
@@ -56,6 +57,8 @@
                         </td>
                     </tr>
 
+                @if ($orders->isNotEmpty())
+                @foreach ($orders as $index => $order)
                     <tr>
                         <td>2</td>
                         <td>Kokoh</td>
@@ -85,7 +88,7 @@
                             <a href="#"><img img src="{{ asset('images/icons/info.svg') }}" alt="Info"></a>
                         </td>
                     </tr>
-                </tbody>
+                @endif
             </table>
         </div>
     </div>

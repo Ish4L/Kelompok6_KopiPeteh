@@ -2,38 +2,57 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/login', [
+        AuthController::class, 
+        'loginForm'
+    ])->name('login');
+
+    Route::post('/login', [
+        AuthController::class, 
+        'login'
+    ]);
 });
 
 Route::middleware('auth:admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [
+        OrderController::class, 
+        'dashboardIndex'
+    ])->name('dashboard');
 
-    Route::get('/profil', function () {
-        return view('admin.profile');
-    })->name('profile');
+    Route::get('/profil', [
+        AdminController::class, 
+        'index'
+    ])->name('profile');
 
-    Route::get('/kategori', function () {
-        return view('admin.category');
-    })->name('category');
+    Route::get('/kategori', [
+        CategoryController::class, 
+        'index'
+    ])->name('category');
 
-    Route::get('/produk', function () {
-        return view('admin.product');
-    })->name('product');
+    Route::get('/produk', [
+        ProductController::class, 
+        'index'
+    ])->name('product');
 
-    Route::get('/riwayat', function () {
-        return view('admin.history');
-    })->name('history');
+    Route::get('/riwayat', [
+        OrderController::class, 
+        'historyIndex'
+        ])->name('history');
 
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/logout', [
+        AuthController::class, 
+        'logout'
+    ])->name('logout');
 });
 
 // Route::get('/ishal', function () {

@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -15,12 +13,6 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
-        if (empty($request->username) && empty($request->password)) {
-        return back()->withErrors([
-            'error' => 'Username and password must be filled!',
-        ]);
-    }
-
         $credentials = $request->validate([
             'username' => 'required',
             'password' => 'required',
@@ -35,7 +27,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'error' => 'Username or password is incorrect.',
+            'error' => 'Incorrect username or password.',
         ])->onlyInput('username');
     }
 
