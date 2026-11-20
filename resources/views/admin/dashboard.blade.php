@@ -60,14 +60,60 @@
                     <td>1</td>
                     <td>20.000</td>
                     <td>
-                        <span class="status status-yellow">Menunggu</span>
+                        <span class="status status-yellow">Belum Bayar</span>
                     </td>
                     <td>
                         <a href="#"><img img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
-                        <a href="#"><img img src="{{ asset('images/icons/info.svg') }}" alt="Info"></a>
+                        <a href="#" onclick="openPaymentModal(); return false;">
+                            <img src="{{ asset('images/icons/info.svg') }}" alt="Info">
+                        </a>
                     </td>
                 </tr>
             </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="payment-overlay" id="paymentModal">
+        <div class="payment-modal">
+            <h3>Konfirmasi Pembayaran</h3>
+            <h4>Pesanan #001</h4>
+
+            <hr>
+
+            <div class="payment-details">
+                <h5>Detail Pembayaran</h5>
+
+                <div class="detail-row">
+                    <span>Nama Pelanggan</span>
+                    <span>Fulan</span>
+                </div>
+
+                <div class="detail-row">
+                    <span>Metode Pembayaran</span>
+                    <span>Tunai</span>
+                </div>
+
+                <div class="detail-row">
+                    <span>Total Pembayaran</span>
+                    <span>Rp44.000</span>
+                </div>
+            </div>
+
+            <div class="payment-footer">
+                <p>Apakah pembayaran sudah diterima?</p>
+
+                <div class="payment-buttons">
+                    <button class="btn-not-received"
+                        onclick="closePaymentModal()">
+                        Belum Diterima
+                    </button>
+
+                    <button class="btn-received"
+                        onclick="confirmPayment()">
+                        Sudah Diterima
+                    </button>
+                </div>
             </div>
         </div>
     </div>

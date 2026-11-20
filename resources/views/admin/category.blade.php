@@ -16,7 +16,7 @@
             <h3>Kategori</h3>
 
             <div class="search-area">
-                <a class="btn-add" href="#">Tambah</a>
+                <a class="btn-add" href="{{ route('add-category') }}">Tambah</a>
 
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>

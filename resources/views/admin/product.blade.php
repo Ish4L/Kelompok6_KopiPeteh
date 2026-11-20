@@ -16,11 +16,11 @@
             <h3>Produk</h3>
             
             <div class="search-area">
-                <a class="btn-add" href="#">Tambah</a>
+                <a class="btn-add" href="{{ route('add-product') }}">Tambah</a>
 
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Cari Kategori">
+                    <input type="text" placeholder="Cari Produk">
                 </div>
             </div>
 
@@ -39,7 +39,7 @@
                 <tr>
                     <td>1</td>
                     <td>
-                        <img src="{{ asset('images/dirty.jpeg') }}" alt="Dirty Latte">
+                        <img src="{{ asset('images/dirty.jpeg') }}" alt="Dirty Latte" class="product-img">
                     </td>
                     <td>Dirty Latte</td>
                     <td>Kopi dicamp...</td>
@@ -50,14 +50,14 @@
                     </td>
                     <td>
                         <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
-                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a></a>
+                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a>
                     </td>
                 </tr>
 
                 <tr>
                     <td>2</td>
                     <td>
-                        <img src="{{ asset('images/spanish.jpeg') }}" alt="Spanish Latte">
+                        <img src="{{ asset('images/spanish.jpeg') }}" alt="Spanish Latte" class="product-img">
                     </td>
                     <td>Spanish Latte</td>
                     <td>Intinya kopi...</td>
@@ -68,14 +68,14 @@
                     </td>
                     <td>
                         <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
-                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a></a>
+                        <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="bottom-left">3</td>
                     <td>
-                        <img src="{{ asset('images/americano.jpeg') }}" alt="Americano">
+                        <img src="{{ asset('images/americano.jpeg') }}" alt="Americano" class="product-img">
                     </td>
                     <td>Ice Americano</td>
                     <td>Kopi hitam es</td>

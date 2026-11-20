@@ -29,6 +29,11 @@ Route::middleware('auth:admin')->group(function () {
         'dashboardIndex'
     ])->name('dashboard');
 
+    Route::get('/updatepayment', [
+        OrderController::class, 
+        'updatePaymentIndex'
+    ])->name('updatepayment');
+
     Route::get('/profil', [
         AdminController::class, 
         'index'
@@ -48,6 +53,16 @@ Route::middleware('auth:admin')->group(function () {
         OrderController::class, 
         'historyIndex'
         ])->name('history');
+
+    Route::get('/tambah-kategori', [
+        CategoryController::class, 
+        'create'
+    ])->name('add-category');
+
+    Route::get('/tambah-produk', [
+        ProductController::class, 
+        'create'
+    ])->name('add-product');
 
     Route::get('/logout', [
         AuthController::class, 

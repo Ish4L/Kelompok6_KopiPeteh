@@ -38,6 +38,12 @@ class OrderController extends Controller
         return view('admin.history', compact('orders'));
     }
 
+    public function updatePaymentIndex()
+    {
+        $orders = Order::where('status', 'pending')->latest()->get();
+        return view('admin.updatepayment', compact('orders'));
+    }
+
     public function create()
     {
         return view('order.create');
