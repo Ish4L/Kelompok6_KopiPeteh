@@ -15,7 +15,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('product.create');
+        //
     }
 
     public function store(Request $request)
@@ -60,6 +60,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->delete();
-        return redirect()->route('admin.product')->with('success', 'Product deleted successfully.');
+        return redirect()->route('product')->with('success', 'Product deleted successfully.');
     }
 }

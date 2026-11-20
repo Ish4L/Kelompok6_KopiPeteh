@@ -21,7 +21,7 @@
                 <div class="report-card">
                     <div class="card-text">
                         <span>Total penjualan minggu ini</span>
-                        <h3>{{ $weekCups }} Cup</h3>
+                        <h3>{{ $weeklyCups }} Cup</h3>
                     </div>
                     <div class="card-icon">
                         <img src="{{ asset('images/icons/cup.svg') }}" alt="Sales">
@@ -30,7 +30,7 @@
                 <div class="report-card">
                     <div class="card-text">
                         <span>Total pemasukan minggu ini</span>
-                        <h3>Rp {{ number_format($weekIncome, 2, ',', '.') }}</h3>
+                        <h3>Rp {{ number_format($weeklyIncome, 2, ',', '.') }}</h3>
                     </div>
                     <div class="card-icon">
                         <img src="{{ asset('images/icons/income.svg') }}" alt="Sales">

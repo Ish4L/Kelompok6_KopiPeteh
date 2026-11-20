@@ -16,15 +16,15 @@ class OrderController extends Controller
         $todayOrders = OrderItem::with('order', 'product')->whereDate('created_at', Carbon::today())->get();
         $todayCups = $todayOrders->sum('quantity');
 
-        $weekOrderItems = OrderItem::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
-        $weekCups = $weekOrderItems->sum('quantity');
-        $weekIncome = $weekOrderItems->sum(function ($item) {
+        $weeklyOrderItems = OrderItem::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        $weeklyCups = $weeklyOrderItems->sum('quantity');
+        $weeklyIncome = $weeklyOrderItems->sum(function ($item) {
             return $item->quantity * $item->price;
         });
 
-        return view('admin.dashboard', compact('todayOrders', 'todayCups', 'weekCups', 'weekIncome'));
+        return view('admin.dashboard', compact('todayOrders', 'todayCups', 'weeklyCups', 'weeklyIncome'));
     }
-    
+
     public function historyIndex(Request $request)
     {
         $status = $request->query('status');
@@ -40,7 +40,7 @@ class OrderController extends Controller
 
     public function create()
     {
-        return view('order.create');
+        //
     }
 
     public function store(Request $request)
@@ -51,7 +51,7 @@ class OrderController extends Controller
         if (($todayCups + $requestCups) > 10) {
             $cupsLeft = 10 - $todayCups;
             $message = $cupsLeft > 0
-                ? "Maaf, kuota hari ini sisa {$cupsLeft} cup."
+                ? "Maaf, kuota hari ini tersisa {$cupsLeft} cup."
                 : "Maaf, kuota hari ini sudah penuh";
 
             return back()->withErrors(['error' => $message]);
@@ -88,7 +88,7 @@ class OrderController extends Controller
                 $order->items()->create($itemData);
             }
 
-            return redirect()->route('order.index')->with('success', 'Pesanan berhasil dibuat.');
+            // return redirect()->route('order.index')->with('success', 'Pesanan berhasil dibuat.');
         });
     }
 
@@ -111,6 +111,6 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $order->delete();
-        return redirect()->route('order.index')->with('success', 'Order deleted successfully.');
+        // return redirect()->route('order.index')->with('success', 'Order deleted successfully.');
     }
 }

@@ -15,7 +15,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return view('category.create');
+        //
     }
 
     public function store(Request $request)
@@ -25,7 +25,7 @@ class CategoryController extends Controller
         ]);
 
         Category::create(['category_name' => $request->category_name]);
-        return redirect()->route('category.index')->with('success', 'Kategori berhasil ditambahkan.');
+        return redirect()->route('category')->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     public function show(Category $category)
