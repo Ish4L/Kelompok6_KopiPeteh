@@ -21,6 +21,14 @@ Route::middleware('guest')->group(function () {
         AuthController::class, 
         'login'
     ]);
+
+    Route::get('/available', function () {
+        return view('user.home');
+    });
+
+    Route::get('/unavailable', function () {
+        return view('user.unavailable');
+    });
 });
 
 Route::middleware('auth:admin')->group(function () {
