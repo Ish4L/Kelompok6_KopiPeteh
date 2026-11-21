@@ -13,8 +13,8 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         Admin::create([
-            'name' => 'TehPeteh',
-            'username' => 'admin',
+            'name' => 'Fatih',
+            'username' => 'TehPeteh',
             'password' => Hash::make('admin123'),
             'email' => 'admin@gmail.com',
             'phone' => '081234567890',

@@ -597,10 +597,6 @@ h3{
     gap: 6px;
 }
 
-.profile-content label {
-    font-family: 'ubuntu', sans-serif;
-    font-size: 14px;
-}
 
 .profile-content input {
     height: 36px;
@@ -615,6 +611,40 @@ h3{
 
 .profile-content input:focus-visible {
     box-shadow: 0 0 1.3px rgba(0, 0, 0, 0.5);
+}
+
+.profile-content .input-box {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.profile-content .input-box input {
+    width: 100%;
+    padding-right: 43px;
+}
+
+.profile-content .input-box i {
+    opacity: .6;
+}
+
+.profile-content label {
+    font-family: 'ubuntu', sans-serif;
+    font-size: 14px;
+}
+
+.profile-content .toggle-password {
+    position: absolute;
+    right: 13px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.profile-content .toggle-password:hover {
+    opacity: .8;
 }
 
 .profile-content button {

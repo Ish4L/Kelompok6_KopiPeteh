@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - KopiPeteh</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    @vite(['resources/css/login.css'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
+    @vite(['resources/css/login.css', 'resources/js/app.js'])
 </head>
 <body>
     <main class="login-container">
@@ -41,14 +41,8 @@
                         <label>Username</label>
 
                         <div class="input-box">
-                            <input
-                                type="text"
-                                name="username"
-                                value="{{ old('username') }}"
-                                placeholder="Enter username..."
-                                autofocus>
-
-                            <i class="fa-solid fa-user"></i>
+                            <input type="text" name="username" value="{{ old('username') }}" placeholder="Enter username..." autofocus>
+                            <i class="user-icon fa-solid fa-user"></i>
                         </div>
                     </div>
 
@@ -56,12 +50,11 @@
                         <label>Password</label>
 
                         <div class="input-box">
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="Enter password...">
-
-                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="password" id="password" placeholder="Enter password...">
+                            <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
+                                <i class="icon-eye fa-solid fa-eye"></i>
+                                <i class="icon-eye-off fa-solid fa-eye-slash" style="display: none;"></i>
+                            </button>
                         </div>
                     </div>
 

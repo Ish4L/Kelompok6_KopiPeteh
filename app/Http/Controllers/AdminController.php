@@ -55,7 +55,7 @@ class AdminController extends Controller
         $admin = Auth::guard('admin')->user();
 
         $admin->update([
-            'password' => Hash::make($request->password),
+        'password' => Hash::make($request->password),
         ]);
 
         return back()->with('success_password', 'Password berhasil diperbarui');

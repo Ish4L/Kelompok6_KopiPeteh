@@ -118,6 +118,8 @@ body {
 .input-box {
     position: relative;
     width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .input-box input {
@@ -137,13 +139,25 @@ body {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
-.input-box i {
+.input-box .user-icon {
     position: absolute;
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: #000000;
     font-size: 13px;
+}
+
+.input-box .toggle-password {
+    position: absolute;
+    right: 13px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.toggle-password:hover {
+    opacity: .6;
 }
 
 .login-btn {

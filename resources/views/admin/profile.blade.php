@@ -5,7 +5,7 @@
     <title>Profil - KopiPeteh</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
-    @vite(['resources/css/styleadmin.css'])
+    @vite(['resources/css/styleadmin.css', 'resources/js/app.js'])
 </head>
 <body>
     <div class="wrapper">
@@ -41,8 +41,7 @@
                     <button type="submit" class="btn-profile" onclick="return confirm('Konfirmasi ubah profil?')">Simpan</button>
                     @if (session('success_profile'))
                         <span style="color: lime; font-size: 12px">{{ session('success_profile') }}</span>
-                    @endif
-                    @if ($errors->profile->any())
+                    @elseif ($errors->profile->any())
                         <span style="color: red; font-size: 12px;">{{ $errors->profile->first() }}</span>
                     @endif
                 </div>
@@ -55,11 +54,23 @@
                 <div class="input-group">
                     <div class="field">
                         <label>Password Baru</label>
-                        <input type="password" name="password" placeholder="Masukkan password">
+                        <div class="input-box">
+                            <input type="password" name="password" id="password" placeholder="Masukkan password">
+                            <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
+                                <i class="icon-eye fa-solid fa-eye"></i>
+                                <i class="icon-eye-off fa-solid fa-eye-slash" style="display: none;"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="field">
                         <label>Konfirmasi Password</label>
-                        <input type="password" name="password_confirmation" placeholder="Konfirmasi password">
+                        <div class="input-box">
+                            <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Konfirmasi password">
+                            <button type="button" class="toggle-password" onclick="togglePassword('password_confirmation', this)">
+                                <i class="icon-eye fa-solid fa-eye"></i>
+                                <i class="icon-eye-off fa-solid fa-eye-slash"style="display: none;"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
@@ -67,8 +78,7 @@
                     <button type="submit" class="btn-profile" onclick="return confirm('Konfirmasi ubah password?')">Simpan</button>
                     @if (session('success_password'))
                         <div style="color: lime; font-size: 12px">{{ session('success_password') }}</div>
-                    @endif
-                    @if ($errors->password->any())
+                    @elseif ($errors->password->any())
                         <span style="color: red; font-size: 12px;">{{ $errors->password->first() }}</span>
                     @endif
                 </div>
