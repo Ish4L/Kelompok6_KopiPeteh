@@ -27,13 +27,11 @@ class OrderController extends Controller
 
     public function historyIndex(Request $request)
     {
-        $status = $request->query('status');
-
-        if ($status) {
-            $orders = Order::where('status', $status)->latest()->get();
-        } else {
-            $orders = Order::latest()->get();
-        }
+        $orders = Order::when($request->status, function ($query, $status) {
+            $query->where('status', $status);
+        })->when($request->search, function ($query, $search) {
+            $query->where('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
+        })->latest()->get();
 
         return view('admin.history', compact('orders'));
     }

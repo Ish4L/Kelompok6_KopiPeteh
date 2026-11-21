@@ -5,7 +5,7 @@
     <title>Produk - KopiPeteh</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
-    @vite(['resources/css/styleadmin.css'])
+    @vite(['resources/css/styleadmin.css', 'resources/js/app.js'])
 </head>
 <body>
     <div class="wrapper">
@@ -17,10 +17,7 @@
             <div class="search-area">
                 <a class="btn-add" href="#">Tambah</a>
 
-                <div class="search-box">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Cari Kategori">
-                </div>
+                <x-search-box placeholder="Cari produk atau kategori..." />
             </div>
 
             <table class="data-table product-table">

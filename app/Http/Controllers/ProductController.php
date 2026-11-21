@@ -3,14 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view('admin.product', compact('products'));
+        $products = Product::with('category')->when($request->search, 
+            function($query, $search) {
+                $query->where('product_name', 'like', "%{$search}%")->orWhereHas('category', 
+                    function($catQuery) use ($search) {
+                        $catQuery->where('category_name', 'like', "%{$search}%");
+                    }
+                );
+            }
+        )->get();
+
+        // $products = Product::with('category')->when($request->search, 
+        //     function($query, $search) {
+        //         $query->where(function ($q) use ($search) {
+        //             $q->where('product_name', 'like', "%{$search}%")->orWhereHas('category', 
+        //                 function($catQuery) use ($search) {
+        //                     $catQuery->where('category_name', 'like', "%{$search}%");
+        //                 }
+        //             );
+        //         });
+        //     }
+        // )->get();
+        
+        $categories = Category::All();
+        return view('admin.product', compact('products', 'categories'));
     }
 
     public function create()

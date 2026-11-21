@@ -122,7 +122,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 6px calc(30px + 7px) 6px calc(30px - 10px);
+    padding: 6px calc(23px + 7px) 6px calc(23px - 10px);
     border-top: 1.3px solid rgba(255, 255, 255, 0.6);
 }
 
@@ -225,37 +225,83 @@ h3{
     border: none;
 }
 
-.search-box {
+.search-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    background: transparent;
+}
+
+.search-wrapper .input-box {
     position: relative;
     width: 100%;
-    height: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, .35);
+    border-right: 0;
+    border-radius: 8px 0 0 8px;
 }
 
-.search-box i {
-    position: absolute;
-    left: 13px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 13px;
-}
-
-.search-box input {
+.search-wrapper input {
     width:100%;
     height: 100%;
-    padding: 0 13px 0 38px;
+    padding: 0 40px 0 16px;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    outline: none;
+    background: none;
     font-family: 'ubuntu', sans-serif;
     font-size: 13px;
     color: #000000;
-    border: 1px solid #0000004f;
-    border-radius: 8px;
-    background: #fff;
-    outline: none;
 }
 
-.search-box input:focus-visible {
+.search-wrapper input:focus {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
+
+.search-wrapper a {
+    position: absolute;
+    right: 13px;
+    color: #000000;
+    font-size: 14px;
+    opacity: .3;
+    transition: .3s ease;
+}
+
+.search-wrapper a:hover {
+    opacity: .6;
+}
+
+.search-wrapper .btn-search {
+    width: 5.5em;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, .35);
+    border-radius: 0 8px 8px 0;
+    background: rgba(0, 0, 0, .08);
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.search-wrapper .btn-search:hover {
+    /* box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); */
+    background: rgba(0, 0, 0, .15);
+}
+
+.search-wrapper .btn-search i {
+    color: rgba(0, 0, 0, .35);
+    font-size: 15px;
+}
+
+/* .search-wrapper .btn-search:active i {
+    font-size: 13px;
+    transition: .3s;
+} */
 
 .data-table {
     width: 100%;
