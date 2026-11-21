@@ -71,6 +71,24 @@
                     </tr>
                 @endif
             </table>
+
+            <div class="pagination-container">
+                <p class="pagination-info">
+                    Menampilkan 3 dari 36
+                </p>
+
+                <div class="pagination">
+                    <button type="button" class="page-btn">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </button>
+
+                    <span class="page-number">1</span>
+
+                    <button type="button" class="page-btn">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </body>

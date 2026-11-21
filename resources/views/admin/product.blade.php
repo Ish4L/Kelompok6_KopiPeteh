@@ -15,7 +15,7 @@
             <h3>Produk</h3>
             
             <div class="search-area">
-                <a class="btn-add" href="#">Tambah</a>
+                <a class="btn-add" href="{{ route('add-product') }}">Tambah</a>
 
                 <x-search-box placeholder="Cari produk atau kategori..." />
             </div>

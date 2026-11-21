@@ -15,7 +15,7 @@
             <h3>Kategori</h3>
 
             <div class="search-area">
-                <a class="btn-add" href="#">Tambah</a>
+                <a class="btn-add" href="{{ route('add-category') }}">Tambah</a>
 
                 <x-search-box placeholder="Cari kategori..." />
             </div>

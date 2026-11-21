@@ -21,6 +21,14 @@ Route::middleware('guest')->group(function () {
         AuthController::class, 
         'login'
     ]);
+
+    Route::get('/available', function () {
+        return view('user.home');
+    });
+
+    Route::get('/unavailable', function () {
+        return view('user.unavailable');
+    });
 });
 
 Route::middleware('auth:admin')->group(function () {
@@ -28,6 +36,11 @@ Route::middleware('auth:admin')->group(function () {
         OrderController::class, 
         'dashboardIndex'
     ])->name('dashboard');
+
+    Route::get('/updatepayment', [
+        OrderController::class, 
+        'updatePaymentIndex'
+    ])->name('updatepayment');
 
     Route::get('/kategori', [
         CategoryController::class, 
@@ -59,6 +72,16 @@ Route::middleware('auth:admin')->group(function () {
         'updatePassword'
     ])->name('profile.password');
 
+
+    Route::get('/tambah-kategori', [
+        CategoryController::class, 
+        'create'
+    ])->name('add-category');
+
+    Route::get('/tambah-produk', [
+        ProductController::class, 
+        'create'
+    ])->name('add-product');
 
     Route::get('/logout', [
         AuthController::class, 
