@@ -19,6 +19,7 @@
 
             <div class="tabs">
                     <a href="{{ route('history', ['search' => request('search')]) }}" class="tab {{ request('status') == null ? 'active-tab' : '' }}">Semua Pesanan</a>
+                    <a href="{{ route('history', ['status' => 'belum bayar', 'search' => request('search')]) }}" class="tab {{ request('status') == 'belum bayar' ? 'active-tab' : '' }}">Belum bayar</a>
                     <a href="{{ route('history', ['status' => 'menunggu', 'search' => request('search')]) }}" class="tab {{ request('status') == 'menunggu' ? 'active-tab' : '' }}">Menunggu</a>
                     <a href="{{ route('history', ['status' => 'selesai', 'search' => request('search')]) }}" class="tab {{ request('status') == 'selesai' ? 'active-tab' : '' }}">Selesai</a>
                     <a href="{{ route('history', ['status' => 'dibatalkan', 'search' => request('search')]) }}" class="tab {{ request('status') == 'dibatalkan' ? 'active-tab' : '' }}">Dibatalkan</a>

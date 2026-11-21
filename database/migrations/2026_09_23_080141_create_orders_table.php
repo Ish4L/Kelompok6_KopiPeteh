@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('phone', 20);
             $table->decimal('total_price', 12, 2);
-            $table->enum('status', ['menunggu', 'selesai', 'dibatalkan'])->default('menunggu');
+            $table->enum('status', ['belum bayar','menunggu', 'selesai', 'dibatalkan'])->default('belum bayar');
             $table->timestamps();
         });
     }

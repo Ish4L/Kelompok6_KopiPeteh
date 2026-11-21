@@ -79,7 +79,7 @@ class OrderController extends Controller
                 'name' => $request->name,
                 'phone' => $request->phone,
                 'total_price' => $totalPrice,
-                'status' => 'pending',
+                'status' => 'belum bayar',
             ]);
 
             foreach ($itemsData as $itemData) {

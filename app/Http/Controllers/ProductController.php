@@ -19,18 +19,6 @@ class ProductController extends Controller
                 );
             }
         )->get();
-
-        // $products = Product::with('category')->when($request->search, 
-        //     function($query, $search) {
-        //         $query->where(function ($q) use ($search) {
-        //             $q->where('product_name', 'like', "%{$search}%")->orWhereHas('category', 
-        //                 function($catQuery) use ($search) {
-        //                     $catQuery->where('category_name', 'like', "%{$search}%");
-        //                 }
-        //             );
-        //         });
-        //     }
-        // )->get();
         
         $categories = Category::All();
         return view('admin.product', compact('products', 'categories'));
