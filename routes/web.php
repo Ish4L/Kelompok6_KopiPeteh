@@ -33,6 +33,10 @@ Route::middleware('guest')->group(function () {
     Route::get('/menu', function () {
         return view('user.menu');
     });
+
+    Route::get('/keranjang', function () {
+        return view('user.keranjang');
+    });
 });
 
 Route::middleware('auth:admin')->group(function () {

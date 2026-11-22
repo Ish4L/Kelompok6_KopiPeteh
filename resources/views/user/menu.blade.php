@@ -149,7 +149,7 @@
 
     <footer class="footer">
         <div class="footer-line"></div>
-        <p>Life begins after coffee</p>
+            <p>Life begins after coffee</p>
         <div class="footer-line"></div>
     </footer>
     </div>
