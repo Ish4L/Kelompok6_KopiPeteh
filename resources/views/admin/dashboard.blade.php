@@ -77,7 +77,6 @@
                                     </span>
                                     </td>
                                     <td>
-                                        <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
                                         <a href="#"><img src="{{ asset('images/icons/info.svg') }}" alt="Info"></a>
                                     </td>
                                 </tr>

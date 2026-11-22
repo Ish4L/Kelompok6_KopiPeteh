@@ -32,55 +32,54 @@
                     <th>Aksi</th>
                 </tr>
 
-                @if ($products->isNotEmpty())
-                    @foreach ($products as $index => $product)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>@if($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->product_name }}" class="product-img">
-                                @else
-                                    <div class="no-img">
-                                        <img src="{{ asset('images/icons/image-off.svg') }}" alt="">
-                                    </div>
-                                @endif</td>
-                            <td>{{ $product->product_name }}</td>
-                            <td>{{ $product->description }}</td>
-                            <td>{{ $product->category->category_name }}</td>
-                            <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
-                            <td>
-                                <span class="status {{ $product->status == 'active' ? 'status-green' : 'status-red' }}">
-                                    {{ ucfirst($product->status) }}
-                                </span>
-                            </td>
-                            <td>
-                                <button type="button"
-                                        class="btn-edit-product"
-                                        data-id="{{ $product->id }}"
-                                        data-name="{{ $product->product_name }}"
-                                        data-category="{{ $product->category_id }}"
-                                        data-price="{{ (int) $product->price }}"
-                                        data-description="{{ $product->description }}"
-                                        data-status="{{ $product->status }}"
-                                        data-image="{{ $product->image ? asset('storage/' . $product->image) : '' }}">
-                                    <img src="{{ asset('images/icons/edit.svg') }}" alt="Edit">
-                                </button>
+                @forelse ($products as $product)
+                    <tr>
+                        <td>{{ $products->firstItem() + $loop->index }}</td>
+                        <td>@if($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->product_name }}" class="product-img">
+                            @else
+                                <div class="no-img">
+                                    <img src="{{ asset('images/icons/image-off.svg') }}" alt="">
+                                </div>
+                            @endif</td>
+                        <td>{{ $product->product_name }}</td>
+                        <td>{{ $product->description }}</td>
+                        <td>{{ $product->category->category_name }}</td>
+                        <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+                        <td>
+                            <span class="status {{ $product->status == 'active' ? 'status-green' : 'status-red' }}">
+                                {{ ucfirst($product->status) }}
+                            </span>
+                        </td>
+                        <td>
+                            <button type="button"
+                                    class="btn-edit-product"
+                                    data-id="{{ $product->id }}"
+                                    data-name="{{ $product->product_name }}"
+                                    data-category="{{ $product->category_id }}"
+                                    data-price="{{ (int) $product->price }}"
+                                    data-description="{{ $product->description }}"
+                                    data-status="{{ $product->status }}"
+                                    data-image="{{ $product->image ? asset('storage/' . $product->image) : '' }}">
+                                <img src="{{ asset('images/icons/edit.svg') }}" alt="Edit">
+                            </button>
 
-                                <form action="{{ route('product.destroy', $product->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin hapus {{ ucfirst($product->product_name) }}?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn-hapus">
-                                        <img src="{{ asset('images/icons/delete.svg') }}" alt="Delete">
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                @else
+                            <form action="{{ route('product.destroy', $product->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin hapus {{ ucfirst($product->product_name) }}?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-hapus">
+                                    <img src="{{ asset('images/icons/delete.svg') }}" alt="Delete">
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
                     <tr>
                         <td colspan="8" style="color: rgba(0, 0, 0, 0.5); font-weight: 500;">Tidak ada data</td>
                     </tr>
-                @endif
+                @endforelse
             </table>
+            <x-pagination :paginator="$products" />
         </div>
     </div>
 

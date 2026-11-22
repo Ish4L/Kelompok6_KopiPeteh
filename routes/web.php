@@ -29,6 +29,10 @@ Route::middleware('guest')->group(function () {
     Route::get('/unavailable', function () {
         return view('user.unavailable');
     });
+
+    Route::get('/menu', function () {
+        return view('user.menu');
+    });
 });
 
 Route::middleware('auth:admin')->group(function () {
@@ -82,10 +86,10 @@ Route::middleware('auth:admin')->group(function () {
         'destroy'
     ])->name('product.destroy');
 
-    Route::get('/riwayat', [
+    Route::get('/pesanan', [
         OrderController::class, 
-        'historyIndex'
-    ])->name('history');
+        'orderIndex'
+    ])->name('order');
 
     Route::get('/profil', [
         AdminController::class, 

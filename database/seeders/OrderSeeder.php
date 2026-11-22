@@ -47,5 +47,164 @@ class OrderSeeder extends Seeder
                 'price' => $product3->price
             ]
         ]);
+
+        $order3 = Order::create([
+            'name' => 'Fulani',
+            'phone' => '080987654321',
+            'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'status' => 'menunggu'
+        ]);
+
+        $order3->items()->createMany([
+            [
+                'product_id' => $product2->id,
+                'quantity' => 2,
+                'price' => $product2->price
+            ],
+            [
+                'product_id' => $product3->id,
+                'quantity' => 1,
+                'price' => $product3->price
+            ]
+        ]);
+
+        $order4 = Order::create([
+            'name' => 'Fulani',
+            'phone' => '080987654321',
+            'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'status' => 'menunggu'
+        ]);
+
+        $order4->items()->createMany([
+            [
+                'product_id' => $product2->id,
+                'quantity' => 2,
+                'price' => $product2->price
+            ],
+            [
+                'product_id' => $product3->id,
+                'quantity' => 1,
+                'price' => $product3->price
+            ]
+        ]);
+
+        $order5 = Order::create([
+            'name' => 'Fulani',
+            'phone' => '080987654321',
+            'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'status' => 'selesai'
+        ]);
+
+        $order5->items()->createMany([
+            [
+                'product_id' => $product2->id,
+                'quantity' => 2,
+                'price' => $product2->price
+            ],
+            [
+                'product_id' => $product3->id,
+                'quantity' => 1,
+                'price' => $product3->price
+            ]
+        ]);
+
+        $order6 = Order::create([
+            'name' => 'Fulani',
+            'phone' => '080987654321',
+            'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'status' => 'selesai'
+        ]);
+
+        $order6->items()->createMany([
+            [
+                'product_id' => $product2->id,
+                'quantity' => 2,
+                'price' => $product2->price
+            ],
+            [
+                'product_id' => $product3->id,
+                'quantity' => 1,
+                'price' => $product3->price
+            ]
+        ]);
+
+        $order7 = Order::create([
+            'name' => 'Fulani',
+            'phone' => '080987654321',
+            'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'status' => 'selesai'
+        ]);
+
+        $order7->items()->createMany([
+            [
+                'product_id' => $product2->id,
+                'quantity' => 2,
+                'price' => $product2->price
+            ],
+            [
+                'product_id' => $product3->id,
+                'quantity' => 1,
+                'price' => $product3->price
+            ]
+        ]);
+
+        $order8 = Order::create([
+            'name' => 'Fulani',
+            'phone' => '080987654321',
+            'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'status' => 'selesai'
+        ]);
+
+        $order8->items()->createMany([
+            [
+                'product_id' => $product2->id,
+                'quantity' => 2,
+                'price' => $product2->price
+            ],
+            [
+                'product_id' => $product3->id,
+                'quantity' => 1,
+                'price' => $product3->price
+            ]
+        ]);
+        $order9 = Order::create([
+            'name' => 'Fulani',
+            'phone' => '080987654321',
+            'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'status' => 'selesai'
+        ]);
+
+        $order9->items()->createMany([
+            [
+                'product_id' => $product2->id,
+                'quantity' => 2,
+                'price' => $product2->price
+            ],
+            [
+                'product_id' => $product3->id,
+                'quantity' => 1,
+                'price' => $product3->price
+            ]
+        ]);
+
+        $order10 = Order::create([
+            'name' => 'Fulani',
+            'phone' => '080987654321',
+            'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'status' => 'selesai'
+        ]);
+
+        $order10->items()->createMany([
+            [
+                'product_id' => $product2->id,
+                'quantity' => 2,
+                'price' => $product2->price
+            ],
+            [
+                'product_id' => $product3->id,
+                'quantity' => 1,
+                'price' => $product3->price
+            ]
+        ]);
     }
 }

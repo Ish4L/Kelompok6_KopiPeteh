@@ -20,7 +20,7 @@ class ProductController extends Controller
                     }
                 );
             }
-        )->orderBy('id', 'asc')->get();
+        )->orderBy('id', 'asc')->paginate(12)->withQueryString();
         
         $categories = Category::orderBy('id', 'asc')->get();
 

@@ -7,10 +7,10 @@
 
     @php
         $menus = [
-            ['route' => 'dashboard', 'active' => 'dashboard*', 'label' => 'Dashboard',       'icon' => 'home.svg'],
-            ['route' => 'category',  'active' => 'category*',  'label' => 'Kategori',        'icon' => 'category.svg'],
-            ['route' => 'product',   'active' => 'product*',   'label' => 'Produk',          'icon' => 'product.svg'],
-            ['route' => 'history',   'active' => 'history*',   'label' => 'Riwayat Pesanan', 'icon' => 'history.svg'],
+            ['route' => 'dashboard', 'active' => 'dashboard*', 'label' => 'Dashboard', 'icon' => 'home.svg'],
+            ['route' => 'category',  'active' => 'category*',  'label' => 'Kategori',  'icon' => 'category.svg'],
+            ['route' => 'product',   'active' => 'product*',   'label' => 'Produk',    'icon' => 'product.svg'],
+            ['route' => 'order',     'active' => 'order*',     'label' => 'Pesanan',   'icon' => 'history.svg'],
         ];
     @endphp
 

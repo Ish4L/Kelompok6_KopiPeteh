@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat Pesanan - KopiPeteh</title>
+    <title>Daftar Pesanan - KopiPeteh</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
     @vite(['resources/css/styleadmin.css', 'resources/js/app.js'])
@@ -12,17 +12,17 @@
         <x-sidebar />
 
         <div class="content">
-            <h3>Riwayat Pesanan</h3>
+            <h3>Daftar Pesanan</h3>
             <div class="search-area">
-                <x-search-box placeholder="Cari nama pemesan atau id pesanan..." />
+                <x-search-box placeholder="Cari nama pemesan atau ID pesanan..." />
             </div>
 
             <div class="tabs">
-                    <a href="{{ route('history', ['search' => request('search')]) }}" class="tab {{ request('status') == null ? 'active-tab' : '' }}">Semua Pesanan</a>
-                    <a href="{{ route('history', ['status' => 'belum bayar', 'search' => request('search')]) }}" class="tab {{ request('status') == 'belum bayar' ? 'active-tab' : '' }}">Belum bayar</a>
-                    <a href="{{ route('history', ['status' => 'menunggu', 'search' => request('search')]) }}" class="tab {{ request('status') == 'menunggu' ? 'active-tab' : '' }}">Menunggu</a>
-                    <a href="{{ route('history', ['status' => 'selesai', 'search' => request('search')]) }}" class="tab {{ request('status') == 'selesai' ? 'active-tab' : '' }}">Selesai</a>
-                    <a href="{{ route('history', ['status' => 'dibatalkan', 'search' => request('search')]) }}" class="tab {{ request('status') == 'dibatalkan' ? 'active-tab' : '' }}">Dibatalkan</a>
+                    <a href="{{ route('order', ['search' => request('search')]) }}" class="tab {{ request('status') == null ? 'active-tab' : '' }}">Semua Pesanan</a>
+                    <a href="{{ route('order', ['status' => 'belum bayar', 'search' => request('search')]) }}" class="tab {{ request('status') == 'belum bayar' ? 'active-tab' : '' }}">Belum bayar</a>
+                    <a href="{{ route('order', ['status' => 'menunggu', 'search' => request('search')]) }}" class="tab {{ request('status') == 'menunggu' ? 'active-tab' : '' }}">Menunggu</a>
+                    <a href="{{ route('order', ['status' => 'selesai', 'search' => request('search')]) }}" class="tab {{ request('status') == 'selesai' ? 'active-tab' : '' }}">Selesai</a>
+                    <a href="{{ route('order', ['status' => 'dibatalkan', 'search' => request('search')]) }}" class="tab {{ request('status') == 'dibatalkan' ? 'active-tab' : '' }}">Dibatalkan</a>
             </div>
 
             <table class="data-table history-table">
@@ -36,8 +36,7 @@
                     <th>Aksi</th=>
                 </tr>
 
-                @if ($orders->isNotEmpty())
-                @foreach ($orders as $index => $order)
+                @forelse ($orders as $order)
                     <tr>
                         <td>{{ $order->id }}</td>
                         <td>{{ $order->name }}</td>
@@ -58,21 +57,20 @@
                             </span>
                         </td>
                         <td>
-                            <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
                             <a href="#"><img src="{{ asset('images/icons/info.svg') }}" alt="Info"></a>
                         </td>
                     </tr>
-                @endforeach
-                @else
+                @empty
                     <tr>
                         <td colspan="7" style="text-align: center; color: rgba(0, 0, 0, 0.5); font-weight: 500;">
-                            Belum ada riwayat pesanan
+                            Belum ada pesanan
                         </td>
                     </tr>
-                @endif
+                @endforelse
             </table>
+            <x-pagination :paginator="$orders" />
 
-            <div class="pagination-container">
+            {{-- <div class="pagination-container">
                 <p class="pagination-info">
                     Menampilkan 3 dari 36
                 </p>
@@ -88,7 +86,7 @@
                         <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </body>

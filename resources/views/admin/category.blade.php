@@ -27,36 +27,35 @@
                     <th>Aksi</th>
                 </tr>
                 
-                @if ($categories->isNotEmpty())
-                    @foreach ($categories as $index => $category)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ ucfirst($category->category_name) }}</td>
-                            <td>
-                                <button type="button" 
-                                        class="btn-edit" 
-                                        data-id="{{ $category->id }}" 
-                                        data-name="{{ $category->category_name }}" 
-                                        title="Edit">
-                                    <img src="{{ asset('images/icons/edit.svg') }}" alt="Edit">
-                                </button>
+                @forelse ($categories as $category)
+                    <tr>
+                        <td>{{ $categories->firstItem() + $loop->index }}</td>
+                        <td>{{ ucfirst($category->category_name) }}</td>
+                        <td>
+                            <button type="button" 
+                                    class="btn-edit" 
+                                    data-id="{{ $category->id }}" 
+                                    data-name="{{ $category->category_name }}" 
+                                    title="Edit">
+                                <img src="{{ asset('images/icons/edit.svg') }}" alt="Edit">
+                            </button>
 
-                                <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin hapus {{ ucfirst($category->category_name) }}?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn-hapus">
-                                        <img src="{{ asset('images/icons/delete.svg') }}" alt="Delete">
-                                    </button>
-                                </form>                                
-                            </td>
-                        </tr>
-                    @endforeach
-                @else
+                            <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin hapus {{ ucfirst($category->category_name) }}?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-hapus">
+                                    <img src="{{ asset('images/icons/delete.svg') }}" alt="Delete">
+                                </button>
+                            </form>                                
+                        </td>
+                    </tr>
+                @empty
                     <tr>
                         <td colspan="3" style="color: rgba(0, 0, 0, 0.5); font-weight: 500;">Tidak ada data</td>
                     </tr>
-                @endif
+                @endforelse
             </table>
+            <x-pagination :paginator="$categories" />
         </div>
     </div>
 

@@ -25,15 +25,17 @@ class OrderController extends Controller
         return view('admin.dashboard', compact('todayOrders', 'todayCups', 'weeklyCups', 'weeklyIncome'));
     }
 
-    public function historyIndex(Request $request)
+    public function orderIndex(Request $request)
     {
         $orders = Order::when($request->status, function ($query, $status) {
             $query->where('status', $status);
         })->when($request->search, function ($query, $search) {
-            $query->where('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
-        })->latest()->get();
+            $query->where(function ($q) use ($search) { 
+                $q->where('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
+            });
+        })->latest()->paginate(8)->withQueryString();
 
-        return view('admin.history', compact('orders'));
+        return view('admin.order', compact('orders'));
     }
 
     public function updatePaymentIndex()
