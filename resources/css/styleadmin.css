@@ -35,7 +35,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
     padding: 0 30px;
 }
 
@@ -43,7 +43,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
-    border-bottom: 1.3px solid rgba(255, 255, 255, 0.7);
+    /* border-bottom: 1.3px solid rgba(255, 255, 255, 0.7); */
 }
 
 .sidebar-header img {
@@ -106,12 +106,6 @@ body {
     font-size: 12px;
     text-decoration: none;
     color: #fff;
-}
-
-.sidebar ul li a:active, 
-.sidebar ul li .profile a:active {
-    transform: scale(.96);
-    transition: 0.3s;
 }
 
 .sidebar ul li a img {
@@ -896,7 +890,7 @@ h3{
 .detail-order .order-section {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 13px;
 }
 
 .detail-order #modalOrderItems {
@@ -931,7 +925,7 @@ h3{
 
 .modal-content .btn-batal {
     background: transparent;
-    border: 2px solid #3B2721;
+    border: 1px solid #3B2721;
     transition: .3s ease;
 }
 

@@ -169,18 +169,20 @@ body {
     font-family: 'shanti', sans-serif;
     font-size: 13px;
     border: none;
-    border-radius: 6px;
+    border-radius: 7px;
     cursor: pointer;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    transition: 0.2s ease;
 }
 
 .login-btn:hover {
-    background-color: #64443a;
+    /* background-color: #64443a; */
+    opacity: .8;
     /* transform:scale(1.01); */
-    transition-duration: 0.2s;
+    transform: translateY(-1px);
 }
 
 .login-btn:active {
-    transform: scale(0.98);
+    /* transform: scale(0.98); */
     transition-duration: 0.1s;
 }

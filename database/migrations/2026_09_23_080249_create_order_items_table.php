@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products');
-            $table->enum('variant', ['cold', 'hot'])->nullable();
+            $table->enum('variant', ['iced', 'hot'])->nullable();
             $table->integer('quantity');
             $table->decimal('price', 12, 2);
             $table->timestamps();

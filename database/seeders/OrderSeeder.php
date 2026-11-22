@@ -25,7 +25,7 @@ class OrderSeeder extends Seeder
 
         $order1->items()->create([
             'product_id' => $product1->id,
-            'variant' => 'cold',
+            'variant' => 'iced',
             'quantity' => 2,
             'price' => $product1->price
         ]);
@@ -41,13 +41,13 @@ class OrderSeeder extends Seeder
         $order2->items()->createMany([
             [
                 'product_id' => $product2->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -64,13 +64,13 @@ class OrderSeeder extends Seeder
         $order3->items()->createMany([
             [
                 'product_id' => $product2->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -87,13 +87,13 @@ class OrderSeeder extends Seeder
         $order4->items()->createMany([
             [
                 'product_id' => $product2->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -110,13 +110,13 @@ class OrderSeeder extends Seeder
         $order5->items()->createMany([
             [
                 'product_id' => $product2->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -133,13 +133,13 @@ class OrderSeeder extends Seeder
         $order6->items()->createMany([
             [
                 'product_id' => $product2->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -156,13 +156,13 @@ class OrderSeeder extends Seeder
         $order7->items()->createMany([
             [
                 'product_id' => $product2->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -179,13 +179,13 @@ class OrderSeeder extends Seeder
         $order8->items()->createMany([
             [
                 'product_id' => $product2->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -201,13 +201,13 @@ class OrderSeeder extends Seeder
         $order9->items()->createMany([
             [
                 'product_id' => $product2->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -224,13 +224,13 @@ class OrderSeeder extends Seeder
         $order10->items()->createMany([
             [
                 'product_id' => $product2->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
-                'variant' => 'cold',
+                'variant' => 'iced',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
