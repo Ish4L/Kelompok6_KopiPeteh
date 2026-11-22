@@ -780,7 +780,7 @@ h3{
 .upload-area #imagePreview {
     display: none;
     width: auto;
-    max-height: 7em;
+    max-height: 6em;
 }
 
 .fullscreen-drop-overlay {
@@ -802,7 +802,8 @@ h3{
 }
 
 .fullscreen-drop-box {
-    width: 20em;
+    width: 90%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;

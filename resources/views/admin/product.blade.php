@@ -150,7 +150,7 @@
                             <input type="file" name="image" id="productImageInput" accept="image/*" hidden>
                             <img id="imagePreview" src="" alt="Preview">
                             <div class="upload-placeholder" id="uploadPlaceholder">
-                                <img src="{{ asset('images/icons/image.svg') }}" alt="">
+                                <img src="{{ asset('images/icons/upload.svg') }}" alt="">
                                 <p>Klik untuk upload gambar</p>
                                 <small>atau drag & drop</small>
                             </div>
@@ -202,7 +202,6 @@
 
     <div class="fullscreen-drop-overlay" id="fullscreenDropOverlay">
     <div class="fullscreen-drop-box">
-        {{-- <i class="fa-regular fa-image"></i> --}}
         <img src="{{ asset('images/icons/image-add.svg') }}" alt="">
         <p>Masukkan gambar</p>
     </div>
