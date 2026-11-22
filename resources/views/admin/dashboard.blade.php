@@ -63,7 +63,7 @@
                                     <td>Rp {{ number_format($item->quantity * $item->price, 0, ',', '.') }}</td>
                                     <td>
                                         <span class="status 
-                                            @if($item->order->status == 'menunggu' || $item->order->status == 'belum bayar')
+                                            @if($item->order->status == 'menunggu')
                                             status-yellow
                                             @elseif($item->order->status == 'selesai')
                                                 status-green

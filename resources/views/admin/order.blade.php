@@ -45,7 +45,7 @@
                         <td>Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                         <td>
                             <span class="status 
-                                @if($order->status == 'menunggu' || $order->status == 'belum bayar')
+                                @if($order->status == 'menunggu')
                                     status-yellow
                                 @elseif($order->status == 'selesai')
                                     status-green
