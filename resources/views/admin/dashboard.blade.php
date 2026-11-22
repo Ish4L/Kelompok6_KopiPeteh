@@ -5,17 +5,13 @@
     <title>Dashboard - KopiPeteh</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
-    @vite(['resources/css/styleadmin.css'])
+    @vite(['resources/css/styleadmin.css', 'resources/js/app.js'])
 </head>
 <body>
     <div class="wrapper">
         <x-sidebar />
 
         <div class="content dashboard-content">
-            <!-- <div class="dashboard-header">
-                <h3>Selamat Datang, Admin.</h3>
-            </div> -->
-            
             <div class="report-cards">
                 <h3>Laporan Minggu Ini</h3>
                 <div class="report-card">
@@ -48,7 +44,8 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Pesanan</th>
+                            <th>Produk</th>
+                            <th>Varian</th>
                             <th>Jumlah</th>
                             <th>Total harga</th>
                             <th>Status</th>
@@ -61,11 +58,12 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $item->order->name }}</td>
                                     <td>{{ $item->product->product_name }}</td>
+                                    <td>{{ ucfirst($item->variant) }}</td>
                                     <td>{{ $item->quantity }}</td>
                                     <td>Rp {{ number_format($item->quantity * $item->price, 0, ',', '.') }}</td>
                                     <td>
                                         <span class="status 
-                                            @if($item->order->status == 'menunggu')
+                                            @if($item->order->status == 'menunggu' || $item->order->status == 'belum bayar')
                                             status-yellow
                                             @elseif($item->order->status == 'selesai')
                                                 status-green
@@ -77,13 +75,41 @@
                                     </span>
                                     </td>
                                     <td>
-                                        <a href="#"><img src="{{ asset('images/icons/info.svg') }}" alt="Info"></a>
+                                        @php
+                                            $order = $item->order;
+
+                                            $orderItems = $order->items->map(function ($orderItem) {
+                                                return [
+                                                    'name' => $orderItem->product->product_name ?? 'Produk dihapus',
+                                                    'variant' => $orderItem->variant ? ucfirst($orderItem->variant) : null,
+                                                    'quantity' => $orderItem->quantity,
+                                                    'price' => $orderItem->price,
+                                                    'subtotal' => $orderItem->quantity * $orderItem->price,
+                                                ];
+                                            });
+                                        @endphp
+
+                                        <button type="button"
+                                            class="btn-info-order"
+                                            data-id="{{ $order->id }}"
+                                            data-formatted-id="Pesanan #{{ str_pad($order->id, 3, '0', STR_PAD_LEFT) }}"
+                                            data-name="{{ $order->name }}"
+                                            data-phone="{{ $order->phone }}"
+                                            data-date="{{ $order->created_at->format('j-n-Y') }}"
+                                            data-payment="{{ ucfirst($order->payment_method ?? 'Cash') }}"
+                                            data-total="{{ $order->total_price }}"
+                                            data-status="{{ $order->status }}"
+                                            data-update-url="{{ route('order.update', $order->id) }}"
+                                            data-items='@json($orderItems)'
+                                            style="background: none; border: none; cursor: pointer; padding: 0;">
+                                            <img src="{{ asset('images/icons/info.svg') }}" alt="Info">
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="7" style="color: rgba(0, 0, 0, 0.5); font-weight: 500;">Belum ada pesanan hari ini</td>
+                                <td colspan="8" style="color: rgba(0, 0, 0, 0.5); font-weight: 500;">Belum ada pesanan hari ini</td>
                             </tr>
                         @endif
                     </table>
@@ -91,5 +117,7 @@
             </div>
         </div>
     </div>
+
+    <x-order-detail-modal />
 </body>
 </html>

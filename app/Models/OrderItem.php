@@ -13,6 +13,7 @@ class OrderItem extends Model
     public $fillable = [
         'order_id',
         'product_id',
+        'variant',
         'quantity',
         'price'
     ];

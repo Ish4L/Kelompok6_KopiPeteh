@@ -45,7 +45,7 @@
                         <td>Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                         <td>
                             <span class="status 
-                                @if($order->status == 'menunggu')
+                                @if($order->status == 'menunggu' || $order->status == 'belum bayar')
                                     status-yellow
                                 @elseif($order->status == 'selesai')
                                     status-green
@@ -57,7 +57,33 @@
                             </span>
                         </td>
                         <td>
-                            <a href="#"><img src="{{ asset('images/icons/info.svg') }}" alt="Info"></a>
+                            @php
+                                $orderItems = $order->items->map(function ($item) {
+                                    return [
+                                        'name' => $item->product->product_name ?? 'Produk dihapus',
+                                        'variant' => $item->variant ? ucfirst($item->variant) : null,
+                                        'quantity' => $item->quantity,
+                                        'price' => $item->price,
+                                        'subtotal' => $item->quantity * $item->price,
+                                    ];
+                                });
+                            @endphp
+
+                            <button type="button"
+                                class="btn-info-order"
+                                data-id="{{ $order->id }}"
+                                data-formatted-id="Pesanan #{{ str_pad($order->id, 3, '0', STR_PAD_LEFT) }}"
+                                data-name="{{ $order->name }}"
+                                data-phone="{{ $order->phone }}"
+                                data-date="{{ $order->created_at->format('j-n-Y') }}"
+                                data-payment="{{ ucfirst($order->payment_method) }}"
+                                data-total="{{ $order->total_price }}"
+                                data-status="{{ $order->status }}"
+                                data-update-url="{{ route('order.update', $order->id) }}"
+                                data-items='@json($orderItems)'
+                                title="Detail Pesanan">
+                                <img src="{{ asset('images/icons/info.svg') }}" alt="Info">
+                            </button>
                         </td>
                     </tr>
                 @empty
@@ -69,25 +95,9 @@
                 @endforelse
             </table>
             <x-pagination :paginator="$orders" />
-
-            {{-- <div class="pagination-container">
-                <p class="pagination-info">
-                    Menampilkan 3 dari 36
-                </p>
-
-                <div class="pagination">
-                    <button type="button" class="page-btn">
-                        <i class="fa-solid fa-angle-left"></i>
-                    </button>
-
-                    <span class="page-number">1</span>
-
-                    <button type="button" class="page-btn">
-                        <i class="fa-solid fa-angle-right"></i>
-                    </button>
-                </div>
-            </div> --}}
         </div>
     </div>
+
+    <x-order-detail-modal />
 </body>
 </html>

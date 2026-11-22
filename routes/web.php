@@ -91,6 +91,11 @@ Route::middleware('auth:admin')->group(function () {
         'orderIndex'
     ])->name('order');
 
+    Route::put('/admin/order/{order}/status', [
+        OrderController::class, 
+        'update'
+    ])->name('order.update');
+
     Route::get('/profil', [
         AdminController::class, 
         'index'
@@ -105,17 +110,6 @@ Route::middleware('auth:admin')->group(function () {
         AdminController::class,
         'updatePassword'
     ])->name('profile.password');
-
-
-    Route::get('/tambah-kategori', [
-        CategoryController::class, 
-        'create'
-    ])->name('add-category');
-
-    Route::get('/tambah-produk', [
-        ProductController::class, 
-        'create'
-    ])->name('add-product');
 
     Route::get('/logout', [
         AuthController::class, 

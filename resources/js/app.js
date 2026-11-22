@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-// Form Category Overlay
+// Overlay Form Category
 document.addEventListener('DOMContentLoaded', function () {
     const categoryModal = document.getElementById('categoryModal');
     const categoryForm = document.getElementById('categoryForm');
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Form Product Overlay
+// Overlay Form Product
 document.addEventListener('DOMContentLoaded', function () {
     const productModal = document.getElementById('productModal');
     const productForm = document.getElementById('productForm');
@@ -262,3 +262,66 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+// Overlay Detail Order
+const orderDetailModal = document.getElementById('orderDetailModal');
+
+if (orderDetailModal) {
+    const closeOrderModal = document.getElementById('btnCloseOrderModal');
+    const orderStatusForm = document.getElementById('orderStatusForm');
+    const itemsContainer = document.getElementById('modalOrderItems');
+    const statusSelect = document.getElementById('modalOrderStatus');
+    const saveBtn = orderStatusForm.querySelector('.btn-simpan');
+
+    const formatRupiah = (angka) => {
+        return Number(angka).toLocaleString('id-ID');
+    };
+
+    document.querySelectorAll('.btn-info-order').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            document.getElementById('modalOrderNumber').textContent = btn.dataset.formattedId;
+            document.getElementById('modalCustomerName').textContent = btn.dataset.name;
+            document.getElementById('modalCustomerPhone').textContent = btn.dataset.phone;
+            document.getElementById('modalOrderDate').textContent = btn.dataset.date;
+            document.getElementById('modalPaymentMethod').textContent = btn.dataset.payment;
+            document.getElementById('modalTotalPrice').textContent = 'Rp ' + formatRupiah(btn.dataset.total);
+            
+            const currentStatus = btn.dataset.status;
+            statusSelect.value = currentStatus;
+
+            const isEditable = ['belum bayar', 'menunggu'].includes(currentStatus);
+            statusSelect.disabled = !isEditable;
+            if (saveBtn) {
+                saveBtn.disabled = !isEditable;
+            }
+
+            orderStatusForm.action = btn.dataset.updateUrl;
+
+            const items = JSON.parse(btn.dataset.items || '[]');
+            itemsContainer.innerHTML = items.map((item) => {
+                const productTitle = item.variant ? `${item.name} (${item.variant})` : item.name;
+                return `
+                    <div class="order-item-entry">
+                        <div class="item-name">${productTitle}</div>
+                        <div class="item-calc">
+                            <span>${item.quantity} x ${formatRupiah(item.price)}</span>
+                            <span>Rp ${formatRupiah(item.subtotal)}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            orderDetailModal.classList.add('show');
+        });
+    });
+
+    closeOrderModal.addEventListener('click', () => {
+        orderDetailModal.classList.remove('show');
+    });
+
+    orderDetailModal.addEventListener('click', (e) => {
+        if (e.target === orderDetailModal) {
+            orderDetailModal.classList.remove('show');
+        }
+    });
+}

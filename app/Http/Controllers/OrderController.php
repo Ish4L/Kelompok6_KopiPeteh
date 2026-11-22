@@ -13,7 +13,7 @@ class OrderController extends Controller
 {
     public function dashboardIndex()
     {
-        $todayOrders = OrderItem::with('order', 'product')->whereDate('created_at', Carbon::today())->get();
+        $todayOrders = OrderItem::with(['product', 'order.items.product'])->whereDate('created_at', Carbon::today())->latest()->get();
         $todayCups = $todayOrders->sum('quantity');
 
         $weeklyOrderItems = OrderItem::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
@@ -27,15 +27,20 @@ class OrderController extends Controller
 
     public function orderIndex(Request $request)
     {
-        $orders = Order::when($request->status, function ($query, $status) {
-            $query->where('status', $status);
-        })->when($request->search, function ($query, $search) {
-            $query->where(function ($q) use ($search) { 
-                $q->where('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
-            });
-        })->latest()->paginate(8)->withQueryString();
+        $orders = Order::with('items.product')->when($request->status, 
+            function ($query, $status) {
+                $query->where('status', $status);
+            })->when($request->search, 
+                function ($query, $search) {
+                    $query->where(
+                        function ($q) use ($search) {
+                            $q->where('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
+                        }
+                    );
+                }
+            )->latest()->paginate(8)->withQueryString();
 
-        return view('admin.order', compact('orders'));
+    return view('admin.order', compact('orders'));
     }
 
     public function updatePaymentIndex()
@@ -110,13 +115,23 @@ class OrderController extends Controller
 
     public function update(Request $request, Order $order)
     {
-        //
+        if (!in_array($order->status, ['belum bayar', 'menunggu'])) {
+            return back()->with('error', 'Status pesanan yang sudah selesai atau dibatalkan tidak dapat diubah');
+        }
+
+        $request->validate([
+            'status' => 'required|in:belum bayar,menunggu,selesai,dibatalkan',
+        ]);
+
+        $order->update([
+            'status' => $request->status,
+        ]);
+
+        return back()->with('success', 'Status pesanan berhasil diperbarui');
     }
 
     public function destroy(string $id)
     {
-        $order = Order::findOrFail($id);
-        $order->delete();
-        // return redirect()->route('order.index')->with('success', 'Order deleted successfully.');
+        //
     }
 }

@@ -19,11 +19,13 @@ class OrderSeeder extends Seeder
             'name' => 'Fulan',
             'phone' => '081234567890',
             'total_price' => 2 * $product1->price,
-            'status' => 'menunggu'
+            'payment_method' => 'cash',
+            'status' => 'belum bayar'
         ]);
 
         $order1->items()->create([
             'product_id' => $product1->id,
+            'variant' => 'cold',
             'quantity' => 2,
             'price' => $product1->price
         ]);
@@ -32,17 +34,20 @@ class OrderSeeder extends Seeder
             'name' => 'Fulani',
             'phone' => '080987654321',
             'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'payment_method' => 'cash',
             'status' => 'menunggu'
         ]);
 
         $order2->items()->createMany([
             [
                 'product_id' => $product2->id,
+                'variant' => 'cold',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
+                'variant' => 'cold',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -52,17 +57,20 @@ class OrderSeeder extends Seeder
             'name' => 'Fulani',
             'phone' => '080987654321',
             'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'payment_method' => 'cash',
             'status' => 'menunggu'
         ]);
 
         $order3->items()->createMany([
             [
                 'product_id' => $product2->id,
+                'variant' => 'cold',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
+                'variant' => 'cold',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -72,17 +80,20 @@ class OrderSeeder extends Seeder
             'name' => 'Fulani',
             'phone' => '080987654321',
             'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'payment_method' => 'cash',
             'status' => 'menunggu'
         ]);
 
         $order4->items()->createMany([
             [
                 'product_id' => $product2->id,
+                'variant' => 'cold',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
+                'variant' => 'cold',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -92,17 +103,20 @@ class OrderSeeder extends Seeder
             'name' => 'Fulani',
             'phone' => '080987654321',
             'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'payment_method' => 'cash',
             'status' => 'selesai'
         ]);
 
         $order5->items()->createMany([
             [
                 'product_id' => $product2->id,
+                'variant' => 'cold',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
+                'variant' => 'cold',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -112,17 +126,20 @@ class OrderSeeder extends Seeder
             'name' => 'Fulani',
             'phone' => '080987654321',
             'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'payment_method' => 'cash',
             'status' => 'selesai'
         ]);
 
         $order6->items()->createMany([
             [
                 'product_id' => $product2->id,
+                'variant' => 'cold',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
+                'variant' => 'cold',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -132,17 +149,20 @@ class OrderSeeder extends Seeder
             'name' => 'Fulani',
             'phone' => '080987654321',
             'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'payment_method' => 'cash',
             'status' => 'selesai'
         ]);
 
         $order7->items()->createMany([
             [
                 'product_id' => $product2->id,
+                'variant' => 'cold',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
+                'variant' => 'cold',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -152,17 +172,20 @@ class OrderSeeder extends Seeder
             'name' => 'Fulani',
             'phone' => '080987654321',
             'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'payment_method' => 'cash',
             'status' => 'selesai'
         ]);
 
         $order8->items()->createMany([
             [
                 'product_id' => $product2->id,
+                'variant' => 'cold',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
+                'variant' => 'cold',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -171,17 +194,20 @@ class OrderSeeder extends Seeder
             'name' => 'Fulani',
             'phone' => '080987654321',
             'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'payment_method' => 'cash',
             'status' => 'selesai'
         ]);
 
         $order9->items()->createMany([
             [
                 'product_id' => $product2->id,
+                'variant' => 'cold',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
+                'variant' => 'cold',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
@@ -191,17 +217,20 @@ class OrderSeeder extends Seeder
             'name' => 'Fulani',
             'phone' => '080987654321',
             'total_price' => (2 * $product2->price) + (1 * $product3->price),
+            'payment_method' => 'cash',
             'status' => 'selesai'
         ]);
 
         $order10->items()->createMany([
             [
                 'product_id' => $product2->id,
+                'variant' => 'cold',
                 'quantity' => 2,
                 'price' => $product2->price
             ],
             [
                 'product_id' => $product3->id,
+                'variant' => 'cold',
                 'quantity' => 1,
                 'price' => $product3->price
             ]
