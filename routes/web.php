@@ -29,6 +29,10 @@ Route::middleware('guest')->group(function () {
     Route::get('/unavailable', function () {
         return view('user.unavailable');
     });
+
+    Route::get('/menu', function () {
+        return view('user.menu');
+    });
 });
 
 Route::middleware('auth:admin')->group(function () {
