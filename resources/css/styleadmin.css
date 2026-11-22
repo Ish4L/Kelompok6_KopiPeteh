@@ -1029,7 +1029,7 @@ h3{
     outline: none;
 }
 
-.profile-content input:focus-visible {
+.profile-content input:focus {
     box-shadow: 0 0 1.3px rgba(0, 0, 0, 0.5);
 }
 
@@ -1069,4 +1069,14 @@ h3{
 
 .profile-content button {
     width: fit-content;
+}
+
+#nprogress .bar {
+    background: #654137 !important;
+    height: 5px !important;
+    z-index: 99999 !important;
+}
+
+#nprogress .peg {
+    box-shadow: 0 0 10px #c89d6c, 0 0 5px #c89d6c !important;
 }

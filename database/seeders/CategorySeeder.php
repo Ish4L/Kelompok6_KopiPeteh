@@ -11,8 +11,8 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::insert([
-            ['category_name' => 'Makanan'],
-            ['category_name' => 'Minuman']
+            ['category_name' => 'coffee'],
+            ['category_name' => 'non-coffee']
         ]);
     }
 }

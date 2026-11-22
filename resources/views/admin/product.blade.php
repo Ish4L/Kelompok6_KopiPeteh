@@ -44,7 +44,7 @@
                             @endif</td>
                         <td>{{ $product->product_name }}</td>
                         <td>{{ $product->description }}</td>
-                        <td>{{ $product->category->category_name }}</td>
+                        <td>{{ ucfirst($product->category->category_name) }}</td>
                         <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                         <td>
                             <span class="status {{ $product->status == 'active' ? 'status-green' : 'status-red' }}">

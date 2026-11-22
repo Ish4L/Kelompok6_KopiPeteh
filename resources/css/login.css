@@ -186,3 +186,13 @@ body {
     /* transform: scale(0.98); */
     transition-duration: 0.1s;
 }
+
+#nprogress .bar {
+    background: #654137 !important;
+    height: 5px !important;
+    z-index: 99999 !important;
+}
+
+#nprogress .peg {
+    box-shadow: 0 0 10px #c89d6c, 0 0 5px #c89d6c !important;
+}

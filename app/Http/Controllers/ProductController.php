@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function productIndex(Request $request)
     {
         $products = Product::with('category')->when($request->search, 
             function($query, $search) {
@@ -20,11 +20,17 @@ class ProductController extends Controller
                     }
                 );
             }
-        )->orderBy('id', 'asc')->paginate(12)->withQueryString();
+        )->orderBy('id')->paginate(12)->withQueryString();
         
         $categories = Category::orderBy('id', 'asc')->get();
 
         return view('admin.product', compact('products', 'categories'));
+    }
+
+    public function menuIndex() {
+        $menus = Product::with('category')->orderBy('product_name')->get();
+
+        return view('user.menu2', compact('menus'));
     }
 
     public function create()

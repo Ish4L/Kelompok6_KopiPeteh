@@ -13,7 +13,7 @@ class ProductSeeder extends Seeder
         Product::insert([
             [
                 'product_name' => 'Dirty Latte',
-                'category_id' => 2,
+                'category_id' => 1,
                 'price' => 20000,
                 'description' => 'lorem ipsum',
                 'image' => 'products\dirty-latte.jpeg',
@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'product_name' => 'Spanish Latte',
-                'category_id' => 2,
+                'category_id' => 1,
                 'price' => 15000,
                 'description' => 'lorem ipsum',
                 'image' => 'products\spanish-latte.jpeg',
@@ -29,7 +29,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'product_name' => 'Americano',
-                'category_id' => 2,
+                'category_id' => 1,
                 'price' => 12000,
                 'description' => 'lorem ipsum',
                 'image' => 'products\ice-americano.jpeg',

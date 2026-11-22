@@ -13,7 +13,7 @@ class CategoryController extends Controller
             function ($query, $search) {
                 $query->where('category_name', 'like', "%{$search}%");
             }
-        )->orderBy('id', 'asc')->paginate(8)->withQueryString();
+        )->orderBy('id')->paginate(8)->withQueryString();
 
         return view('admin.category', compact('categories'));
     }

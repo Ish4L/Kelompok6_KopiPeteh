@@ -1,5 +1,50 @@
 import './bootstrap';
 
+// Tampilan progress saat loading
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+
+NProgress.configure({ showSpinner: false, speed: 400 });
+
+if (sessionStorage.getItem('nprogress_active')) {
+    sessionStorage.removeItem('nprogress_active');
+    NProgress.set(0.75);
+    requestAnimationFrame(() => {
+        NProgress.done();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const triggerProgress = () => {
+        sessionStorage.setItem('nprogress_active', '1');
+        NProgress.start();
+    };
+
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (!link) return;
+
+        const href = link.getAttribute('href');
+        const isSamePageAnchor = !href || href.startsWith('#') || href.startsWith('javascript:');
+        const isNewTab = link.target === '_blank' || e.ctrlKey || e.metaKey;
+
+        if (!isSamePageAnchor && !isNewTab) {
+            triggerProgress();
+        }
+    });
+
+    document.addEventListener('submit', () => {
+        triggerProgress();
+    });
+
+    window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+            sessionStorage.removeItem('nprogress_active');
+            NProgress.done();
+        }
+    });
+});
+
 // Fitur show password
 window.togglePassword = function (inputId, button) {
     const input = document.getElementById(inputId);

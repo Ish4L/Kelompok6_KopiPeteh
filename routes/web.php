@@ -7,11 +7,25 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::middleware('guest')->group(function () {
+    Route::get('/', function () {
+        return view('user.available');
+    })->name('available');
+
+    Route::get('/unavailable', function () {
+        return view('user.unavailable');
+    })->name('unavailable');
+
+    Route::get('/menu', function () {
+        return view('user.menu');
+    });
+
+    Route::get('/menu2', [
+        ProductController::class,
+        'menuIndex'
+    ])->name('menu');
+    
     Route::get('/login', [
         AuthController::class, 
         'loginForm'
@@ -22,17 +36,6 @@ Route::middleware('guest')->group(function () {
         'login'
     ]);
 
-    Route::get('/available', function () {
-        return view('user.home');
-    });
-
-    Route::get('/unavailable', function () {
-        return view('user.unavailable');
-    });
-
-    Route::get('/menu', function () {
-        return view('user.menu');
-    });
 });
 
 Route::middleware('auth:admin')->group(function () {
@@ -68,7 +71,7 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('/produk', [
         ProductController::class, 
-        'index'
+        'productIndex'
     ])->name('product');
 
     Route::post('/produk/tambah', [
