@@ -199,6 +199,7 @@ h3{
     /* height: 100%; */
     line-height: 2.2rem;
     padding: 0 1.5em;
+    border: none;
     border-radius: 8px;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
     background-color: #654137;
@@ -293,7 +294,7 @@ h3{
     background: rgba(0, 0, 0, .15);
 }
 
-.search-wrapper .btn-search i {
+.search-wrapper .btn-seaarch i {
     color: rgba(0, 0, 0, .35);
     font-size: 15px;
 }
@@ -405,6 +406,12 @@ h3{
 .data-table td:last-child {
     padding: 0 20px 0 10px;
     white-space: nowrap;
+
+    button {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
 
     img {
         width: 18px;
@@ -628,96 +635,114 @@ h3{
 .modal-overlay {
     display: flex;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 .modal-content {
-    width: 350px;
-    background: #FFFFFF;
+    max-width: 23rem;
+    width: 100%;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    transform: translateY(10px);
+    transition: transform .4s cubic-bezier(.16, 1, .3, 1);
 }
 
-.modal-body {
-        padding: 40px 19px 0px;
-        font-family: 'ubuntu', sans-serif;
+.modal-overlay.show .modal-content {
+    transform: translateY(0);
 }
 
-.modal-body h2 {
-    font-size: 18px;
-    color: #3B2721;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1.3px solid rgba(99, 99, 99, 0.432); 
-}
-
-.modal-body label, .form-group label {
-    display: block;
-    font-size: 13px;
-    font-weight: 500;
-    color: #3B2721;
-    margin-bottom: 10px;
-}
-
-.modal-body input {
+.modal-content .modal-body {
     width: 100%;
-    box-sizing: border-box;
-    padding: 8px 12px;
-    border: none;
-    outline: none;
-    border-radius: 9px;
-    background: #E7E7E7;
-    font-size: 12px;
-    font-family: 'ubuntu', sans-serif;
-}
-
-.modal-body input:focus-visible {
-    box-shadow: 0 0 2px rgba(0, 0, 0, 10);
-}
-
-.modal-footer {
-    background: #FCF5E8;
-    margin: 5px -19px 0;
-    padding: 15px 11px;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
     gap: 12px;
+    padding: 35px 25px 25px;
+    background: #FFFFFF;
 }
 
-.modal-footer button {
-    width: 90px;
-    padding: 7px;
+.modal-content h1 {
+    font-size: 1.2rem;
+}
+
+.modal-content hr {
+    height: .5px;
+    border: none;
+    background: rgba(0, 0, 0, .35);
+}
+
+.modal-content .input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.modal-content label {
+    font-size: .9rem;
+    font-weight: 500;
+}
+
+.modal-content input {
+    padding: 9px 15px;
+    border: none;
     border-radius: 8px;
-    font-size: 13px;
+    background: rgba(0, 0, 0, .1);
     font-family: 'ubuntu', sans-serif;
-    cursor: pointer;
+}
+
+.modal-content .modal-footer {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    gap: 12px;
+    padding: 20px 25px;
+    background: #FCF5E8;
+}
+
+.modal-content button {
+    width: 8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 9px 28px;
+    border: none;
     border-radius: 8px;
-    font-size: 13px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    font-family: 'ubuntu', sans-serif;
+    font-size: .85rem;
+    color: #3B2721;
     cursor: pointer;
 }
 
-.btn-batal {
+.modal-content .btn-batal {
     background: transparent;
-    border: 1px solid #4C332B;
-    color: #4C332B;
+    border: 2px solid #3B2721;
+    transition: .3s ease;
 }
 
-.btn-simpan {
-    background: #3F2922;
-    border: 3px solid #3F2922;
-    color: white;
+.modal-content .btn-batal:hover {
+    background: rgba(0, 0, 0, .08);
 }
 
-.btn-simpan:hover {
-    background-color: #654137;
-    border: 3px solid #654137;
+.modal-content .btn-simpan {
+    background: #3B2721;
+    color: #FFFFFF;
+    transition: .3s ease;
+}
+
+.modal-content .btn-simpan:hover {
+    background: rgba(59, 39, 33, .8);
 }
 
 .btn-simpan:active, .btn-batal:active {
@@ -1046,7 +1071,7 @@ h3{
     margin-bottom: 0;
 }
 
-.profile-content .input-group {
+.profile-content .input-box {
     display: flex;
     gap: 25px;
 }

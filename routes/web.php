@@ -47,6 +47,21 @@ Route::middleware('auth:admin')->group(function () {
         'index'
     ])->name('category');
 
+    Route::post('/kategori/tambah', [
+        CategoryController::class,
+        'store'
+    ])->name('category.store');
+
+    Route::put('/kategori/{category}', [
+        CategoryController::class,
+        'update'
+    ])->name('category.update');
+
+    Route::delete('/kategori/{category}', [
+        CategoryController::class,
+        'destroy'
+    ])->name('category.destroy');
+
     Route::get('/produk', [
         ProductController::class, 
         'index'

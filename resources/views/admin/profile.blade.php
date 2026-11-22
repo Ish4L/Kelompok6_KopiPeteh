@@ -16,7 +16,7 @@
                 @csrf
                 @method('PUT')
                 <h3>Profil</h3>
-                <div class="input-group">
+                <div class="input-box">
                     <div class="field">
                         <label>Nama</label>
                         <input type="text" name="name" value="{{ old('name', $admin->name) }}" placeholder="Masukkan nama">
@@ -26,7 +26,7 @@
                         <input type="text" name="username" value="{{ old('username', $admin->username) }}" placeholder="Masukkan username">
                     </div>
                 </div>
-                <div class="input-group">
+                <div class="input-box">
                     <div class="field">
                         <label>Email</label>
                         <input type="email" name="email" value="{{ old('email', $admin->email) }}" placeholder="Masukkan email">
@@ -51,7 +51,7 @@
                 @csrf
                 @method('PUT')
                 <h3>Ganti Password</h3>
-                <div class="input-group">
+                <div class="input-box">
                     <div class="field">
                         <label>Password Baru</label>
                         <div class="input-box">

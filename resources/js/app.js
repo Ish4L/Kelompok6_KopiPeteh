@@ -1,5 +1,22 @@
 import './bootstrap';
 
+// Fitur show password
+window.togglePassword = function (inputId, button) {
+    const input = document.getElementById(inputId);
+    const eyeIcon = button.querySelector('.icon-eye');
+    const eyeOffIcon = button.querySelector('.icon-eye-off');
+
+    if (input.type === 'password') {
+        input.type = 'text';
+        eyeIcon.style.display = 'none';
+        eyeOffIcon.style.display = 'block';
+    } else {
+        input.type = 'password';
+        eyeIcon.style.display = 'block';
+        eyeOffIcon.style.display = 'none';
+    }
+}
+
 // Fitur search auto submit
 document.addEventListener('DOMContentLoaded', function () {
         const searchForm = document.getElementById('searchForm');
@@ -51,19 +68,52 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-// Fitur show password
-window.togglePassword = function (inputId, button) {
-    const input = document.getElementById(inputId);
-    const eyeIcon = button.querySelector('.icon-eye');
-    const eyeOffIcon = button.querySelector('.icon-eye-off');
+// Fitur form overlay
+document.addEventListener('DOMContentLoaded', function () {
+    const categoryModal = document.getElementById('categoryModal');
+    const categoryForm = document.getElementById('categoryForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const formMethod = document.getElementById('formMethod');
+    const categoryNameInput = document.getElementById('categoryNameInput');
+    const btnAddCategory = document.getElementById('btnAddCategory');
+    const btnCloseModal = document.getElementById('btnCloseModal');
 
-    if (input.type === 'password') {
-        input.type = 'text';
-        eyeIcon.style.display = 'none';
-        eyeOffIcon.style.display = 'block';
-    } else {
-        input.type = 'password';
-        eyeIcon.style.display = 'block';
-        eyeOffIcon.style.display = 'none';
+    if (categoryModal && categoryForm) {
+        if (btnAddCategory) {
+            btnAddCategory.addEventListener('click', function () {
+                modalTitle.textContent = 'Tambah Kategori';
+                categoryForm.action = categoryForm.dataset.storeUrl;
+                formMethod.value = 'POST';
+                categoryNameInput.value = '';
+                categoryModal.classList.add('show');
+                categoryNameInput.focus();
+            });
+        }
+
+        document.querySelectorAll('.btn-edit').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const id = this.dataset.id;
+                const name = this.dataset.name;
+
+                modalTitle.textContent = 'Edit Kategori';
+                categoryForm.action = `${categoryForm.dataset.updateUrl}/${id}`;
+                formMethod.value = 'PUT';
+                categoryNameInput.value = name;
+                categoryModal.classList.add('show');
+                categoryNameInput.focus();
+            });
+        });
+
+        if (btnCloseModal) {
+            btnCloseModal.addEventListener('click', function () {
+                categoryModal.classList.remove('show');
+            });
+        }
+
+        categoryModal.addEventListener('click', function (e) {
+            if (e.target === categoryModal) {
+                categoryModal.classList.remove('show');
+            }
+        });
     }
-}
+});

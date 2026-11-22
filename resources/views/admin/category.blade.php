@@ -15,7 +15,7 @@
             <h3>Kategori</h3>
 
             <div class="search-area">
-                <a class="btn-add" href="{{ route('add-category') }}">Tambah</a>
+                <button class="btn-add" id="btnAddCategory" title="Tambah kategori">Tambah</button>
 
                 <x-search-box placeholder="Cari kategori..." />
             </div>
@@ -33,8 +33,17 @@
                             <td>{{ $index + 1 }}</td>
                             <td>{{ ucfirst($category->category_name) }}</td>
                             <td>
-                                <a href="#"><img src="{{ asset('images/icons/edit.svg') }}" alt="Edit"></a>
-                                <a href="#"><img src="{{ asset('images/icons/delete.svg') }}" alt="Delete"></a>
+                                <button type="button" class="btn-edit" data-id="{{ $category->id }}" data-name="{{ $category->category_name }}" title="Edit">
+                                    <img src="{{ asset('images/icons/edit.svg') }}" alt="Edit">
+                                </button>
+
+                                <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin hapus {{ $category->category_name }}?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-hapus">
+                                        <img src="{{ asset('images/icons/delete.svg') }}" alt="Delete">
+                                    </button>
+                                </form>                                
                             </td>
                         </tr>
                     @endforeach
@@ -44,6 +53,40 @@
                     </tr>
                 @endif
             </table>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="categoryModal">
+        <div class="modal-content">
+            <form action="{{ route('category.store') }}" data-store-url="{{ route('category.store') }}" data-update-url="{{ url('/kategori') }}" method="POST" class="category-form" id="categoryForm">
+                @csrf
+                <input type="hidden" name="_method" id="formMethod" value="POST">
+
+                <div class="modal-body">
+                    <h1 id="modalTitle">Tambah Kategori</h1>
+                    <hr>
+                    <div class="input-box">
+                        <label for="categoryNameInput">Nama Kategori</label>
+                        <input 
+                            type="text" 
+                            name="category_name" 
+                            id="categoryNameInput" 
+                            value="{{ old('category_name') }}" 
+                            placeholder="Contoh: Makanan"
+                            autofocus 
+                            required>
+                        
+                        @error('category_name')
+                            <small class="error-text" style="color: red;">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-batal" id="btnCloseModal">Batal</button>
+                    <button type="submit" class="btn-simpan">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 </body>
