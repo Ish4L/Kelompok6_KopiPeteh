@@ -28,7 +28,7 @@ class ProductSeeder extends Seeder
                 'status' => 'active'
             ],
             [
-                'product_name' => 'Ice Americano',
+                'product_name' => 'Americano',
                 'category_id' => 2,
                 'price' => 12000,
                 'description' => 'lorem ipsum',

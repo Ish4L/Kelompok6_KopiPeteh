@@ -33,11 +33,15 @@
                             <td>{{ $index + 1 }}</td>
                             <td>{{ ucfirst($category->category_name) }}</td>
                             <td>
-                                <button type="button" class="btn-edit" data-id="{{ $category->id }}" data-name="{{ $category->category_name }}" title="Edit">
+                                <button type="button" 
+                                        class="btn-edit" 
+                                        data-id="{{ $category->id }}" 
+                                        data-name="{{ $category->category_name }}" 
+                                        title="Edit">
                                     <img src="{{ asset('images/icons/edit.svg') }}" alt="Edit">
                                 </button>
 
-                                <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin hapus {{ $category->category_name }}?')">
+                                <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin hapus {{ ucfirst($category->category_name) }}?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn-hapus">

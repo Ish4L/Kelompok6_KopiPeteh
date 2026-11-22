@@ -67,6 +67,21 @@ Route::middleware('auth:admin')->group(function () {
         'index'
     ])->name('product');
 
+    Route::post('/produk/tambah', [
+        ProductController::class, 
+        'store'
+    ])->name('product.store');
+    
+    Route::put('/produk/{product}', [
+        ProductController::class,
+        'update'
+    ])->name('product.update');
+
+    Route::delete('/produk/{product}', [
+        ProductController::class, 
+        'destroy'
+    ])->name('product.destroy');
+
     Route::get('/riwayat', [
         OrderController::class, 
         'historyIndex'
