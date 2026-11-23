@@ -37,6 +37,10 @@ Route::middleware('guest')->group(function () {
     Route::get('/keranjang', function () {
         return view('user.keranjang');
     });
+
+    Route::get('/tambahkeranjang', function () {
+        return view('user.tambahkeranjang');
+    });
 });
 
 Route::middleware('auth:admin')->group(function () {
