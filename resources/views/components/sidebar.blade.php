@@ -34,7 +34,7 @@
                     </div>
                 </a>
 
-                <a class="logout-link" href="{{ route('logout') }}" onclick="return confirm('Yakin ingin keluar?')">
+                <a class="logout-link" href="javascript:void(0)" onclick="openLogoutModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0z" fill="none" />
                         <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.393 4C4 4.617 4 5.413 4 7.004v9.994c0 1.591 0 2.387.393 3.002q.105.165.235.312c.483.546 1.249.765 2.78 1.202c1.533.438 2.3.657 2.856.329a1.5 1.5 0 0 0 .267-.202C11 21.196 11 20.4 11 18.803V5.197c0-1.596 0-2.393-.469-2.837a1.5 1.5 0 0 0-.267-.202c-.555-.328-1.323-.11-2.857.329c-1.53.437-2.296.656-2.78 1.202a2.5 2.5 0 0 0-.234.312M11 4h2.017c1.902 0 2.853 0 3.443.586c.33.326.476.764.54 1.414m-6 14h2.017c1.902 0 2.853 0 3.443-.586c.33-.326.476-.764.54-1.414m4-6h-7m5.5-2.5S22 11.34 22 12s-2.5 2.5-2.5 2.5" />
@@ -43,4 +43,25 @@
             </div>
         </li>
     </ul>
+</div>
+
+<div id="logoutModal" class="confirm-overlay" aria-hidden="true">
+    <div class="confirm-box">
+        <div class="confirm-icon">
+            <img src="{{ asset('images/icons/logout.svg') }}" alt="">
+        </div>
+        <div class="confirm-text">
+            <h3>Konfirmasi Keluar</h3>
+            <p>Anda yakin ingin keluar dari akun ini?</p>
+        </div>
+
+        <div class="confirm-actions">
+            <button type="button" class="btn-cancel" onclick="closeLogoutModal()">Batal</button>
+            
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn-danger">Ya, Keluar</button>
+            </form>
+        </div>
+    </div>
 </div>

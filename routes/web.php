@@ -17,11 +17,11 @@ Route::middleware('guest')->group(function () {
         return view('user.unavailable');
     })->name('unavailable');
 
-    Route::get('/menu', function () {
+    Route::get('/menu2', function () {
         return view('user.menu');
     });
 
-    Route::get('/menu2', [
+    Route::get('/menu', [
         ProductController::class,
         'menuIndex'
     ])->name('menu');
@@ -108,13 +108,8 @@ Route::middleware('auth:admin')->group(function () {
         AdminController::class,
         'updateProfile'
     ])->name('profile.update');
-    
-    Route::put('/profil/password', [
-        AdminController::class,
-        'updatePassword'
-    ])->name('profile.password');
 
-    Route::get('/logout', [
+    Route::post('/logout', [
         AuthController::class, 
         'logout'
     ])->name('logout');

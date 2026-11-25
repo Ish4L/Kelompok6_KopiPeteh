@@ -38,7 +38,7 @@ class OrderController extends Controller
                         }
                     );
                 }
-            )->latest()->paginate(8)->withQueryString();
+            )->latest()->paginate(6)->withQueryString();
 
     return view('admin.order', compact('orders'));
     }

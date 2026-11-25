@@ -13,7 +13,7 @@ class CategoryController extends Controller
             function ($query, $search) {
                 $query->where('category_name', 'like', "%{$search}%");
             }
-        )->orderBy('id')->paginate(8)->withQueryString();
+        )->orderBy('id')->paginate(6)->withQueryString();
 
         return view('admin.category', compact('categories'));
     }
@@ -64,8 +64,8 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        if ($category->products()->exists()) {
-            return redirect()->route('category')->with('error', 'Kategori masih digunakan oleh produk');
+        if ($category->products()->withTrashed()->exists()) {
+            return redirect()->route('category')->with('error', 'Kategori masih digunakan oleh produk (termasuk arsip riwayat)');
         }
 
         $category->delete();

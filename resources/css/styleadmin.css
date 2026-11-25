@@ -350,9 +350,9 @@ h3{
 
 .history-table th:nth-child(1) { width: 5%; }
 .history-table th:nth-child(2) { width: 10%; }
-.history-table th:nth-child(3) { width: 39%; }
-.history-table th:nth-child(4) { width: 12%; }
-.history-table th:nth-child(5) { width: 12%; }
+.history-table th:nth-child(3) { width: 35%; }
+.history-table th:nth-child(4) { width: 14%; }
+.history-table th:nth-child(5) { width: 14%; }
 .history-table th:nth-child(6) { width: 15%; }
 .history-table th:nth-child(7) { width: 7%; }
 
@@ -418,7 +418,7 @@ h3{
     }
 
     img:hover {
-        opacity: 0.7;
+        opacity: 0.6;
         transition: 0.3s ease;
     }
 }
@@ -737,7 +737,7 @@ h3{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 8px 28px;
+    padding: 9px 28px;
     border: none;
     border-radius: 8px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
@@ -883,7 +883,8 @@ h3{
     transform: translate(25px, -50%);
 }
 
-.detail-order h1, .detail-order p {
+.detail-order h1, 
+.detail-order p {
     text-align: center;
 }
 
@@ -909,12 +910,14 @@ h3{
     }
 }
 
-.detail-order .detail-row, .detail-order .item-calc {
+.detail-order .detail-row, 
+.detail-order .item-calc {
     display: flex;
     justify-content: space-between;
 }
 
-.detail-order span, .detail-order .item-name {
+.detail-order span, 
+.detail-order .item-name {
     font-size: .9rem;
 }
 
@@ -934,7 +937,7 @@ h3{
 }
 
 .modal-content .btn-simpan {
-    background: #3B2721;
+    background: #654137;
     color: #FFFFFF;
     transition: .3s ease;
 }
@@ -969,17 +972,17 @@ h3{
 
 .tab {
     position: relative;
+    padding: 5px 0;
     text-decoration: none;
     color: #654137;
     font-size: 15px;
-    padding: 5px 0;
 }
 
 .active-tab {
     color: #654137;
-    font-weight: 600;
     border-bottom: 2px solid #4C332B;
     text-decoration: none;
+    font-weight: 600;
 }
 
 .history-table .status {
@@ -1016,7 +1019,6 @@ h3{
     flex-direction: column;
     gap: 6px;
 }
-
 
 .profile-content input {
     height: 36px;
@@ -1069,6 +1071,118 @@ h3{
 
 .profile-content button {
     width: fit-content;
+}
+
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.confirm-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.confirm-box {
+    width: 28vw;
+    height: 33vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    border-radius: 10px;
+    background: #46342F;
+    color: #FFFFFF;
+    transform: translateY(10px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+
+.confirm-overlay.show .confirm-box {
+    transform: translateY(0);
+}
+
+.confirm-icon {
+    padding: 10px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, .2);
+}
+
+.confirm-icon img {
+    width: 32px;
+    height: auto;
+}
+
+.confirm-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    h3 {
+        margin-bottom: 0;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    p {
+        font-size: 13px;
+    }
+}
+
+.confirm-actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.confirm-actions button {
+    padding: 10px 20px;
+    border: solid 3px transparent;
+    border-radius: 8px;
+    outline: none;
+    background: #FFFFFF;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #46342F;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.confirm-actions .btn-cancel {
+    width: 35%;
+}
+
+.confirm-actions .btn-cancel:hover {
+    border: solid 3px rgba(0, 0, 0, .3);
+    /* background: rgba(255, 255, 255, .8); */
+}
+
+.confirm-actions form {
+    width: 35%;
+
+    button {
+        width: 100%;
+        background: red;
+        color: #FFFFFF;
+    }
+
+    button:hover {
+        background: #FFFFFF;
+        color: red;
+    }
 }
 
 #nprogress .bar {

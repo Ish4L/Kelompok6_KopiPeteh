@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.addEventListener('click', (e) => {
+        if (e.defaultPrevented) return;
+
         const link = e.target.closest('a');
         if (!link) return;
 
@@ -33,7 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.addEventListener('submit', () => {
+    document.addEventListener('submit', (e) => {
+        if (e.defaultPrevented) return;
+
         triggerProgress();
     });
 
@@ -370,3 +374,27 @@ if (orderDetailModal) {
         }
     });
 }
+
+// Overlay notification logout
+window.openLogoutModal = function () {
+    const modal = document.getElementById('logoutModal');
+    if (modal) {
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+};
+
+window.closeLogoutModal = function () {
+    const modal = document.getElementById('logoutModal');
+    if (modal) {
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+};
+
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('logoutModal');
+    if (modal && e.target === modal) {
+        window.closeLogoutModal();
+    }
+});

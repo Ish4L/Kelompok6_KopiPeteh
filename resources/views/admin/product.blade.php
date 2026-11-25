@@ -122,7 +122,7 @@
                             <option value="" disabled selected>Pilih kategori produk</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->category_name }}
+                                    {{ ucfirst($category->category_name) }}
                                 </option>
                             @endforeach
                         </select>

@@ -102,7 +102,7 @@
                                             data-update-url="{{ route('order.update', $order->id) }}"
                                             data-items='@json($orderItems)'
                                             style="background: none; border: none; cursor: pointer; padding: 0;">
-                                            <img src="{{ asset('images/icons/info.svg') }}" alt="Info">
+                                            <img src="{{ asset('images/icons/edit.svg') }}" alt="Info">
                                         </button>
                                     </td>
                                 </tr>

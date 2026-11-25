@@ -16,6 +16,7 @@
                 @csrf
                 @method('PUT')
                 <h3>Profil</h3>
+
                 <div class="input-box">
                     <div class="field">
                         <label>Nama</label>
@@ -26,6 +27,7 @@
                         <input type="text" name="username" value="{{ old('username', $admin->username) }}" placeholder="Masukkan username">
                     </div>
                 </div>
+
                 <div class="input-box">
                     <div class="field">
                         <label>Email</label>
@@ -37,25 +39,11 @@
                     </div>
                 </div>
 
-                <div style="display: flex; align-items:center; gap: 10px;">
-                    <button type="submit" class="btn-profile" onclick="return confirm('Konfirmasi ubah profil?')">Simpan</button>
-                    @if (session('success_profile'))
-                        <span style="color: lime; font-size: 12px">{{ session('success_profile') }}</span>
-                    @elseif ($errors->profile->any())
-                        <span style="color: red; font-size: 12px;">{{ $errors->profile->first() }}</span>
-                    @endif
-                </div>
-            </form>
-
-            <form action="{{ route('profile.password') }}" method="POST" class="form-card">
-                @csrf
-                @method('PUT')
-                <h3>Ganti Password</h3>
                 <div class="input-box">
                     <div class="field">
                         <label>Password Baru</label>
                         <div class="input-box">
-                            <input type="password" name="password" id="password" placeholder="Masukkan password">
+                            <input type="password" name="password" id="password" placeholder="Masukkan password baru">
                             <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
                                 <i class="icon-eye fa-solid fa-eye"></i>
                                 <i class="icon-eye-off fa-solid fa-eye-slash" style="display: none;"></i>
@@ -68,21 +56,22 @@
                             <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Konfirmasi password">
                             <button type="button" class="toggle-password" onclick="togglePassword('password_confirmation', this)">
                                 <i class="icon-eye fa-solid fa-eye"></i>
-                                <i class="icon-eye-off fa-solid fa-eye-slash"style="display: none;"></i>
+                                <i class="icon-eye-off fa-solid fa-eye-slash" style="display: none;"></i>
                             </button>
                         </div>
                     </div>
                 </div>
-                
-                <div style="display: flex; align-items:center; gap: 10px;">
-                    <button type="submit" class="btn-profile" onclick="return confirm('Konfirmasi ubah password?')">Simpan</button>
-                    @if (session('success_password'))
-                        <div style="color: lime; font-size: 12px">{{ session('success_password') }}</div>
-                    @elseif ($errors->password->any())
-                        <span style="color: red; font-size: 12px;">{{ $errors->password->first() }}</span>
+
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <button type="submit" class="btn-profile" onclick="return confirm('Konfirmasi simpan perubahan profil?')">Simpan</button>
+                    @if (session('success'))
+                        <span style="color: #10B981; font-size: 12px;">{{ session('success') }}</span>
+                    @elseif ($errors->any())
+                        <span style="color: red; font-size: 12px;">{{ $errors->first() }}</span>
                     @endif
                 </div>
             </form>
         </div>
     </div>
 </body>
+</html>

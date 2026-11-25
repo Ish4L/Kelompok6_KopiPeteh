@@ -7,22 +7,22 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
     public function productIndex(Request $request)
     {
-        $products = Product::with('category')->when($request->search, 
-            function($query, $search) {
-                $query->where('product_name', 'like', "%{$search}%")->orWhereHas('category', 
-                    function($catQuery) use ($search) {
-                        $catQuery->where('category_name', 'like', "%{$search}%");
-                    }
-                );
-            }
-        )->orderBy('id')->paginate(12)->withQueryString();
-        
-        $categories = Category::orderBy('id', 'asc')->get();
+        $products = Product::with('category')->when($request->search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('product_name', 'like', "%{$search}%")
+                ->orWhereHas('category', function ($catQuery) use ($search) {
+                    $catQuery->where('category_name', 'like', "%{$search}%");
+                });
+            });
+        })->orderBy('id')->paginate(5)->withQueryString();
+
+        $categories = Category::orderBy('id')->get();
 
         return view('admin.product', compact('products', 'categories'));
     }
@@ -41,7 +41,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_name' => 'required|string|max:50|unique:products,product_name',
+            'product_name' => ['required', 'string', 'max:50', Rule::unique('products', 'product_name')->whereNull('deleted_at')],
             'category_id'  => 'required|exists:categories,id',
             'price'        => 'required|numeric|min:0',
             'description'  => 'nullable|string',
@@ -82,7 +82,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'product_name' => 'required|string|max:50|unique:products,product_name,' . $product->id,
+            'product_name' => ['required', 'string', 'max:50', Rule::unique('products', 'product_name')->ignore($product->id)->whereNull('deleted_at')],
             'category_id'  => 'required|exists:categories,id',
             'price'        => 'required|numeric|min:0',
             'description'  => 'nullable|string',
@@ -116,10 +116,6 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        if ($product->image && Storage::disk('public')->exists($product->image)) {
-            Storage::disk('public')->delete($product->image);
-        }
-
         $product->delete();
 
         return redirect()->route('product')->with('success', 'Produk berhasil dihapus');
