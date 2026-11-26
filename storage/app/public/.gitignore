@@ -1,4 +1,4 @@
 *
 !.gitignore
-!product/
-!product/**
+!products/
+!products/**
