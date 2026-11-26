@@ -28,7 +28,6 @@
                 </p>
             </div>
 
-            <img src="{{ asset('images/brown-deco-1.svg') }}" alt="" class="bg-organic brown-deco">
             <img src="{{ asset('images/hero-product.png') }}" alt="" class="bg-organic hero-product">
             <img src="{{ asset('images/brown-deco-left-2.svg') }}" alt="" class="bg-organic brown-deco-left">
             <img src="{{ asset('images/coffee-deco-left-2.png') }}" alt="" class="bg-organic coffee-deco-left">
@@ -39,14 +38,17 @@
 
         <div class="menu-section">
             <div class="menu-header">
-                <h2 class="section-title">
-                    Menu Drinks
-                </h2>
+                <div class="section-title">
+                    <h2>
+                        Menu Drinks
+                    </h2>
+                    <span></span>
+                </div>
     
                 <div class="menu-tab">
-                    <a href="#">All</a>
-                    <a href="#">Coffee</a>
-                    <a href="#">Non-coffee</a>
+                    <button type="button" class="active" data-filter="all">All</button>
+                    <button type="button" data-filter="coffee">Coffee</button>
+                    <button type="button" data-filter="non-coffee">Non-coffee</button>
                 </div>
             </div>
 
@@ -54,10 +56,70 @@
                 <img src="{{ asset('images/icons/cup.svg') }}" alt="">
                 <div class="quota-text">
                     <p>Sisa Kuota Hari Ini</p>
-                    <span>7/10 Cup</span>
+                    <span>{{ $todayCups }}/10 Cup</span>
                 </div>
+            </div>
+
+            <div @class(['product-list', 'is-empty' => $menus->isEmpty()])>
+                @foreach ($menus as $item)
+                    <div class="item"
+                        data-id="{{ $item->id }}"
+                        data-name="{{ $item->product_name }}"
+                        data-price="{{ $item->price }}"
+                        data-img="{{ asset('storage/' . $item->image) }}"
+                        data-category="{{ \Illuminate\Support\Str::slug($item->category->category_name ?? '') }}">
+                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->product_name }}" class="item-img">
+
+                        <div class="item-info">
+                            <p class="item-name">{{ $item->product_name }}</p>
+                            <p class="item-desc">{{ $item->description }}</p>
+                            <div class="item-price">
+                                <p>Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                                <button type="button" class="cart-add">
+                                    <img src="{{ asset('images/icons/cart1.svg') }}" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                <h4 id="emptyFilterMsg" style="display: {{ $menus->isEmpty() ? 'block' : 'none' }}; font-weight: 500;">
+                    Tidak ada data
+                </h4>
             </div>
         </div>
     </section>
+    
+    <x-footer />
+
+    <div id="addToCartModal" class="cart-modal-overlay" aria-hidden="true">
+        <div class="cart-modal-box">
+            <div class="cart-modal-body">
+                <h3 class="cart-modal-title">Tambah ke keranjang</h3>
+                <hr class="cart-modal-divider">
+
+                <p id="modalProductName" class="cart-modal-product"></p>
+
+                <div class="cart-modal-qty-row">
+                    <span>Jumlah:</span>
+                    <div class="modal-qty-control">
+                        <button type="button" id="modalQtyMinus" class="modal-qty-btn">-</button>
+                        <span id="modalQtyValue">1</span>
+                        <button type="button" id="modalQtyPlus" class="modal-qty-btn">+</button>
+                    </div>
+                </div>
+
+                <div class="cart-modal-variants">
+                    <button type="button" class="variant-btn active" data-variant="Iced">Iced</button>
+                    <button type="button" class="variant-btn" data-variant="Hot">Hot</button>
+                </div>
+            </div>
+
+            <div class="cart-modal-footer">
+                <button type="button" id="modalCancelBtn" class="modal-btn-cancel">Batal</button>
+                <button type="button" id="modalConfirmBtn" class="modal-btn-add">Tambah</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

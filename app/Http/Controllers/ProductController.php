@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -28,9 +31,12 @@ class ProductController extends Controller
     }
 
     public function menuIndex() {
-        $menus = Product::with('category')->orderBy('product_name')->get();
+        $menus = Product::with('category')->where('status', 'active')->whereHas('category')->orderBy('product_name')->get();
 
-        return view('user.menu2', compact('menus'));
+        $todayOrders = OrderItem::with(['product', 'order.items.product'])->whereDate('created_at', Carbon::today())->latest()->get();
+        $todayCups = $todayOrders->sum('quantity');
+
+        return view('user.menu2', compact('menus', 'todayCups'));
     }
 
     public function create()

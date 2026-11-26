@@ -398,3 +398,250 @@ document.addEventListener('click', (e) => {
         window.closeLogoutModal();
     }
 });
+
+// Overlay tambah item
+document.addEventListener('DOMContentLoaded', () => {
+    const cartModal = document.getElementById('addToCartModal');
+    if (!cartModal) return;
+
+    const modalProductName = document.getElementById('modalProductName');
+    const modalQtyValue = document.getElementById('modalQtyValue');
+    const variantButtons = cartModal.querySelectorAll('.variant-btn');
+
+    let cart = JSON.parse(localStorage.getItem('kopipeteh_cart') || '{}');
+    let selectedProduct = null;
+    let modalQty = 1;
+    let modalVariant = 'Iced';
+
+    function updateCartBadge() {
+        const totalQty = Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
+        const navBadge = document.querySelector('.cart-count span');
+        if (navBadge) navBadge.textContent = totalQty;
+    }
+
+    function openCartModal(product) {
+        selectedProduct = product;
+        modalQty = 1;
+        modalVariant = 'Iced';
+
+        modalProductName.textContent = product.name;
+        modalQtyValue.textContent = modalQty;
+
+        variantButtons.forEach((btn) => {
+            btn.classList.toggle('active', btn.dataset.variant === 'Iced');
+        });
+
+        cartModal.classList.add('show');
+        cartModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeCartModal() {
+        cartModal.classList.remove('show');
+        cartModal.setAttribute('aria-hidden', 'true');
+        selectedProduct = null;
+    }
+
+    updateCartBadge();
+
+    document.addEventListener('click', (e) => {
+        const addBtn = e.target.closest('.cart-add');
+        if (!addBtn) return;
+
+        const card = addBtn.closest('.item[data-id]');
+        if (!card) return;
+
+        openCartModal({
+            id: card.dataset.id,
+            name: card.dataset.name,
+            price: parseInt(card.dataset.price, 10),
+            img: card.dataset.img,
+        });
+    });
+
+    document.getElementById('modalQtyMinus')?.addEventListener('click', () => {
+        if (modalQty > 1) {
+            modalQty--;
+            modalQtyValue.textContent = modalQty;
+        }
+    });
+
+    document.getElementById('modalQtyPlus')?.addEventListener('click', () => {
+        modalQty++;
+        modalQtyValue.textContent = modalQty;
+    });
+
+    variantButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            modalVariant = btn.dataset.variant;
+            variantButtons.forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    document.getElementById('modalCancelBtn')?.addEventListener('click', closeCartModal);
+
+    cartModal.addEventListener('click', (e) => {
+        if (e.target === cartModal) closeCartModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && cartModal.classList.contains('show')) {
+            closeCartModal();
+        }
+    });
+
+    document.getElementById('modalConfirmBtn')?.addEventListener('click', () => {
+        if (!selectedProduct) return;
+
+        const key = `${selectedProduct.id}-${modalVariant}`;
+
+        if (cart[key]) {
+            cart[key].qty += modalQty;
+        } else {
+            cart[key] = {
+                ...selectedProduct,
+                variant: modalVariant,
+                qty: modalQty,
+            };
+        }
+
+        localStorage.setItem('kopipeteh_cart', JSON.stringify(cart));
+        updateCartBadge();
+        closeCartModal();
+    });
+});
+
+// Filter menu
+document.addEventListener('DOMContentLoaded', () => {
+    const filterTabs = document.querySelectorAll('.menu-tab button');
+    const menuItems = document.querySelectorAll('.product-list .item');
+    const emptyMsg = document.getElementById('emptyFilterMsg');
+
+    if (!filterTabs.length) return;
+
+    filterTabs.forEach((tab) => {
+        tab.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            filterTabs.forEach((t) => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            const selectedCategory = tab.dataset.filter;
+            let visibleCount = 0;
+
+            menuItems.forEach((item) => {
+                const isMatch = selectedCategory === 'all' || item.dataset.category === selectedCategory;
+
+                item.style.display = isMatch ? '' : 'none';
+                if (isMatch) visibleCount++;
+            });
+
+            if (emptyMsg) {
+                emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
+        });
+    });
+});
+
+// Fitur search menu
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.querySelector('.search-box input');
+    const searchForm = searchInput?.closest('form');
+    const filterTabs = document.querySelectorAll('.menu-tab button');
+    const menuItems = document.querySelectorAll('.product-list .item');
+    const emptyMsg = document.getElementById('emptyFilterMsg');
+    const menuSection = document.querySelector('.menu-section');
+    const productList = document.querySelector('.product-list');
+
+    if (!productList && searchInput) {
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                if (query) {
+                    window.location.href = `/menu?search=${encodeURIComponent(query)}`;
+                }
+            }
+        });
+        return;
+    }
+
+    if (!productList) return;
+
+    let activeCategory = 'all';
+    let searchQuery = '';
+
+    function applyMenuFilters() {
+        let visibleCount = 0;
+
+        menuItems.forEach((item) => {
+            const category = item.dataset.category || '';
+            const name = (item.dataset.name || item.querySelector('.item-name')?.textContent || '').toLowerCase();
+            const desc = (item.querySelector('.item-desc')?.textContent || '').toLowerCase();
+
+            const matchesCategory = activeCategory === 'all' || category === activeCategory;
+            const matchesSearch = !searchQuery || name.includes(searchQuery) || desc.includes(searchQuery);
+
+            const isVisible = matchesCategory && matchesSearch;
+            item.style.display = isVisible ? '' : 'none';
+
+            if (isVisible) visibleCount++;
+        });
+
+        if (emptyMsg) {
+            if (menuItems.length === 0) {
+                emptyMsg.textContent = 'Tidak ada data';
+            } else if (searchQuery) {
+                emptyMsg.textContent = `Item "${searchInput.value.trim()}" tidak ditemukan`;
+            } else {
+                emptyMsg.textContent = 'Tidak ada item di kategori ini';
+            }
+
+            emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        productList.classList.toggle('is-empty', visibleCount === 0);
+    }
+
+    function scrollToMenu() {
+        if (!menuSection) return;
+        const navHeight = document.querySelector('.navbar')?.offsetHeight || 0;
+        const targetPosition = menuSection.offsetTop - navHeight;
+
+        if (window.scrollY < targetPosition - 20) {
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+        }
+    }
+
+    filterTabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+            filterTabs.forEach((t) => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            activeCategory = tab.dataset.filter;
+            applyMenuFilters();
+        });
+    });
+
+    if (searchInput) {
+        searchForm?.addEventListener('submit', (e) => e.preventDefault());
+
+        searchInput.addEventListener('input', () => {
+            searchQuery = searchInput.value.toLowerCase().trim();
+            applyMenuFilters();
+
+            if (searchQuery.length > 0) {
+                scrollToMenu();
+            }
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialSearch = urlParams.get('search');
+        if (initialSearch) {
+            searchInput.value = initialSearch;
+            searchQuery = initialSearch.toLowerCase().trim();
+            applyMenuFilters();
+            scrollToMenu();
+        }
+    }
+});
