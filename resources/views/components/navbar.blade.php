@@ -13,11 +13,13 @@
             </div>
         </form>
 
-        <a href="#" class="nav-cart">
+        <a href="{{ route('cart') }}" class="nav-cart">
             <img src="{{ asset('images/icons/cart2.svg') }}" alt="" title="Lihat Keranjang">
-            <div class="cart-count">
-                <span>1</span>
-            </div>
+            @if (request()->routeIs('menu'))
+                <div class="cart-count">
+                    <span>0</span>
+                </div>
+            @endif
         </a>
     </div>
 </div>

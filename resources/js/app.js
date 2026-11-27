@@ -14,6 +14,11 @@ if (sessionStorage.getItem('nprogress_active')) {
     });
 }
 
+const triggerProgress = () => {
+    sessionStorage.setItem('nprogress_active', '1');
+    NProgress.start();
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const triggerProgress = () => {
         sessionStorage.setItem('nprogress_active', '1');
@@ -406,12 +411,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const modalProductName = document.getElementById('modalProductName');
     const modalQtyValue = document.getElementById('modalQtyValue');
+    const modalQtyMinus = document.getElementById('modalQtyMinus');
+    const modalQtyPlus = document.getElementById('modalQtyPlus');
     const variantButtons = cartModal.querySelectorAll('.variant-btn');
 
     let cart = JSON.parse(localStorage.getItem('kopipeteh_cart') || '{}');
     let selectedProduct = null;
     let modalQty = 1;
     let modalVariant = 'Iced';
+
+    function updateModalQtyDisplay() {
+        modalQtyValue.textContent = modalQty;
+        if (modalQtyMinus) {
+            modalQtyMinus.disabled = modalQty <= 1;
+        }
+    }
 
     function updateCartBadge() {
         const totalQty = Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
@@ -425,7 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modalVariant = 'Iced';
 
         modalProductName.textContent = product.name;
-        modalQtyValue.textContent = modalQty;
+        updateModalQtyDisplay();
 
         variantButtons.forEach((btn) => {
             btn.classList.toggle('active', btn.dataset.variant === 'Iced');
@@ -458,16 +472,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.getElementById('modalQtyMinus')?.addEventListener('click', () => {
+    modalQtyMinus?.addEventListener('click', () => {
         if (modalQty > 1) {
             modalQty--;
-            modalQtyValue.textContent = modalQty;
+            updateModalQtyDisplay();
         }
     });
 
-    document.getElementById('modalQtyPlus')?.addEventListener('click', () => {
+    modalQtyPlus?.addEventListener('click', () => {
         modalQty++;
-        modalQtyValue.textContent = modalQty;
+        updateModalQtyDisplay();
     });
 
     variantButtons.forEach((btn) => {
@@ -497,11 +511,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (cart[key]) {
             cart[key].qty += modalQty;
+            if (!cart[key].addedAt) cart[key].addedAt = Date.now();
         } else {
             cart[key] = {
                 ...selectedProduct,
                 variant: modalVariant,
                 qty: modalQty,
+                addedAt: Date.now(),
             };
         }
 
@@ -644,4 +660,236 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollToMenu();
         }
     }
+});
+
+// Fitur sistem keranjang 
+document.addEventListener('DOMContentLoaded', () => {
+    const successFlag = document.getElementById('orderSuccessFlag');
+    if (successFlag) {
+        localStorage.removeItem('kopipeteh_cart');
+        localStorage.removeItem('kopipeteh_checkout_form');
+        const navBadge = document.querySelector('.cart-count span');
+        if (navBadge) navBadge.textContent = '0';
+        alert(successFlag.dataset.message);
+    }
+
+    const cartListContainer = document.getElementById('cartListContainer');
+    const checkoutForm = document.getElementById('checkoutForm');
+    if (!cartListContainer || !checkoutForm) return;
+    const nameInput = checkoutForm.querySelector('input[name="name"]');
+    const phoneInput = checkoutForm.querySelector('input[name="phone"]');
+    const FORM_STORAGE_KEY = 'kopipeteh_checkout_form';
+
+    const savedForm = JSON.parse(localStorage.getItem(FORM_STORAGE_KEY) || '{}');
+    if (nameInput && !nameInput.value && savedForm.name) {
+        nameInput.value = savedForm.name;
+    }
+    if (phoneInput && !phoneInput.value && savedForm.phone) {
+        phoneInput.value = savedForm.phone;
+    }
+
+    function saveFormInputs() {
+        localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify({
+            name: nameInput ? nameInput.value : '',
+            phone: phoneInput ? phoneInput.value : '',
+        }));
+    }
+
+    nameInput?.addEventListener('input', saveFormInputs);
+    phoneInput?.addEventListener('input', saveFormInputs);
+
+    const cartTotalPriceEl = document.getElementById('cartTotalPrice');
+    const payBtn = document.getElementById('openPaymentModalBtn');
+    const hiddenInputsContainer = document.getElementById('checkoutHiddenInputs');
+
+    const paymentModal = document.getElementById('paymentMethodModal');
+    const modalPaymentTotal = document.getElementById('modalPaymentTotal');
+    const paymentOptionBtns = paymentModal.querySelectorAll('.payment-option-btn');
+    const cancelPaymentBtn = document.getElementById('cancelPaymentModalBtn');
+    const confirmOrderBtn = document.getElementById('confirmOrderBtn');
+
+    let selectedPaymentMethod = 'cash';
+
+    const formatRupiah = (angka) => 'Rp ' + Number(angka).toLocaleString('id-ID');
+
+    function getCart() {
+        return JSON.parse(localStorage.getItem('kopipeteh_cart') || '{}');
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem('kopipeteh_cart', JSON.stringify(cart));
+        updateNavbarBadge(cart);
+        renderCartItems();
+    }
+
+    function updateNavbarBadge(cart) {
+        const totalQty = Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
+        const navBadge = document.querySelector('.cart-count span');
+        if (navBadge) navBadge.textContent = totalQty;
+    }
+
+    function renderCartItems() {
+        const cart = getCart();
+        const entries = Object.entries(cart).sort(([, a], [, b]) => {
+            return (a.addedAt || 0) - (b.addedAt || 0);
+        });
+
+        if (entries.length === 0) {
+            cartListContainer.innerHTML = `
+                <div class="cart-empty-state">
+                    <p>Keranjang Anda masih kosong</p>
+                </div>
+            `;
+            cartTotalPriceEl.textContent = 'Rp 0';
+            payBtn.disabled = true;
+            return;
+        }
+
+        payBtn.disabled = false;
+        let grandTotal = 0;
+
+        cartListContainer.innerHTML = entries.map(([key, item]) => {
+            const subtotal = item.price * item.qty;
+            grandTotal += subtotal;
+
+            return `
+                <div class="item" data-key="${key}">
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="item-name">
+                        <p>${item.name}</p>
+                        <div class="item-variants">
+                            <button type="button" class="variant-btn ${item.variant === 'Iced' ? 'active' : ''}" data-variant="Iced">Iced</button>
+                            <button type="button" class="variant-btn ${item.variant === 'Hot' ? 'active' : ''}" data-variant="Hot">Hot</button>
+                        </div>
+                    </div>
+                    <div class="item-subtotal">
+                        <p>${formatRupiah(subtotal)}</p>
+                        <div class="item-qty">
+                            <button type="button" class="qty-btn qty-minus" ${item.qty <= 1 ? 'disabled' : ''}>-</button>
+                            <span>${item.qty}</span>
+                            <button type="button" class="qty-btn qty-plus">+</button>
+                        </div>
+                    </div>
+                    <button type="button" class="discard-btn">
+                        <img src="/images/icons/delete.svg" alt="Hapus">
+                    </button>
+                </div>
+            `;
+        }).join('');
+
+        cartTotalPriceEl.textContent = formatRupiah(grandTotal);
+        if (modalPaymentTotal) {
+            modalPaymentTotal.textContent = formatRupiah(grandTotal);
+        }
+    }
+
+    cartListContainer.addEventListener('click', (e) => {
+        const itemRow = e.target.closest('.item[data-key]');
+        if (!itemRow) return;
+
+        const key = itemRow.dataset.key;
+        const cart = getCart();
+        const item = cart[key];
+        if (!item) return;
+
+        const variantBtn = e.target.closest('.variant-btn');
+        if (variantBtn) {
+            const newVariant = variantBtn.dataset.variant;
+            if (newVariant === item.variant) return;
+
+            const newKey = `${item.id}-${newVariant}`;
+            if (cart[newKey]) {
+                cart[newKey].qty += item.qty;
+            } else {
+                cart[newKey] = { ...item, variant: newVariant };
+            }
+            delete cart[key];
+            saveCart(cart);
+            return;
+        }
+
+        if (e.target.closest('.qty-plus')) {
+            item.qty += 1;
+            saveCart(cart);
+            return;
+        }
+
+        if (e.target.closest('.qty-minus')) {
+            if (item.qty > 1) {
+                item.qty -= 1;
+                saveCart(cart);
+            }
+            return;
+        }
+
+        if (e.target.closest('.discard-btn')) {
+            delete cart[key];
+            saveCart(cart);
+        }
+    });
+
+    checkoutForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const cart = getCart();
+        if (Object.keys(cart).length === 0) return;
+
+        if (!checkoutForm.reportValidity()) return;
+
+        paymentModal.classList.add('show');
+        paymentModal.setAttribute('aria-hidden', 'false');
+    });
+
+    paymentOptionBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            selectedPaymentMethod = btn.dataset.method;
+            paymentOptionBtns.forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    function closePaymentModal() {
+        paymentModal.classList.remove('show');
+        paymentModal.setAttribute('aria-hidden', 'true');
+    }
+
+    cancelPaymentBtn?.addEventListener('click', closePaymentModal);
+    paymentModal.addEventListener('click', (e) => {
+        if (e.target === paymentModal) closePaymentModal();
+    });
+
+    confirmOrderBtn?.addEventListener('click', () => {
+        const cart = getCart();
+        const items = Object.values(cart)
+            .filter((item) => item && typeof item === 'object' && Number(item.qty) > 0)
+            .sort((a, b) => (a.addedAt || 0) - (b.addedAt || 0))
+            .map((item) => ({
+                id: item.id,
+                name: item.name,
+                variant: item.variant,
+                price: Number(item.price),
+                quantity: Number(item.qty),
+            }));
+
+        if (items.length === 0) {
+            alert('Keranjang masih kosong atau data item tidak valid.');
+            return;
+        }
+
+        const activeMethodBtn = paymentModal.querySelector('.payment-option-btn.active');
+        const selectedMethod = activeMethodBtn ? activeMethodBtn.dataset.method : 'cash';
+
+        const paymentMethodInput = checkoutForm.querySelector('input[name="payment_method"]');
+        const cartItemsInput = checkoutForm.querySelector('input[name="items"]');
+
+        if (paymentMethodInput) paymentMethodInput.value = selectedMethod;
+        if (cartItemsInput) cartItemsInput.value = JSON.stringify(items);
+
+        confirmOrderBtn.disabled = true;
+        confirmOrderBtn.textContent = 'Memproses...';
+        triggerProgress();
+        checkoutForm.submit();
+    });
+
+    renderCartItems();
 });

@@ -8,149 +8,122 @@
     @vite(['resources/css/style.css', 'resources/js/app.js'])
 </head>
 <body>
-    <div class="main-container">
-    <header class="navbar">
-        <div class="logo">
-            <img src="{{ asset('images/logo3.png') }}" alt="Kopipeteh Logo">
-        </div>
-        <div class="nav-right">
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Search...">
+    <x-navbar />
+
+    <section class="page-menu">
+        <div class="hero-section">
+            <div class="hero-text">
+                <div class="hero-eyebrow">
+                    <span>GOOD COFFEE, GOOD MOOD</span>
+                    <span class="eybrow-line"></span>
+                </div>
+    
+                <h1 class="hero-title">
+                    <span class="first-title">FRESH COFFÉE</span>
+                    <span class="second-title">Better Together</span>
+                </h1>
+    
+                <p class="hero-subtitle">
+                    Nikmati kopi favoritmu dengan rasa yang selalu <br>istimewa.
+                </p>
             </div>
-            <button class="cart-icon" onclick="showCart()">
-                <a href="#"><img src="{{ asset('images/icons/cart2.svg') }}" alt="Keranjang" class="cart"></a>
-                <span class="cart-count" id="cartCount">0</span>
-            </button>
-        </div>
-    </header>
 
-    <section class="hero">
-
-        <div class="hero-content">
-            <!-- Background hero menggunakan gambar milikmu -->
+            <img src="{{ asset('images/hero-product.png') }}" alt="" class="bg-organic hero-product">
+            <img src="{{ asset('images/brown-deco-left-2.svg') }}" alt="" class="bg-organic brown-deco-left">
+            <img src="{{ asset('images/coffee-deco-left-2.png') }}" alt="" class="bg-organic coffee-deco-left">
+            <img src="{{ asset('images/brown-deco-right-2.svg') }}" alt="" class="bg-organic brown-deco-right">
+            <img src="{{ asset('images/coffee-deco-right-3.png') }}" alt="" class="bg-organic coffee-deco-right">
+            <img src="{{ asset('images/cream-deco-bottom-1.svg') }}" alt="" class="bg-organic cream-deco-bottom">
         </div>
 
-    </section>
-
-    <section class="menu-section">
-
-        <div class="menu-header">
-
-            <div>
-                <h2>Menu Drinks</h2>
-
-                <div class="category-buttons">
-                    <button class="category active" data-category="All">All</button>
-                    <button class="category" data-category="Coffee">Coffee</button>
-                    <button class="category" data-category="Non Coffee">Non Coffee</button>
+        <div class="menu-section">
+            <div class="menu-header">
+                <div class="section-title">
+                    <h2>
+                        Menu Drinks
+                    </h2>
+                    <span></span>
+                </div>
+    
+                <div class="menu-tab">
+                    <button type="button" class="active" data-filter="all">All</button>
+                    <button type="button" data-filter="coffee">Coffee</button>
+                    <button type="button" data-filter="non-coffee">Non-coffee</button>
                 </div>
             </div>
 
             <div class="quota">
-                <span>
-                    <a href="#"><img src="{{ asset('images/icons/cup.svg') }}" alt="Keranjang"></a>
-                </span>
-                <div>
-                    <small>Sisa Kuota Hari Ini</small>
-                    <p>7 / 10 Cup</p>
+                <img src="{{ asset('images/icons/cup.svg') }}" alt="">
+                <div class="quota-text">
+                    <p>Kuota PO Hari Ini</p>
+                    <span>{{ $todayCups }}/10 Cup</span>
                 </div>
             </div>
 
-        </div>
+            <div @class(['product-list', 'is-empty' => $menus->isEmpty()])>
+                @foreach ($menus as $item)
+                    <div class="item"
+                        data-id="{{ $item->id }}"
+                        data-name="{{ $item->product_name }}"
+                        data-price="{{ $item->price }}"
+                        data-img="{{ asset('storage/' . $item->image) }}"
+                        data-category="{{ \Illuminate\Support\Str::slug($item->category->category_name ?? '') }}">
+                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->product_name }}" class="item-img">
 
-        <div class="product-container">
-            <div class="product-card" data-category="Coffee">
-                <img src="{{ asset('images/americano.jpeg') }}" alt="Americano">
-                <div class="product-info">
-                    <h3>Americano</h3>
-                    <p>Kopi hitam espresso dengan aroma kopi yang khas.</p>
-                    <h4>Rp 8.000</h4>
-                </div>
-                <button class="add-cart" onclick="openModal('Americano', 8000)">
-                   <a href="#"><img src="{{ asset('images/icons/cart1.svg') }}" alt="Keranjang" class="cart"></a>
-                </button>
-            </div>
+                        <div class="item-info">
+                            <p class="item-name">{{ $item->product_name }}</p>
+                            <p class="item-desc">{{ $item->description }}</p>
+                            <div class="item-price">
+                                <p>Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                                <button type="button" class="cart-add">
+                                    <img src="{{ asset('images/icons/cart1.svg') }}" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
 
-            <div class="product-card" data-category="Coffee">
-                <img src="{{ asset('images/sunset.jpeg') }}" alt="Sunset Noir">
-                <div class="product-info">
-                    <h3>Sunset Noir</h3>
-                    <p>Kopi susu dengan perpaduan rasa manis dan creamy.</p>
-                    <h4>Rp 12.000</h4>
-                </div>
-                <button class="add-cart" onclick="openModal('Sunset Noir', 12000)">
-                    <a href="#"><img src="{{ asset('images/icons/cart1.svg') }}" alt="Keranjang" class="cart"></a>
-                </button>
-            </div>
-
-            <div class="product-card" data-category="Coffee">
-                <img src="{{ asset('images/dirty.jpeg') }}" alt="Dirty Latte">
-                <div class="product-info">
-                    <h3>Dirty Latte</h3>
-                    <p>Espresso dengan susu segar yang lembut.</p>
-                    <h4>Rp 20.000</h4>
-                </div>
-                <button class="add-cart" onclick="openModal('Dirty Latte', 20000)">
-                    <a href="#"><img src="{{ asset('images/icons/cart1.svg') }}" alt="Keranjang" class="cart"></a>
-                </button>
-            </div>
-
-            <div class="product-card" data-category="Coffee">
-                <img src="{{ asset('images/senja.jpeg') }}" alt="Kopi Senja Aren">
-                <div class="product-info">
-                    <h3>Kopi Senja Aren</h3>
-                    <p>Perpaduan kopi, susu, dan manisnya gula aren.</p>
-                    <h4>Rp 15.000</h4>
-                </div>
-                <button class="add-cart" onclick="openModal('Kopi Senja Aren', 15000)">
-                    <a href="#"><img src="{{ asset('images/icons/cart1.svg') }}" alt="Keranjang" class="cart"></a>
-                </button>
-            </div>
-
-            <div class="product-card" data-category="Coffee">
-                <img src="{{ asset('images/spanish.jpeg') }}" alt="Spanish Latte">
-                <div class="product-info">
-                    <h3>Spanish Latte</h3>
-                    <p>Espresso dengan susu creamy dan rasa manis.</p>
-                    <h4>Rp 15.000</h4>
-                </div>
-                <button class="add-cart" onclick="openModal('Spanish Latte', 15000)">
-                    <a href="#"><img src="{{ asset('images/icons/cart1.svg') }}" alt="Keranjang" class="cart"></a>
-                </button>
-            </div>
-
-            <div class="product-card" data-category="Non Coffee">
-                <img src="{{ asset('images/matcha.jpeg') }}" alt="Matcha">
-                <div class="product-info">
-                    <h3>Matcha</h3>
-                    <p>Matcha pilihan dengan rasa khas dan tekstur lembut.</p>
-                    <h4>Rp 20.000</h4>
-                </div>
-                <button class="add-cart" onclick="openModal('Matcha', 20000)">
-                    <a href="#"><img src="{{ asset('images/icons/cart1.svg') }}" alt="Keranjang" class="cart"></a>
-                </button>
-            </div>
-
-            <div class="product-card" data-category="Non Coffee">
-                <img src="{{ asset('images/magic.jpeg') }}" alt="Magic Milk">
-                <div class="product-info">
-                    <h3>Magic Milk</h3>
-                    <p>Perpaduan susu dengan rasa manis yang creamy.</p>
-                    <h4>Rp 20.000</h4>
-                </div>
-                <button class="add-cart" onclick="openModal('Magic Milk', 20000)">
-                    <a href="#"><img src="{{ asset('images/icons/cart1.svg') }}" alt="Keranjang" class="cart"></a>
-                </button>
+                <h4 id="emptyFilterMsg" style="display: {{ $menus->isEmpty() ? 'block' : 'none' }}; font-weight: 500;">
+                    Tidak ada data
+                </h4>
             </div>
         </div>
     </section>
+    
+    <x-footer />
 
-    <footer class="footer">
-        <div class="footer-line"></div>
-        <p>Life begins after coffee</p>
-        <div class="footer-line"></div>
-    </footer>
+    <div id="addToCartModal" class="cart-modal-overlay" aria-hidden="true">
+        <div class="cart-modal-box">
+            <div class="cart-modal-body">
+                <h3 class="cart-modal-title">Tambah ke keranjang</h3>
+                <hr class="cart-modal-divider">
+
+                <p id="modalProductName" class="cart-modal-product"></p>
+
+                <div class="cart-modal-qty-row">
+                    <span>Jumlah:</span>
+                    <div class="modal-qty-control">
+                        <button type="button" id="modalQtyMinus" class="modal-qty-btn" disabled>-</button>
+                        <span id="modalQtyValue">1</span>
+                        <button type="button" id="modalQtyPlus" class="modal-qty-btn">+</button>
+                    </div>
+                </div>
+
+                <div class="cart-modal-variants">
+                    <button type="button" class="variant-btn active" data-variant="Iced">Iced</button>
+                    <button type="button" class="variant-btn" data-variant="Hot">Hot</button>
+                </div>
+            </div>
+
+            <div class="cart-modal-footer">
+                <button type="button" id="modalCancelBtn" class="modal-btn-cancel">Batal</button>
+                <button type="button" id="modalConfirmBtn" class="modal-btn-add">Tambah</button>
+            </div>
+        </div>
     </div>
+
+    @if (session('order_success'))
+        <div id="orderSuccessFlag" data-message="{{ session('order_success') }}" style="display: none;"></div>
+    @endif
 </body>
 </html>

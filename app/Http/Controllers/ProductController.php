@@ -36,7 +36,7 @@ class ProductController extends Controller
         $todayOrders = OrderItem::with(['product', 'order.items.product'])->whereDate('created_at', Carbon::today())->latest()->get();
         $todayCups = $todayOrders->sum('quantity');
 
-        return view('user.menu2', compact('menus', 'todayCups'));
+        return view('user.menu', compact('menus', 'todayCups'));
     }
 
     public function create()

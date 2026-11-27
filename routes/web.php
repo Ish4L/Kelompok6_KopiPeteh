@@ -25,6 +25,15 @@ Route::middleware('guest')->group(function () {
         ProductController::class,
         'menuIndex'
     ])->name('menu');
+
+    Route::get('/keranjang', function () {
+        return view('user.cart');
+    })->name('cart');
+
+    Route::post('/order', [
+        OrderController::class, 
+        'store'
+    ])->name('order.store');
     
     Route::get('/login', [
         AuthController::class, 

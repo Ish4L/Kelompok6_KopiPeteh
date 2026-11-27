@@ -8,9 +8,12 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Validation\ValidationException;
 
 class OrderController extends Controller
 {
+    private const DAILY_MAX_CUPS = 10;
+
     public function dashboardIndex()
     {
         $todayOrders = OrderItem::with(['product', 'order.items.product'])->whereDate('created_at', Carbon::today())->latest()->get();
@@ -50,51 +53,91 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $todayCups = OrderItem::whereDate('created_at', Carbon::today())->sum('quantity');
-        $requestCups = collect($request->products)->sum('quantity');
+        $validated = $request->validate([
+            'name'           => 'required|string|max:255',
+            'phone'          => 'required|string|max:20',
+            'payment_method' => 'required|in:cash,QRIS',
+            'items'          => 'required|string',
+        ]);
 
-        if (($todayCups + $requestCups) > 10) {
-            $cupsLeft = 10 - $todayCups;
-            $message = $cupsLeft > 0
-                ? "Maaf, kuota hari ini tersisa {$cupsLeft} cup."
-                : "Maaf, kuota hari ini sudah penuh";
+        $cartItems = json_decode($validated['items'], true);
 
-            return back()->withErrors(['error' => $message]);
+        if (!is_array($cartItems) || count($cartItems) === 0) {
+            return back()->withErrors(['items' => 'Keranjang pesanan tidak boleh kosong.']);
         }
-    
-        return DB::transaction(function () use ($request) {
+
+        $requestedTotalCups = 0;
+        foreach ($cartItems as $item) {
+            $quantity = (int) ($item['quantity'] ?? $item['qty'] ?? 0);
+            if ($quantity < 1) {
+                return back()->withErrors(['items' => 'Jumlah item tidak valid.']);
+            }
+            $requestedTotalCups += $quantity;
+        }
+
+        if ($requestedTotalCups > self::DAILY_MAX_CUPS) {
+            return back()->withErrors([
+                'quota' => 'Maksimal pemesanan adalah ' . self::DAILY_MAX_CUPS . ' cup per hari.',
+            ]);
+        }
+
+        DB::transaction(function () use ($validated, $cartItems, $requestedTotalCups) {
+            $products = Product::lockForUpdate()->get()->keyBy('id');
+
+            $soldToday = OrderItem::whereHas('order', function ($query) {
+                $query->whereDate('created_at', today())
+                      ->where('status', '!=', 'dibatalkan');
+            })->sum('quantity');
+
+            $remainingQuota = max(0, self::DAILY_MAX_CUPS - $soldToday);
+
+            if ($requestedTotalCups > $remainingQuota) {
+                $pesan = $remainingQuota === 0
+                    ? 'Maaf, kuota pesanan hari ini sudah habis.'
+                    : "Maaf, sisa kuota hari ini tersisa {$remainingQuota} cup (pesanan Anda {$requestedTotalCups} cup).";
+
+                throw ValidationException::withMessages([
+                    'quota' => $pesan,
+                ]);
+            }
+
             $totalPrice = 0;
-            $itemsData = [];
+            foreach ($cartItems as $item) {
+                $product = $products->get($item['id']);
 
-            foreach ($request->products as $item) {
-                if ($item['quantity'] > 0) {
-                    $product = Product::findOrFail($item['product_id']);
-                    $quantity = $item['quantity'];
-                    $price = $product->price;
-                    
-                    $totalPrice += ($quantity * $price);
-
-                    $itemsData[] = [
-                        'product_id' => $product->id,
-                        'quantity' => $quantity,
-                        'price' => $price,
-                    ];
+                if (!$product) {
+                    throw ValidationException::withMessages([
+                        'items' => 'Salah satu menu tidak ditemukan.',
+                    ]);
                 }
+
+                $qty = (int) ($item['quantity'] ?? $item['qty']);
+                $totalPrice += $product->price * $qty;
             }
 
             $order = Order::create([
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'total_price' => $totalPrice,
-                'status' => 'belum bayar',
+                'name'           => $validated['name'],
+                'phone'          => $validated['phone'],
+                'payment_method' => $validated['payment_method'],
+                'total_price'    => $totalPrice,
+                'status'         => 'belum bayar',
             ]);
 
-            foreach ($itemsData as $itemData) {
-                $order->items()->create($itemData);
-            }
+            foreach ($cartItems as $item) {
+                $product = $products->get($item['id']);
+                $qty = (int) ($item['quantity'] ?? $item['qty']);
 
-            // return redirect()->route('order.index')->with('success', 'Pesanan berhasil dibuat.');
+                OrderItem::create([
+                    'order_id'   => $order->id,
+                    'product_id' => $product->id,
+                    'variant'    => $item['variant'],
+                    'quantity'   => $qty,
+                    'price'      => $product->price,
+                ]);
+            }
         });
+
+        return redirect()->route('menu')->with('order_success', 'Pesanan Anda berhasil dibuat!');
     }
 
     public function show(Order $order)
