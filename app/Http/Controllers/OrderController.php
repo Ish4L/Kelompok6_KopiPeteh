@@ -26,7 +26,7 @@ class OrderController extends Controller
 
         $weeklyOrderItems = OrderItem::whereHas('order', 
             function ($query) {
-                $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('status', '!=', 'dibatalkan');
+                $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('status', 'selesai');
             }
         )->get();
 
