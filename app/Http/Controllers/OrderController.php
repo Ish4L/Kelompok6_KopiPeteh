@@ -16,10 +16,20 @@ class OrderController extends Controller
 
     public function dashboardIndex()
     {
-        $todayOrders = OrderItem::with(['product', 'order.items.product'])->whereDate('created_at', Carbon::today())->latest()->get();
+        $todayOrders = OrderItem::with(['product', 'order.items.product'])->whereHas('order', 
+            function ($query) {
+                $query->whereDate('created_at', Carbon::today())->where('status', '!=', 'dibatalkan');
+            }
+        )->latest()->get();
+
         $todayCups = $todayOrders->sum('quantity');
 
-        $weeklyOrderItems = OrderItem::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        $weeklyOrderItems = OrderItem::whereHas('order', 
+            function ($query) {
+                $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('status', '!=', 'dibatalkan');
+            }
+        )->get();
+
         $weeklyCups = $weeklyOrderItems->sum('quantity');
         $weeklyIncome = $weeklyOrderItems->sum(function ($item) {
             return $item->quantity * $item->price;

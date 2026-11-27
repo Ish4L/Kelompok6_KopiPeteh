@@ -30,11 +30,15 @@ class ProductController extends Controller
         return view('admin.product', compact('products', 'categories'));
     }
 
-    public function menuIndex() {
+    public function menuIndex()
+    {
         $menus = Product::with('category')->where('status', 'active')->whereHas('category')->orderBy('product_name')->get();
 
-        $todayOrders = OrderItem::with(['product', 'order.items.product'])->whereDate('created_at', Carbon::today())->latest()->get();
-        $todayCups = $todayOrders->sum('quantity');
+        $todayCups = OrderItem::whereHas('order', 
+            function ($query) {
+                $query->whereDate('created_at', Carbon::today())->where('status', '!=', 'dibatalkan');
+            }
+        )->sum('quantity');
 
         return view('user.menu', compact('menus', 'todayCups'));
     }
