@@ -47,7 +47,7 @@
                     <label>Nomor Telepon</label>
                     <div class="input-box">
                         <img src="{{ asset('images/icons/phone.svg') }}" alt="">
-                        <input type="text" name="phone" value="{{ old('phone') }}" placeholder="Masukkan nomor telepon" required>
+                        <input type="tel" inputmode="numeric" pattern="[0-9]*" name="phone" value="{{ old('phone') }}" placeholder="Masukkan nomor telepon" required>
                     </div>
                 </div>
                 <hr>

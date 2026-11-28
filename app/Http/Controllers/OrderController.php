@@ -65,7 +65,7 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'name'           => 'required|string|max:255',
-            'phone'          => 'required|string|max:20',
+            'phone'          => 'required|string|regex:/^[0-9]+$/|min:10|max:15',
             'payment_method' => 'required|in:cash,QRIS',
             'items'          => 'required|string',
         ]);
@@ -91,63 +91,166 @@ class OrderController extends Controller
             ]);
         }
 
-        DB::transaction(function () use ($validated, $cartItems, $requestedTotalCups) {
-            $products = Product::lockForUpdate()->get()->keyBy('id');
+        $products = Product::whereIn('id', collect($cartItems)->pluck('id'))->get()->keyBy('id');
+        $totalPrice = 0;
+        $normalizedItems = [];
 
-            $soldToday = OrderItem::whereHas('order', function ($query) {
-                $query->whereDate('created_at', today())
-                      ->where('status', '!=', 'dibatalkan');
-            })->sum('quantity');
+        foreach ($cartItems as $item) {
+            $product = $products->get($item['id']);
+            if (!$product) {
+                return back()->withErrors(['items' => 'Salah satu menu tidak ditemukan.']);
+            }
+
+            $qty = (int) ($item['quantity'] ?? $item['qty']);
+            $totalPrice += $product->price * $qty;
+
+            $normalizedItems[] = [
+                'product_id' => $product->id,
+                'variant'    => $item['variant'],
+                'quantity'   => $qty,
+                'price'      => $product->price,
+            ];
+        }
+
+        if ($validated['payment_method'] === 'QRIS') {
+            $soldToday = OrderItem::whereHas('order', 
+                function ($query) {
+                    $query->whereDate('created_at', today())->where('status', '!=', 'dibatalkan');
+                }
+            )->sum('quantity');
 
             $remainingQuota = max(0, self::DAILY_MAX_CUPS - $soldToday);
 
             if ($requestedTotalCups > $remainingQuota) {
                 $pesan = $remainingQuota === 0
                     ? 'Maaf, kuota pesanan hari ini sudah habis.'
-                    : "Maaf, sisa kuota hari ini tersisa {$remainingQuota} cup (pesanan Anda {$requestedTotalCups} cup).";
+                    : "Maaf, kuota hari ini tersisa {$remainingQuota} cup (pesanan Anda {$requestedTotalCups} cup).";
+
+                return back()->withErrors(['quota' => $pesan]);
+            }
+
+            session([
+                'pending_qris_order' => [
+                    'name'           => $validated['name'],
+                    'phone'          => $validated['phone'],
+                    'payment_method' => 'QRIS',
+                    'total_price'    => $totalPrice,
+                    'total_cups'     => $requestedTotalCups,
+                    'items'          => $normalizedItems,
+                    'confirmable_at' => now()->addMinute()->timestamp,
+                ],
+            ]);
+
+            return redirect()->route('payment.qris');
+        }
+
+        $order = $this->createOrderWithQuotaLock([
+            'name'           => $validated['name'],
+            'phone'          => $validated['phone'],
+            'payment_method' => 'cash',
+            'total_price'    => $totalPrice,
+            'total_cups'     => $requestedTotalCups,
+            'items'          => $normalizedItems,
+        ], 'belum bayar');
+
+        session(['completed_order_id' => $order->id]);
+
+        return redirect()->route('detail')->with('clear_cart', true);
+    }
+
+    public function qrisPayment()
+    {
+        $pendingOrder = session('pending_qris_order');
+
+        if (!$pendingOrder) {
+            return redirect()->route('cart')->withErrors(['items' => 'Sesi pembayaran QRIS tidak ditemukan atau sudah kedaluwarsa.']);
+        }
+
+        $remainingSeconds = max(0, ($pendingOrder['confirmable_at'] ?? 0) - now()->timestamp);
+
+        return view('user.qris', compact('pendingOrder', 'remainingSeconds'));
+    }
+
+    public function confirmQris()
+    {
+        $pendingOrder = session('pending_qris_order');
+
+        if (!$pendingOrder) {
+            return redirect()->route('cart')->withErrors(['items' => 'Sesi pembayaran QRIS tidak ditemukan.']);
+        }
+
+        if (now()->timestamp < ($pendingOrder['confirmable_at'] ?? 0)) {
+            return back()->withErrors(['qris' => 'Silakan tunggu hingga waktu hitung mundur 1 menit selesai.']);
+        }
+
+        try {
+            $order = $this->createOrderWithQuotaLock($pendingOrder, 'menunggu');
+        } catch (ValidationException $e) {
+            session()->forget('pending_qris_order');
+            return redirect()->route('cart')->withErrors($e->errors());
+        }
+
+        session()->forget('pending_qris_order');
+        session(['completed_order_id' => $order->id]);
+
+        return redirect()->route('detail')->with('clear_cart', true);
+    }
+
+    public function detailOrder()
+    {
+        $orderId = session('completed_order_id');
+        $order = $orderId ? Order::with('items.product')->find($orderId) : null;
+
+        if (!$order) {
+            return redirect()->route('menu');
+        }
+
+        return view('user.detail-order', compact('order'));
+    }
+
+    private function createOrderWithQuotaLock(array $orderData, string $status): Order
+    {
+        return DB::transaction(function () use ($orderData, $status) {
+            Product::lockForUpdate()->get();
+
+            $soldToday = OrderItem::whereHas('order', 
+                function ($query) {
+                    $query->whereDate('created_at', today())->where('status', '!=', 'dibatalkan');
+                }
+            )->sum('quantity');
+
+            $remainingQuota = max(0, self::DAILY_MAX_CUPS - $soldToday);
+
+            if ($orderData['total_cups'] > $remainingQuota) {
+                $pesan = $remainingQuota === 0
+                    ? 'Maaf, kuota pesanan hari ini sudah habis.'
+                    : "Maaf, sisa kuota hari ini tersisa {$remainingQuota} cup (pesanan Anda {$orderData['total_cups']} cup).";
 
                 throw ValidationException::withMessages([
                     'quota' => $pesan,
                 ]);
             }
 
-            $totalPrice = 0;
-            foreach ($cartItems as $item) {
-                $product = $products->get($item['id']);
-
-                if (!$product) {
-                    throw ValidationException::withMessages([
-                        'items' => 'Salah satu menu tidak ditemukan.',
-                    ]);
-                }
-
-                $qty = (int) ($item['quantity'] ?? $item['qty']);
-                $totalPrice += $product->price * $qty;
-            }
-
             $order = Order::create([
-                'name'           => $validated['name'],
-                'phone'          => $validated['phone'],
-                'payment_method' => $validated['payment_method'],
-                'total_price'    => $totalPrice,
-                'status'         => 'belum bayar',
+                'name'           => $orderData['name'],
+                'phone'          => $orderData['phone'],
+                'payment_method' => $orderData['payment_method'],
+                'total_price'    => $orderData['total_price'],
+                'status'         => $status,
             ]);
 
-            foreach ($cartItems as $item) {
-                $product = $products->get($item['id']);
-                $qty = (int) ($item['quantity'] ?? $item['qty']);
-
+            foreach ($orderData['items'] as $item) {
                 OrderItem::create([
                     'order_id'   => $order->id,
-                    'product_id' => $product->id,
+                    'product_id' => $item['product_id'],
                     'variant'    => $item['variant'],
-                    'quantity'   => $qty,
-                    'price'      => $product->price,
+                    'quantity'   => $item['quantity'],
+                    'price'      => $item['price'],
                 ]);
             }
-        });
 
-        return redirect()->route('menu')->with('order_success', 'Pesanan Anda berhasil dibuat!');
+            return $order;
+        });
     }
 
     public function show(Order $order)

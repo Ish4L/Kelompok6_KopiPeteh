@@ -34,6 +34,26 @@ Route::middleware('guest')->group(function () {
         OrderController::class, 
         'store'
     ])->name('order.store');
+
+    Route::post('/order', [
+        OrderController::class, 
+        'store'
+    ])->name('order.store');
+
+    Route::get('/pembayaran/qris', [
+        OrderController::class,
+        'qrisPayment'
+    ])->name('payment.qris');
+
+    Route::post('/pembayaran/qris/konfirmasi', [
+        OrderController::class, 
+        'confirmQris'
+    ])->name('payment.qris.confirm');
+
+    Route::get('/detail-pesanan', [
+        OrderController::class, 
+        'detailOrder'
+    ])->name('detail');
     
     Route::get('/login', [
         AuthController::class, 

@@ -662,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Fitur sistem keranjang 
+// Fitur keranjang & payment 
 document.addEventListener('DOMContentLoaded', () => {
     const successFlag = document.getElementById('orderSuccessFlag');
     if (successFlag) {
@@ -670,7 +670,9 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('kopipeteh_checkout_form');
         const navBadge = document.querySelector('.cart-count span');
         if (navBadge) navBadge.textContent = '0';
-        alert(successFlag.dataset.message);
+        if (successFlag.dataset.message) {
+            alert(successFlag.dataset.message);
+        }
     }
 
     const cartListContainer = document.getElementById('cartListContainer');
@@ -892,4 +894,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     renderCartItems();
+});
+
+// Countdown konfirmasi pembayaran QRIS
+document.addEventListener('DOMContentLoaded', () => {
+    const qrisForm = document.getElementById('qrisConfirmForm');
+    const qrisBtn = document.getElementById('qrisConfirmBtn');
+    if (!qrisForm || !qrisBtn) return;
+
+    let remaining = parseInt(qrisBtn.dataset.remaining || '0', 10);
+
+    const formatTime = (sec) => {
+        const minutes = String(Math.floor(sec / 60)).padStart(2, '0');
+        const seconds = String(sec % 60).padStart(2, '0');
+        return `${minutes}:${seconds}`;
+    };
+
+    if (remaining > 0) {
+        qrisBtn.disabled = true;
+        qrisBtn.textContent = `Konfirmasi Bayar (${formatTime(remaining)})`;
+
+        const timer = setInterval(() => {
+            remaining -= 1;
+
+            if (remaining <= 0) {
+                clearInterval(timer);
+                qrisBtn.disabled = false;
+                qrisBtn.textContent = 'Konfirmasi Bayar';
+            } else {
+                qrisBtn.textContent = `Konfirmasi Bayar (${formatTime(remaining)})`;
+            }
+        }, 1000);
+    }
+
+    qrisForm.addEventListener('submit', () => {
+        qrisBtn.disabled = true;
+        qrisBtn.textContent = 'Memproses...';
+    });
 });
