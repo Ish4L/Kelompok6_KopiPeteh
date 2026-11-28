@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/images/logo3.png" alt="Logo KopiPeteh" width="300" />
+  <img src="public/images/logo1.png" alt="Logo KopiPeteh" width="300" />
 </p>
 
 # KopiPeteh
