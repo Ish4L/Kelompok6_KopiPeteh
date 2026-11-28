@@ -1,59 +1,147 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="public/images/logo3.png" alt="Logo KopiPeteh" width="300" />
 </p>
 
-## About Laravel
+# KopiPeteh
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**KopiPeteh** adalah aplikasi web lengkap untuk kedai kopi yang dibangun menggunakan framework **Laravel**. Aplikasi ini menghadirkan pengalaman pemesanan yang praktis bagi pelanggan serta dashboard manajemen yang komprehensif bagi admin. Sistem ini dilengkapi dengan kuota penjualan harian secara *real-time*, beragam metode pembayaran, dan kontrol penuh atas produk, kategori, serta pesanan.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Fitur User
 
-## Learning Laravel
+* **Halaman Utama (Landing Page):** Menampilkan status ketersediaan kuota harian secara langsung. Jika kuota sudah terpenuhi, sistem akan menginformasikan bahwa pemesanan sedang tidak tersedia.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+* **Menu Produk:** Menampilkan daftar minuman kopi dan non-kopi yang dapat difilter berdasarkan kategori.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* **Keranjang Belanja:** Keranjang belanja berbasis *client-side* dengan pilihan varian **Iced** atau **Hot**.
 
-## Laravel Sponsors
+* **Proses Checkout:** Pelanggan dapat membuat pesanan dengan mengisi data diri (nama dan nomor telepon) serta memilih metode pembayaran.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+* **Pilihan Pembayaran:**
 
-### Premium Partners
+  * **Cash:** Pemesanan dibayar langsung di tempat.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+  * **QRIS:** Alur pembayaran dua langkah, di mana pelanggan akan ditampilkan kode QRIS dan diminta mengonfirmasi pembayaran setelah jeda singkat.
 
-## Contributing
+* **Sistem Kuota Harian:** Batas maksimal penjualan adalah **10 cup per hari**. Sistem otomatis mengunci proses pemesanan saat kuota tercapai.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* **Halaman Detail Pesanan:** Setelah pesanan dibuat, pelanggan diarahkan ke halaman ringkasan yang memuat detail pesanan secara lengkap.
 
-## Code of Conduct
+### Fitur Admin
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* **Authentication:** Halaman login terpisah khusus untuk administrator.
 
-## Security Vulnerabilities
+* **Dashboard:** Ringkasan penjualan harian yang mencakup daftar pesanan terbaru, total cup terjual, statistik penjualan mingguan, dan total pendapatan mingguan.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* **Manajemen Produk:** Fitur CRUD lengkap (*Create, Read, Update, Delete*) untuk produk, termasuk unggah gambar, harga, deskripsi, dan status (`aktif`/`nonaktif`). Menggunakan *soft delete* agar riwayat pesanan tetap terjaga.
 
-## License
+* **Manajemen Kategori:** Fitur CRUD lengkap untuk kategori produk. Kategori tidak dapat dihapus jika masih terhubung dengan produk (termasuk produk yang sudah di-*soft delete*).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* **Manajemen Pesanan:** Melihat seluruh riwayat dan pesanan yang sedang berlangsung, memfilter pesanan berdasarkan status (`belum bayar`, `menunggu`, `selesai`, `dibatalkan`), serta memperbarui status pesanan aktif.
+
+* **Manajemen Profil:** Admin dapat memperbarui informasi pribadi dan mengubah kata sandi.
+
+## Tech Stack
+
+* **Backend:** PHP / Laravel 12
+
+* **Frontend:** Blade, Vanilla CSS, Vanilla JavaScript
+
+* **Build Tool:** Vite
+
+* **Database:** MySQL, SQLite
+
+## Getting Started
+
+Ikuti langkah-langkah berikut untuk menjalankan proyek ini di komputer lokal Anda untuk keperluan pengembangan dan pengujian.
+
+### Prasyarat
+
+* PHP >= 8.2
+
+* Composer
+
+* Node.js & npm
+
+* Database MySQL atau SQLite
+
+### Instalasi
+
+1. **Clone repository**
+
+   ```
+   git clone https://github.com/ish4l/kelompok6_kopipeteh.git
+   cd kelompok6_kopipeteh
+   
+   ```
+
+2. **Install dependency**
+
+   ```
+   composer install
+   npm install
+   
+   ```
+
+3. **Konfigurasi environment**
+
+   * Salin file contoh konfigurasi:
+
+     ```
+     cp .env.example .env
+     
+     ```
+
+   * Buat *application key* baru:
+
+     ```
+     php artisan key:generate
+     
+     ```
+
+   * Atur koneksi database pada file `.env` (seperti `DB_CONNECTION` dan `DB_DATABASE`). Jika menggunakan SQLite, cukup buat file databasenya:
+
+     ```
+     touch database/database.sqlite
+     
+     ```
+
+4. **Jalankan migration dan seeder database** Perintah ini akan membuat tabel yang dibutuhkan sekaligus mengisi data awal (akun admin, kategori produk, dan contoh produk):
+
+   ```
+   php artisan migrate --seed
+   
+   ```
+
+5. **Buat symbolic link untuk storage**
+   Diperlukan agar gambar produk yang diunggah dapat diakses secara publik:
+
+   ```
+   php artisan storage:link
+   
+   ```
+
+6. **Build aset frontend**
+
+   ```
+   npm run build
+   
+   ```
+
+7. **Jalankan server lokal**
+
+   ```
+   php artisan serve
+   
+   ```
+
+   Aplikasi dapat diakses melalui `http://127.0.0.1:8000`.
+
+## Login Admin
+
+Setelah menjalankan seeder database, Anda dapat masuk ke panel admin melalui rute `/login` menggunakan kredensial default berikut:
+
+* **Username:** `TehPeteh`
+
+* **Password:** `admin123`
