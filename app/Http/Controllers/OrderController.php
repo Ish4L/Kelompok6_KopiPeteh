@@ -56,6 +56,36 @@ class OrderController extends Controller
     return view('admin.order', compact('orders'));
     }
 
+    public function landingIndex()
+    {
+        $soldToday = OrderItem::whereHas('order', 
+            function ($query) {
+                $query->whereDate('created_at', today())->where('status', '!=', 'dibatalkan');
+            }
+        )->sum('quantity');
+
+        if ($soldToday >= self::DAILY_MAX_CUPS) {
+            return redirect()->route('unavailable');
+        }
+
+        return view('user.available');
+    }
+
+    public function unavailableIndex()
+    {
+        $soldToday = OrderItem::whereHas('order', 
+            function ($query) {
+                $query->whereDate('created_at', today())->where('status', '!=', 'dibatalkan');
+            }
+        )->sum('quantity');
+
+        if ($soldToday < self::DAILY_MAX_CUPS) {
+            return redirect()->route('available');
+        }
+
+        return view('user.unavailable');
+    }
+
     public function create()
     {
         //

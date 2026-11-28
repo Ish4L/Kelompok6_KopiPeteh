@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckDailyQuota;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
@@ -9,62 +10,55 @@ use App\Http\Controllers\OrderController;
 
 
 Route::middleware('guest')->group(function () {
-    Route::get('/', function () {
-        return view('user.available');
-    })->name('available');
+    Route::middleware(CheckDailyQuota::class)->group(function () {
+        Route::get('/', function () {
+            return view('user.available');
+        })->name('available');
 
-    Route::get('/unavailable', function () {
-        return view('user.unavailable');
-    })->name('unavailable');
+        Route::get('/menu', [
+            ProductController::class, 
+            'menuIndex']
+        )->name('menu');
 
-    Route::get('/menu2', function () {
-        return view('user.menu');
+        Route::get('/keranjang', function () {
+            return view('user.cart');
+        })->name('cart');
+
+        Route::post('/order', [
+            OrderController::class, 
+            'store']
+        )->name('order.store');
+
+        Route::get('/pembayaran/qris', [
+            OrderController::class, 
+            'qrisPayment']
+        )->name('payment.qris');
+
+        Route::post('/pembayaran/qris/konfirmasi', [
+            OrderController::class, 
+            'confirmQris']
+        )->name('payment.qris.confirm');
     });
 
-    Route::get('/menu', [
-        ProductController::class,
-        'menuIndex'
-    ])->name('menu');
-
-    Route::get('/keranjang', function () {
-        return view('user.cart');
-    })->name('cart');
-
-    Route::post('/order', [
+    Route::get('/unavailable', [
         OrderController::class, 
-        'store'
-    ])->name('order.store');
-
-    Route::post('/order', [
-        OrderController::class, 
-        'store'
-    ])->name('order.store');
-
-    Route::get('/pembayaran/qris', [
-        OrderController::class,
-        'qrisPayment'
-    ])->name('payment.qris');
-
-    Route::post('/pembayaran/qris/konfirmasi', [
-        OrderController::class, 
-        'confirmQris'
-    ])->name('payment.qris.confirm');
+        'unavailableIndex']
+    )->name('unavailable');
 
     Route::get('/detail-pesanan', [
         OrderController::class, 
-        'detailOrder'
-    ])->name('detail');
-    
+        'detailOrder']
+    )->name('detail');
+
     Route::get('/login', [
         AuthController::class, 
-        'loginForm'
-    ])->name('login');
+        'loginForm']
+    )->name('login');
 
     Route::post('/login', [
         AuthController::class, 
-        'login'
-    ]);
-
+        'login']
+    );
 });
 
 Route::middleware('auth:admin')->group(function () {

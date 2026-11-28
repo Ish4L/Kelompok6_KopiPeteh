@@ -64,9 +64,9 @@ body {
 
 .second-tagline p, .unavailable-content p {
     color: #654137;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
-    letter-spacing: 5%;
+    letter-spacing: 3%;
     line-height: 1.5;
 }
 
