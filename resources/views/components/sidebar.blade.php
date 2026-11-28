@@ -65,3 +65,5 @@
         </div>
     </div>
 </div>
+
+<x-success-notification />

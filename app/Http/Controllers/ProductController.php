@@ -76,7 +76,7 @@ class ProductController extends Controller
             'status'       => $request->has('status') ? 'active' : 'inactive',
         ]);
 
-        return redirect()->route('product')->with('success', 'Produk berhasil ditambahkan');
+        return redirect()->route('product')->with('success', 'Produk berhasil ditambah.');
     }
 
     public function show(Product $product)
@@ -121,13 +121,13 @@ class ProductController extends Controller
             'status'       => $request->has('status') ? 'active' : 'inactive',
         ]);
 
-        return redirect()->route('product')->with('success', 'Produk berhasil diperbarui');
+        return redirect()->route('product')->with('success', 'Data Produk berhasil diubah');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
 
-        return redirect()->route('product')->with('success', 'Produk berhasil dihapus');
+        return redirect()->route('product')->with('success', 'Data produk berhasil dihapus');
     }
 }

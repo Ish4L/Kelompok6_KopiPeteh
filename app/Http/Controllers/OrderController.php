@@ -167,7 +167,7 @@ class OrderController extends Controller
                     'total_price'    => $totalPrice,
                     'total_cups'     => $requestedTotalCups,
                     'items'          => $normalizedItems,
-                    'confirmable_at' => now()->addMinute()->timestamp,
+                    'confirmable_at' => now()->addSeconds(30)->timestamp,
                 ],
             ]);
 
@@ -185,7 +185,10 @@ class OrderController extends Controller
 
         session(['completed_order_id' => $order->id]);
 
-        return redirect()->route('detail')->with('clear_cart', true);
+        return redirect()->route('detail')->with([
+            'clear_cart' => true,
+            'success'    => 'Pesanan berhasil dibuat',
+        ]);
     }
 
     public function qrisPayment()
@@ -210,7 +213,7 @@ class OrderController extends Controller
         }
 
         if (now()->timestamp < ($pendingOrder['confirmable_at'] ?? 0)) {
-            return back()->withErrors(['qris' => 'Silakan tunggu hingga waktu hitung mundur 1 menit selesai.']);
+            return back()->withErrors(['qris' => 'Silakan tunggu hingga waktu hitung mundur 30 detik selesai.']);
         }
 
         try {
@@ -223,7 +226,10 @@ class OrderController extends Controller
         session()->forget('pending_qris_order');
         session(['completed_order_id' => $order->id]);
 
-        return redirect()->route('detail')->with('clear_cart', true);
+        return redirect()->route('detail')->with([
+            'clear_cart' => true,
+            'success'    => 'Pesanan berhasil dibuat',
+        ]);
     }
 
     public function detailOrder()
@@ -307,7 +313,7 @@ class OrderController extends Controller
             'status' => $request->status,
         ]);
 
-        return back()->with('success', 'Status pesanan berhasil diperbarui');
+        return back()->with('success', 'Status pesanan berhasil diubah');
     }
 
     public function destroy(string $id)

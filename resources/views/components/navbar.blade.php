@@ -23,3 +23,5 @@
         </a>
     </div>
 </div>
+
+<x-success-notification />

@@ -96,6 +96,7 @@
                                             data-name="{{ $order->name }}"
                                             data-phone="{{ $order->phone }}"
                                             data-date="{{ $order->created_at->format('j-n-Y') }}"
+                                            data-time="{{ $order->created_at->format('H:i') }} WITA"
                                             data-payment="{{ ucfirst($order->payment_method ?? 'Cash') }}"
                                             data-total="{{ $order->total_price }}"
                                             data-status="{{ $order->status }}"

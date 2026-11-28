@@ -317,6 +317,50 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// Overlay notifkasi delete Kategori & Produk
+window.closeDeleteModal = function () {
+    const modal = document.getElementById('deleteModal');
+    if (modal) {
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+};
+
+document.addEventListener('click', (e) => {
+    const deleteBtn = e.target.closest('.btn-hapus[data-url]');
+    if (deleteBtn) {
+        const modal = document.getElementById('deleteModal');
+        const form = document.getElementById('deleteConfirmForm');
+        const message = document.getElementById('deleteConfirmMessage');
+
+        if (modal && form) {
+            form.action = deleteBtn.dataset.url;
+            if (message) {
+                const type = deleteBtn.dataset.type || 'item';
+                const name = deleteBtn.dataset.name || '';
+                message.textContent = name
+                    ? `Anda yakin ingin menghapus ${type} "${name}"?`
+                    : `Anda yakin ingin menghapus ${type} ini?`;
+            }
+
+            modal.classList.add('show');
+            modal.setAttribute('aria-hidden', 'false');
+        }
+        return;
+    }
+
+    const modal = document.getElementById('deleteModal');
+    if (modal && e.target === modal) {
+        window.closeDeleteModal();
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        window.closeDeleteModal();
+    }
+});
+
 // Overlay Detail Order
 const orderDetailModal = document.getElementById('orderDetailModal');
 
@@ -337,6 +381,7 @@ if (orderDetailModal) {
             document.getElementById('modalCustomerName').textContent = btn.dataset.name;
             document.getElementById('modalCustomerPhone').textContent = btn.dataset.phone;
             document.getElementById('modalOrderDate').textContent = btn.dataset.date;
+            document.getElementById('modalOrderTime').textContent = btn.dataset.time || '-';
             document.getElementById('modalPaymentMethod').textContent = btn.dataset.payment;
             document.getElementById('modalTotalPrice').textContent = 'Rp ' + formatRupiah(btn.dataset.total);
             
@@ -524,6 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('kopipeteh_cart', JSON.stringify(cart));
         updateCartBadge();
         closeCartModal();
+        window.showSuccessNotification('Item dimasukkan ke keranjang');
     });
 });
 
@@ -739,7 +785,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (entries.length === 0) {
             cartListContainer.innerHTML = `
                 <div class="cart-empty-state">
-                    <p>Keranjang Anda masih kosong</p>
+                    <p>Keranjang Anda masih kosong.</p>
                 </div>
             `;
             cartTotalPriceEl.textContent = 'Rp 0';
@@ -931,4 +977,56 @@ document.addEventListener('DOMContentLoaded', () => {
         qrisBtn.disabled = true;
         qrisBtn.textContent = 'Memproses...';
     });
+});
+
+// Notifikasi success
+// Notifikasi sukses dengan progress bar mundur
+let successNotifTimer = null;
+
+window.closeSuccessNotification = function () {
+    const notif = document.getElementById('successNotification');
+    if (!notif) return;
+
+    clearTimeout(successNotifTimer);
+    notif.classList.add('hide');
+};
+
+window.showSuccessNotification = function (message, duration = 4000) {
+    const notif = document.getElementById('successNotification');
+    const textEl = document.getElementById('successNotificationText');
+    const progressEl = document.getElementById('notificationProgress');
+    if (!notif || !textEl || !progressEl) return;
+
+    clearTimeout(successNotifTimer);
+
+    if (message) {
+        textEl.textContent = message;
+    }
+
+    if (notif.classList.contains('hide')) {
+        requestAnimationFrame(() => {
+            notif.classList.remove('hide');
+        });
+    }
+
+    progressEl.style.transition = 'none';
+    progressEl.style.width = '100%';
+    progressEl.getBoundingClientRect();
+    progressEl.style.transition = `width ${duration}ms linear`;
+    progressEl.style.width = '0%';
+
+    successNotifTimer = setTimeout(() => {
+        window.closeSuccessNotification();
+    }, duration);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const notif = document.getElementById('successNotification');
+    const closeBtn = document.getElementById('closeSuccessNotification');
+
+    closeBtn?.addEventListener('click', window.closeSuccessNotification);
+
+    if (notif && notif.dataset.autoShow === 'true') {
+        window.showSuccessNotification();
+    }
 });

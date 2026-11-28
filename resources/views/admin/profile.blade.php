@@ -71,6 +71,17 @@
                     @endif
                 </div>
             </form>
+
+<div class="success-notification">
+    <img src="{{ asset('images/icons/success.svg') }}" alt="">
+    <div class="success-text">
+        <span>Success</span>
+        <p>Isi notifikasi</p>
+    </div>
+    <button type="button" class="close-notification">
+        <img src="{{ asset('images/icons/close.svg') }}" alt="">
+    </button>
+</div>
         </div>
     </div>
 </body>

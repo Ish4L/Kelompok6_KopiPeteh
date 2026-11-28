@@ -64,13 +64,14 @@
                                 <img src="{{ asset('images/icons/edit.svg') }}" alt="Edit">
                             </button>
 
-                            <form action="{{ route('product.destroy', $product->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin hapus {{ ucfirst($product->product_name) }}?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-hapus">
-                                    <img src="{{ asset('images/icons/delete.svg') }}" alt="Delete">
-                                </button>
-                            </form>
+                            <button type="button"
+                                    class="btn-hapus"
+                                    data-url="{{ route('product.destroy', $product->id) }}"
+                                    data-name="{{ ucfirst($product->product_name) }}"
+                                    data-type="produk"
+                                    title="Hapus">
+                                <img src="{{ asset('images/icons/delete.svg') }}" alt="Delete">
+                            </button>
                         </td>
                     </tr>
                 @empty
@@ -169,7 +170,7 @@
                             value="{{ old('price') }}" 
                             step="0.01" 
                             min="0" 
-                            placeholder="Masukkan harga produk..." 
+                            placeholder="Masukkan harga jual..." 
                             required>
 
                         @error('price')
@@ -200,10 +201,32 @@
     </div>
 
     <div class="fullscreen-drop-overlay" id="fullscreenDropOverlay">
-    <div class="fullscreen-drop-box">
-        <img src="{{ asset('images/icons/image-add.svg') }}" alt="">
-        <p>Masukkan gambar</p>
+        <div class="fullscreen-drop-box">
+            <img src="{{ asset('images/icons/image-add.svg') }}" alt="">
+            <p>Masukkan gambar</p>
+        </div>
     </div>
-</div>
+
+    <div id="deleteModal" class="confirm-overlay" aria-hidden="true">
+        <div class="confirm-box">
+            <div class="confirm-icon">
+                <img src="{{ asset('images/icons/delete2.svg') }}" alt="">
+            </div>
+            <div class="confirm-text">
+                <h3>Konfirmasi Hapus</h3>
+                <p id="deleteConfirmMessage">Anda yakin ingin menghapus produk ini?</p>
+            </div>
+
+            <div class="confirm-actions">
+                <button type="button" class="btn-cancel" onclick="closeDeleteModal()">Batal</button>
+                
+                <form id="deleteConfirmForm" action="" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn-danger">Ya, Hapus</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

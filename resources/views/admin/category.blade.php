@@ -40,13 +40,14 @@
                                 <img src="{{ asset('images/icons/edit.svg') }}" alt="Edit">
                             </button>
 
-                            <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin hapus {{ ucfirst($category->category_name) }}?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-hapus">
-                                    <img src="{{ asset('images/icons/delete.svg') }}" alt="Delete">
-                                </button>
-                            </form>                                
+                            <button type="button"
+                                    class="btn-hapus"
+                                    data-url="{{ route('category.destroy', $category->id) }}"
+                                    data-name="{{ ucfirst($category->category_name) }}"
+                                    data-type="kategori"
+                                    title="Hapus">
+                                <img src="{{ asset('images/icons/delete.svg') }}" alt="Delete">
+                            </button>                           
                         </td>
                     </tr>
                 @empty
@@ -92,5 +93,27 @@
             </form>
         </div>
     </div>
+
+    <div id="deleteModal" class="confirm-overlay" aria-hidden="true">
+    <div class="confirm-box">
+        <div class="confirm-icon">
+            <img src="{{ asset('images/icons/delete2.svg') }}" alt="">
+        </div>
+        <div class="confirm-text">
+            <h3>Hapus Kategori?</h3>
+            <p id="deleteConfirmMessage">Anda yakin ingin menghapus kategori {{ ucfirst($category->categort_name) }}?</p>
+        </div>
+
+        <div class="confirm-actions">
+            <button type="button" class="btn-cancel" onclick="closeDeleteModal()">Batal</button>
+            
+            <form id="deleteConfirmForm" action="" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn-danger">Ya, Hapus</button>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

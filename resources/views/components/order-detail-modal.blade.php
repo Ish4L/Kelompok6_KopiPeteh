@@ -24,6 +24,10 @@
                         <span class="detail-value" id="modalOrderDate">-</span>
                     </div>
                     <div class="detail-row">
+                        <span>Waktu</span>
+                        <span class="detail-value" id="modalOrderTime">-</span>
+                    </div>
+                    <div class="detail-row">
                         <span>Metode Pembayaran</span>
                         <span class="detail-value" id="modalPaymentMethod">-</span>
                     </div>

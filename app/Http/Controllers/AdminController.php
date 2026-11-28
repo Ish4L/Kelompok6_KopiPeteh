@@ -51,7 +51,7 @@ class AdminController extends Controller
 
         $admin->update($data);
 
-        return back()->with('success', 'Profil berhasil diperbarui');
+        return back()->with('success', 'Data Profil berhasil diubah');
     }
 
     // public function updatePassword(Request $request)
